@@ -18,11 +18,15 @@ html {
   height: 100%;
   background-color: #000;
   color: #abbaba;
+  margin: 0;
+  padding: 0;
 }
 body {
   font-family: 'FiraSans';
   font-weight: 200;
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 a {
   color: #e0ebeb;
@@ -36,7 +40,7 @@ a {
 }
 .Page__top,
 .Page__bottom {
-  flex: 0 0 4rem;
+  flex: 0 0 6rem;
   display: flex;
 }
 .Page__content {
@@ -47,4 +51,10 @@ a {
   flex: 1;
   display: flex;
   justify-content: flex-end;
+}
+.Panel__header {
+  display: flex;
+}
+.Weather {
+  display: flex;
 }

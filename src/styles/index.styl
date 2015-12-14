@@ -1,8 +1,4 @@
-// ----------------------------------------------------------
-// Variables
-
-$color-base = hsla(180,10%,70%,1)
-$color-link = hsla(180,20%,90%,1)
+@import 'base.styl'
 
 // ----------------------------------------------------------
 // Base styles
@@ -27,40 +23,60 @@ html
     height 100%
     background-color black
     color $color-base
+    margin 0
+    padding 0
 
 body
     font-family 'FiraSans'
     font-weight 200
     height 100%
+    margin 0
+    padding 0
 
 a
     color $color-link
     text-decoration none
 
-//----------------------------------------------------------
+// ----------------------------------------------------------
 // Page layout
 
 .Page
     height 100%
     display flex
     flex-direction column
-    align-item stretch
+    align-items stretch
 
 .Page__top
 .Page__bottom
-    flex 0 0 4rem
+    flex 0 0 6rem
     display flex
 
 .Page__content
     flex 1 0 auto
     display flex
 
-//----------------------------------------------------------
+// ----------------------------------------------------------
 // Nav
 
 .Nav
     flex 1
     display flex
     justify-content flex-end
+
+// ----------------------------------------------------------
+// Panel
+
+.Panel__header
+    display flex
+
+.Panel__title
+
+
+// ----------------------------------------------------------
+// Weather Panel
+
+.Weather
+    display flex
+
 
 
