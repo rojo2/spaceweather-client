@@ -1,3 +1,5 @@
+"use strict";
+
 const gulp = require("gulp"),
   path = require("path"),
   plugins = require("gulp-load-plugins")(),
@@ -10,30 +12,43 @@ const config = {
   run: {
     browserSync: true
   },
-  buildPath: "./dist",
+  build: {
+    path: "./dist",
+  },
+  index: {
+    script: "./src/app/index.js",
+    template: "./src/templates/index.jade",
+    style: "./src/app/index.styl"
+  },
   srcs: {
     templates: "./src/templates/**/*.jade",
-    indexStyle: "./src/styles/index.styl",
     styles: "./src/styles/**/*.styl",
     scripts: "./src/app/**/*.js",
-    app: "./src/app/index.js",
     fonts: "./src/assets/fonts/**/*.ttf"
   }
 };
 
-gulp.task("templates", function() {
+gulp.task("templates", () => {
 
-  gulp.src(config.srcs.templates)
+  const stream = gulp.src(config.index.template)
     .pipe(plugins.jade())
-    .pipe(gulp.dest(config.buildPath));
+    .pipe(gulp.dest(config.build.path));
 
   if (config.run.browserSync && bs.active) {
-    bs.reload("*.html");
+    stream.pipe(bs.stream());
   }
 
 });
 
-gulp.task("lint", function() {
+gulp.task("styles:lint", () => {
+
+  gulp.src(config.srcs.styles)
+    .pipe(plugins.stylint({ config: ".stylintrc" }))
+    .pipe(plugins.stylint.reporter());
+
+});
+
+gulp.task("scripts:lint", () => {
 
   gulp.src(config.srcs.scripts)
     .pipe(plugins.eslint())
@@ -42,42 +57,43 @@ gulp.task("lint", function() {
 
 });
 
-gulp.task("fonts", function() {
+gulp.task("fonts", () => {
 
   gulp.src(config.srcs.fonts)
     .pipe(plugins.ttf2woff2())
-    .pipe(gulp.dest(config.buildPath + "/fonts/"));
+    .pipe(gulp.dest(config.build.path + "/fonts/"));
+
 });
 
-gulp.task("styles", function() {
+gulp.task("styles", ["styles:lint"], () => {
 
-  gulp.src(config.srcs.indexStyle)
+  const stream = gulp.src(config.index.style)
     .pipe(plugins.stylus({
       debug: config.debug
     }))
-    .pipe(gulp.dest(config.buildPath));
+    .pipe(gulp.dest(config.build.path));
 
   if (config.run.browserSync && bs.active) {
-    bs.reload("*.css");
+    stream.pipe(bs.stream());
   }
 
 });
 
-gulp.task("scripts", ["lint"], function() {
-/*
-  browserify()
-    .add(config.srcs.app, { debug: config.debug })
-    .transform(babelify)
+gulp.task("scripts", ["scripts:lint"], () => {
+
+  const stream = browserify()
+    .add(config.index.script, { debug: config.debug })
+    .transform(babelify, { preset: ["es2015"] })
     .bundle()
-    .pipe(gulp.dest(config.buildPath));
+    .pipe(gulp.dest(config.build.path));
 
   if (config.run.browserSync && bs.active) {
-    bs.reload("*.js");
+    stream.pipe(bs.stream());
   }
 */
 });
 
-gulp.task("watch", ["templates", "styles", "scripts", "fonts"], function() {
+gulp.task("watch", ["build"], () => {
 
   gulp.watch(config.srcs.fonts, ["fonts"]);
   gulp.watch(config.srcs.templates, ["templates"]);
@@ -85,14 +101,15 @@ gulp.task("watch", ["templates", "styles", "scripts", "fonts"], function() {
   gulp.watch(config.srcs.scripts, ["scripts"]);
 
   if (config.run.browserSync) {
-
     bs.init({
       server: {
-        baseDir: config.buildPath
+        baseDir: config.build.path
       }
     });
-
   }
+
 });
+
+gulp.task("build", ["templates", "styles", "scripts", "fonts"]);
 
 gulp.task("default", ["watch"]);
