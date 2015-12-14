@@ -39,6 +39,17 @@ a
     text-decoration none
 
 // ----------------------------------------------------------
+// Page background
+
+.Background
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+
+
+// ----------------------------------------------------------
 // Page layout
 
 .Page
@@ -56,7 +67,6 @@ a
 .Page__top
     position relative
     margin 2rem 2rem 0
-    //border-bottom 1px solid $color-dim
     padding-bottom .5rem
     &:before
     &:after
@@ -74,7 +84,7 @@ a
 // Nav
 
 .Logo
-    font-weight 500
+    font-weight 200
     font-size 1.5rem
     color $color-base
 
@@ -159,7 +169,11 @@ a
 // Sun visualization
 
 .Sun
-    padding 2rem
+    width 100%
+    height 100%
+    display flex
+    align-items center
+    justify-content center
 .Sun__image
     width 100%
     height auto
