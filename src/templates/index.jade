@@ -1,4 +1,29 @@
 extends base
 
 block content
-    h2 Hola, mundo!
+    .Page
+        .Page__top
+            .Logo Suntrek
+            .Nav
+                a.Nav__item.isActive(href="") Weather
+                a.Nav__item(href="") Sunspots
+                a.Nav__item(href="") Solar cycle
+                a.Nav__item(href="") Forecast
+        .Page__content
+            .Weather
+                .Panel
+                    .Panel__header
+                        .Panel__title EIT Filters
+                        .Panel__menu
+                            a.Panel__menuItem(href="") 171 Å
+                            a.Panel__menuItem(href="") 195 Å
+                            a.Panel__menuItem(href="") 284 Å
+                            a.Panel__menuItem(href="") 304 Å
+                            a.Panel__menuItem(href="") Corona
+                .Panel
+                    .Panel__header
+                        .Panel__title Fluxes
+                        .Panel__menu
+                            .Panel__menuItem
+        .Page__bottom
+            .Timeline
