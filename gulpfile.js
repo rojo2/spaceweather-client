@@ -20,12 +20,12 @@ const config = {
   index: {
     script: "./src/app/index.js",
     template: "./src/templates/index.jade",
-    style: "./src/app/index.styl"
+    style: "./src/styles/index.styl"
   },
   srcs: {
+    scripts: "./src/app/**/*.js",
     templates: "./src/templates/**/*.jade",
     styles: "./src/styles/**/*.styl",
-    scripts: "./src/app/**/*.js",
     fonts: "./src/assets/fonts/**/*.ttf"
   }
 };
