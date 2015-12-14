@@ -1,3 +1,114 @@
+.Weather__EITFilters,
+.Weather__fluxes {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.Panel__header {
+  position: relative;
+  font-size: 0.875rem;
+  display: flex;
+  border-bottom: 1px solid #2e3538;
+  border-top: 1px solid #2e3538;
+}
+.Panel__header:before,
+.Panel__header:after,
+.Panel__content:before,
+.Panel__content:after {
+  position: absolute;
+  content: '';
+  width: 1rem;
+  height: 1px;
+  background-color: #73858c;
+}
+.Page__top:before,
+.Page__top:after {
+  position: absolute;
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background-color: #73858c;
+}
+.Panel__title {
+  flex: 1 0 auto;
+  text-transform: uppercase;
+  color: #cc8533;
+  font-weight: 500;
+  padding: 0.5rem 0;
+}
+.Panel__content {
+  flex: 1 0 auto;
+  border-bottom: 1px solid #2e3538;
+}
+.Nav__item.isActive,
+.Panel__menuItem.isActive {
+  background-color: #2e3538;
+  color: #f1f3f4;
+  border-radius: 0.125rem;
+  box-shadow: inset 0 0 1rem rgba(241,243,244,0.12);
+}
+.Panel__menuItem:hover,
+.Nav__item:hover {
+  color: #f1f3f4;
+  animation: AnimHover 0.2s ease-in-out;
+  background-color: #2e3538;
+}
+@-moz-keyframes AnimHover {
+  0% {
+    box-shadow: inset 0 0 0 #f1f3f4;
+    background-color: #000;
+  }
+  50% {
+    box-shadow: inset 0 -2rem 0 #f1f3f4;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 #2e3538;
+    background-color: #000;
+  }
+}
+@-webkit-keyframes AnimHover {
+  0% {
+    box-shadow: inset 0 0 0 #f1f3f4;
+    background-color: #000;
+  }
+  50% {
+    box-shadow: inset 0 -2rem 0 #f1f3f4;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 #2e3538;
+    background-color: #000;
+  }
+}
+@-o-keyframes AnimHover {
+  0% {
+    box-shadow: inset 0 0 0 #f1f3f4;
+    background-color: #000;
+  }
+  50% {
+    box-shadow: inset 0 -2rem 0 #f1f3f4;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 #2e3538;
+    background-color: #000;
+  }
+}
+@keyframes AnimHover {
+  0% {
+    box-shadow: inset 0 0 0 #f1f3f4;
+    background-color: #000;
+  }
+  50% {
+    box-shadow: inset 0 -2rem 0 #f1f3f4;
+    background-color: #000;
+  }
+  100% {
+    box-shadow: inset 0 -2rem 0 #2e3538;
+    background-color: #000;
+  }
+}
 @font-face {
   font-family: 'FiraSans';
   src: url("fonts/FiraSans-Light.woff2") format('woff2');
@@ -17,7 +128,7 @@ html {
   width: 100%;
   height: 100%;
   background-color: #000;
-  color: #abbaba;
+  color: #73858c;
   margin: 0;
   padding: 0;
 }
@@ -25,36 +136,111 @@ body {
   font-family: 'FiraSans';
   font-weight: 200;
   height: 100%;
+  overflow: hidden;
   margin: 0;
   padding: 0;
 }
 a {
-  color: #e0ebeb;
+  color: #c7ced1;
   text-decoration: none;
 }
 .Page {
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-item: stretch;
+  align-items: stretch;
 }
 .Page__top,
 .Page__bottom {
-  flex: 0 0 6rem;
+  flex: 0 0 4rem;
   display: flex;
+  align-items: flex-end;
+}
+.Page__top {
+  position: relative;
+  margin: 2rem 2rem 0;
+  padding-bottom: 0.5rem;
+}
+.Page__top:before,
+.Page__top:after {
+  bottom: -1px;
+}
+.Page__top:before {
+  left: 0;
+}
+.Page__top:after {
+  right: 0;
 }
 .Page__content {
   flex: 1 0 auto;
   display: flex;
+}
+.Logo {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #73858c;
 }
 .Nav {
   flex: 1;
   display: flex;
   justify-content: flex-end;
 }
-.Panel__header {
+.Nav__item {
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  margin-left: 2rem;
+  padding: 0.25rem 1rem;
+}
+.Panel__header:before,
+.Panel__header:after {
+  top: -1px;
+}
+.Panel__header:before {
+  left: 0;
+}
+.Panel__header:after {
+  right: 0;
+}
+.Panel__menu {
+  display: flex;
+  padding: 0.25rem 0;
+}
+.Panel__menuItem {
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  margin-left: 0.25rem;
   display: flex;
 }
+.Unit {
+  color: #73858c;
+}
+.Panel__content {
+  position: relative;
+}
+.Panel__content:before,
+.Panel__content:after {
+  bottom: -1px;
+}
+.Panel__content:before {
+  left: 0;
+}
+.Panel__content:after {
+  right: 0;
+}
 .Weather {
+  flex: 1;
   display: flex;
+}
+.Weather__EITFilters {
+  flex: 0 0 40%;
+}
+.Weather__fluxes {
+  flex: 0 0 60%;
+}
+.Sun {
+  padding: 2rem;
+}
+.Sun__image {
+  width: 100%;
+  height: auto;
 }

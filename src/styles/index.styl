@@ -30,6 +30,7 @@ body
     font-family 'FiraSans'
     font-weight 200
     height 100%
+    overflow hidden
     margin 0
     padding 0
 
@@ -48,35 +49,119 @@ a
 
 .Page__top
 .Page__bottom
-    flex 0 0 6rem
+    flex 0 0 4rem
     display flex
+    align-items flex-end
+
+.Page__top
+    position relative
+    margin 2rem 2rem 0
+    //border-bottom 1px solid $color-dim
+    padding-bottom .5rem
+    &:before
+    &:after
+        @extend $Panel__decor--long
+        bottom -1px
+    &:before
+        left 0
+    &:after
+        right 0
 
 .Page__content
     flex 1 0 auto
     display flex
-
 // ----------------------------------------------------------
 // Nav
+
+.Logo
+    font-weight 500
+    font-size 1.5rem
+    color $color-base
 
 .Nav
     flex 1
     display flex
     justify-content flex-end
+.Nav__item
+    font-size 1.25rem
+    text-transform uppercase
+    margin-left 2rem
+    padding 0.25rem 1rem
+
+.Nav__item.isActive
+    @extend $NavActive
 
 // ----------------------------------------------------------
 // Panel
 
 .Panel__header
-    display flex
+    @extend $Panel__header
+    &:before
+    &:after
+        top -1px
+        @extend $Panel__decor
+    &:before
+        left 0
+    &:after
+        right 0
+
 
 .Panel__title
+    @extend $Panel__title
 
+.Panel__menu
+    display flex
+    padding 0.25rem 0
+
+.Panel__menuItem
+    text-transform uppercase
+    padding 0.25rem 0.5rem
+    margin-left 0.25rem
+    display flex
+.Panel__menuItem.isActive
+    @extend $NavActive
+
+.Panel__menuItem:hover
+.Nav__item:hover
+    @extend $NavHover
+
+.Unit
+    color $color-base
+
+.Panel__content
+    @extend $Panel__content
+    position relative
+    &:before
+    &:after
+        @extend $Panel__decor
+        bottom -1px
+    &:before
+        left 0
+    &:after
+        right 0
 
 // ----------------------------------------------------------
 // Weather Panel
 
 .Weather
+    flex 1
     display flex
 
+.Weather__EITFilters
+    @extend $Panel
+    flex 0 0 40%
+
+.Weather__fluxes
+    @extend $Panel
+    flex 0 0 60%
+
+// ----------------------------------------------------------
+// Sun visualization
+
+.Sun
+    padding 2rem
+.Sun__image
+    width 100%
+    height auto
 
 
