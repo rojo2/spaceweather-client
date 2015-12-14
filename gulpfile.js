@@ -66,7 +66,7 @@ gulp.task("fonts", () => {
 
 });
 
-gulp.task("styles", ["styles:lint"], () => {
+gulp.task("styles", () => {
 
   const stream = gulp.src(config.index.style)
     .pipe(plugins.stylus({
@@ -80,7 +80,7 @@ gulp.task("styles", ["styles:lint"], () => {
 
 });
 
-gulp.task("scripts", ["scripts:lint"], () => {
+gulp.task("scripts", () => {
 
   const stream = browserify()
     .add(config.index.script, { debug: config.debug })

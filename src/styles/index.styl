@@ -1,8 +1,4 @@
-// ----------------------------------------------------------
-// Variables
-
-$color-base = hsla(180,10%,70%,1)
-$color-link = hsla(180,20%,90%,1)
+@import 'base.styl'
 
 // ----------------------------------------------------------
 // Base styles
@@ -27,40 +23,159 @@ html
     height 100%
     background-color black
     color $color-base
+    margin 0
+    padding 0
 
 body
     font-family 'FiraSans'
     font-weight 200
     height 100%
+    overflow hidden
+    margin 0
+    padding 0
 
 a
     color $color-link
     text-decoration none
 
-//----------------------------------------------------------
+// ----------------------------------------------------------
+// Page background
+
+.Background
+    position fixed
+    top 0
+    left 0
+    width 100%
+    height 100%
+
+
+// ----------------------------------------------------------
 // Page layout
 
 .Page
     height 100%
     display flex
     flex-direction column
-    align-item stretch
+    align-items stretch
 
 .Page__top
 .Page__bottom
     flex 0 0 4rem
     display flex
+    align-items flex-end
+
+.Page__top
+    position relative
+    margin 2rem 2rem 0
+    padding-bottom .5rem
+    &:before
+    &:after
+        @extend $Panel__decor--long
+        bottom -1px
+    &:before
+        left 0
+    &:after
+        right 0
 
 .Page__content
     flex 1 0 auto
     display flex
-
-//----------------------------------------------------------
+// ----------------------------------------------------------
 // Nav
+
+.Logo
+    font-weight 500
+    font-size 1rem
+    color $color-base
 
 .Nav
     flex 1
     display flex
     justify-content flex-end
+.Nav__item
+    font-size 1rem
+    text-transform uppercase
+    margin-left .5rem
+    padding 0.25rem 1rem
+
+.Nav__item.isActive
+    @extend $NavActive
+
+// ----------------------------------------------------------
+// Panel
+
+.Panel__header
+    @extend $Panel__header
+    &:before
+    &:after
+        top -1px
+        @extend $Panel__decor
+    &:before
+        left 0
+    &:after
+        right 0
+
+
+.Panel__title
+    @extend $Panel__title
+
+.Panel__menu
+    display flex
+    padding 0.25rem 0
+
+.Panel__menuItem
+    text-transform uppercase
+    padding 0.25rem 0.5rem
+    margin-left 0.25rem
+    display flex
+.Panel__menuItem.isActive
+    @extend $NavActive
+
+.Panel__menuItem:hover
+.Nav__item:hover
+    @extend $NavHover
+
+.Unit
+    color $color-base
+
+.Panel__content
+    @extend $Panel__content
+    position relative
+    display flex
+    &:before
+    &:after
+        @extend $Panel__decor
+        bottom -1px
+    &:before
+        left 0
+    &:after
+        right 0
+
+// ----------------------------------------------------------
+// Weather Panel
+
+.Weather
+    flex 1
+    display flex
+
+.Weather__EITFilters
+    @extend $Panel
+    flex 0 0 40%
+    display flex
+
+.Weather__fluxes
+    @extend $Panel
+    flex 0 0 60%
+
+// ----------------------------------------------------------
+// Sun visualization
+
+.Sun
+    display flex
+    align-items center
+    justify-content center
+.Sun__image
+    width 100%
+    height auto
 
 

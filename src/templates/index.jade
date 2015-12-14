@@ -1,9 +1,10 @@
 extends base
 
 block content
+    canvas.Background
     .Page
         .Page__top
-            .Logo SOL
+            .Logo Project SOL
             .Nav
                 a.Nav__item.isActive(href="") Weather
                 a.Nav__item(href="") Sunspots
@@ -11,19 +12,37 @@ block content
                 a.Nav__item(href="") Forecast
         .Page__content
             .Weather
-                .Panel
+                .Weather__EITFilters
                     .Panel__header
                         .Panel__title EIT Filters
                         .Panel__menu
-                            a.Panel__menuItem(href="") 171 Å
-                            a.Panel__menuItem(href="") 195 Å
-                            a.Panel__menuItem(href="") 284 Å
-                            a.Panel__menuItem(href="") 304 Å
-                            a.Panel__menuItem(href="") Corona
-                .Panel
+                            a.Panel__menuItem(href="")
+                                .Value 171
+                                .Unit Å
+                            a.Panel__menuItem(href="")
+                                .Value 195
+                                .Unit Å
+                            a.Panel__menuItem.isActive(href="")
+                                .Value 284
+                                .Unit Å
+                            a.Panel__menuItem(href="")
+                                .Value 304
+                                .Unit Å
+                            a.Panel__menuItem(href="")
+                                .Value Corona
+                    .Panel__content
+                        .Sun
+                            svg.Sun__image(width="1024", height="1024", viewBox="0 0 1024 1024")
+                                circle(cx="512", cy="512", r="512", fill="#cc9900")
+                .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes
                         .Panel__menu
-                            .Panel__menuItem
+                            a.Panel__menuItem(href="") Solar Wind
+                            a.Panel__menuItem.isActive(href="") Particle Flux
+                            a.Panel__menuItem(href="") Electron Flux
+                            a.Panel__menuItem(href="") X-Ray Flux
+                    .Panel__content
+                        h2 Graph
         .Page__bottom
             .Timeline
