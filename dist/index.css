@@ -188,8 +188,8 @@ a {
   display: flex;
 }
 .Logo {
-  font-weight: 200;
-  font-size: 1.5rem;
+  font-weight: 500;
+  font-size: 1rem;
   color: #73858c;
 }
 .Nav {
@@ -198,9 +198,9 @@ a {
   justify-content: flex-end;
 }
 .Nav__item {
-  font-size: 1.25rem;
+  font-size: 1rem;
   text-transform: uppercase;
-  margin-left: 2rem;
+  margin-left: 0.5rem;
   padding: 0.25rem 1rem;
 }
 .Panel__header:before,
@@ -228,6 +228,7 @@ a {
 }
 .Panel__content {
   position: relative;
+  display: flex;
 }
 .Panel__content:before,
 .Panel__content:after {
@@ -245,13 +246,12 @@ a {
 }
 .Weather__EITFilters {
   flex: 0 0 40%;
+  display: flex;
 }
 .Weather__fluxes {
   flex: 0 0 60%;
 }
 .Sun {
-  width: 100%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
