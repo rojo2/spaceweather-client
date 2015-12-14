@@ -5,6 +5,7 @@ const gulp = require("gulp"),
   plugins = require("gulp-load-plugins")(),
   browserify = require("browserify"),
   babelify = require("babelify"),
+  source = require("vinyl-source-stream"),
   bs = require("browser-sync").create();
 
 const config = {
@@ -14,7 +15,7 @@ const config = {
   },
   build: {
     path: "./dist",
-    fonts: "./dist/fonts"
+    fonts: "./dist/fonts/"
   },
   index: {
     script: "./src/app/index.js",
@@ -83,8 +84,9 @@ gulp.task("scripts", ["scripts:lint"], () => {
 
   const stream = browserify()
     .add(config.index.script, { debug: config.debug })
-    .transform(babelify, { preset: ["es2015"] })
+    .transform(babelify)
     .bundle()
+    .pipe(source(path.basename(config.index.script)))
     .pipe(gulp.dest(config.build.path));
 
   if (config.run.browserSync && bs.active) {
