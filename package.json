@@ -1,5 +1,5 @@
 {
-  "name": "Project SOL",
+  "name": "spaceweather-client",
   "version": "0.0.1",
   "description": "Space weather visualization website",
   "main": "index.js",
