@@ -1,5 +1,5 @@
 import {getProtonFlux} from "./api/protonflux";
 
-getProtonFlux().then((response) => {
-  console.log(response);
+getProtonFlux().then((res) => {
+  console.log(res.body);
 });

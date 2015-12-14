@@ -53,12 +53,31 @@ function url(url) {
 },{"./config":1}],4:[function(require,module,exports){
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.request = request;
+
 function request(url) {
   var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+  options = Object.assign({
+    method: "GET",
+    user: null,
+    pass: null,
+    responseType: "json",
+    withCredentials: false
+  }, options);
 
   return new Promise(function (resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open(options.method, url, true, options.user, options.pass);
+    xhr.responseType = options.responseType;
+    xhr.withCredentials = options.withCredentials;
+    if (options.user && options.pass) {
+      xhr.setRequestHeader("Authorization", "Basic " + window.btoa(options.user + ":" + options.pass));
+    }
+
     if (options.headers) {
       var names = Object.keys(options.headers);
       for (var index = 0; index < names.length; index++) {
@@ -67,7 +86,13 @@ function request(url) {
         xhr.setRequestHeader(_name, value);
       }
     }
-    xhr.send(options.data);
+
+    if (options.data) {
+      xhr.send(options.data);
+    } else {
+      xhr.send();
+    }
+
     xhr.onerror = function () {
       xhr.onerror = null;
       xhr.onload = null;
@@ -78,21 +103,26 @@ function request(url) {
     };
 
     xhr.onload = function () {
+      var headers = xhr.getAllResponseHeaders().split("\n").map(function (item) {
+        return item.split(": ");
+      }).reduce(function (initial, current) {
+        var name = current[0],
+            value = current[1];
+        if (name) {
+          initial[name] = value;
+        }
+        return initial;
+      }, {}),
+          body = xhr.response,
+          status = xhr.status;
+
       xhr.onerror = null;
       xhr.onload = null;
 
       resolve({
-        headers: xhr.getAllResponseHeaders().split("\n").map(function (item) {
-          return item.split(": ");
-        }).reduce(function (initial, current) {
-          var name = current[0],
-              value = current[1];
-
-          initial[name] = value;
-          return initial;
-        }, {}),
-        body: xhr.response,
-        status: xhr.status
+        headers: headers,
+        body: body,
+        status: status
       });
     };
   });
@@ -103,8 +133,8 @@ function request(url) {
 
 var _apiProtonflux = require("./api/protonflux");
 
-(0, _apiProtonflux.getProtonFlux)().then(function (response) {
-  console.log(response);
+(0, _apiProtonflux.getProtonFlux)().then(function (res) {
+  console.log(res.body);
 });
 
 },{"./api/protonflux":2}]},{},[5]);
