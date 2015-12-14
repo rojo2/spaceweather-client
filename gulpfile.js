@@ -64,7 +64,7 @@ gulp.task("styles", function() {
 });
 
 gulp.task("scripts", ["lint"], function() {
-
+/*
   browserify()
     .add(config.srcs.app, { debug: config.debug })
     .transform(babelify)
@@ -74,7 +74,7 @@ gulp.task("scripts", ["lint"], function() {
   if (config.run.browserSync && bs.active) {
     bs.reload("*.js");
   }
-
+*/
 });
 
 gulp.task("watch", ["templates", "styles", "scripts", "fonts"], function() {
