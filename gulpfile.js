@@ -14,6 +14,7 @@ const config = {
   },
   build: {
     path: "./dist",
+    fonts: "./dist/fonts"
   },
   index: {
     script: "./src/app/index.js",
@@ -52,8 +53,7 @@ gulp.task("scripts:lint", () => {
 
   gulp.src(config.srcs.scripts)
     .pipe(plugins.eslint())
-    .pipe(plugins.eslint.format())
-    .pipe(plugins.eslint.failAfterError());
+    .pipe(plugins.eslint.format());
 
 });
 
@@ -61,7 +61,7 @@ gulp.task("fonts", () => {
 
   gulp.src(config.srcs.fonts)
     .pipe(plugins.ttf2woff2())
-    .pipe(gulp.dest(config.build.path + "/fonts/"));
+    .pipe(gulp.dest(config.build.fonts));
 
 });
 
@@ -90,7 +90,7 @@ gulp.task("scripts", ["scripts:lint"], () => {
   if (config.run.browserSync && bs.active) {
     stream.pipe(bs.stream());
   }
-*/
+
 });
 
 gulp.task("watch", ["build"], () => {
