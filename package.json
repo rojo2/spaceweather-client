@@ -4,13 +4,14 @@
   "description": "Space weather visualization website",
   "main": "index.js",
   "scripts": {
-    "start": "",
-    "test": ""
+    "start": "./node_modules/.bin/gulp",
+    "test": "./node_modules/.bin/karma start"
   },
   "author": "ROJO 2 <hola@rojo2.com>",
   "license": "ISC",
   "devDependencies": {
-    "babel-eslint": "^4.1.5",
+    "babel-eslint": "^4.1.6",
+    "babel-preset-es2015": "^6.3.13",
     "babelify": "^6.3.0",
     "browser-sync": "^2.9.11",
     "browserify": "^11.2.0",
