@@ -11,6 +11,7 @@ block content
                 a.Nav__item(href="") Solar cycle
                 a.Nav__item(href="") Forecast
         .Page__content
+            // Weather section
             .Weather
                 .Weather__EITFilters
                     .Panel__header
@@ -44,5 +45,18 @@ block content
                             a.Panel__menuItem(href="") X-Ray Flux
                     .Panel__content
                         h2 Graph
+            // Forecast Section
+            .Forecast.isActive
+                .Forecast__graphs
+
+                .Forecast__alerts
+                    .Panel__header
+                    .Panel__content
+                        .Alerts
+                            .Alert Hola
+                            .Alert Hola
+                            .Alert Hola
+                            .Alert Hola
+                            .Alert Hola
         .Page__bottom
             .Timeline

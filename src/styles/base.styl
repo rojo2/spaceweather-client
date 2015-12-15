@@ -12,10 +12,25 @@ $color-title = hsla(32, 60%, 50%, 1)
 //----------------------------------------------------------
 // Components
 
+$Section
+    flex 0 0 100%
+    display none
+$Section--active
+    display flex
+
 $Panel
     padding 2rem
     display flex
     flex-direction column
+
+$Panel--40
+    @extend $Panel
+    flex 0 0 40%
+    display flex
+
+$Panel--60
+    @extend $Panel
+    flex 0 0 60%
 
 $Panel__header
     position relative

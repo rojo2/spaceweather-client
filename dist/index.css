@@ -1,8 +1,28 @@
+.Weather,
+.Forecast {
+  flex: 0 0 100%;
+  display: none;
+}
+.Weather.isActive,
+.Forecast.isActive {
+  display: flex;
+}
 .Weather__EITFilters,
-.Weather__fluxes {
+.Weather__fluxes,
+.Forecast__graphs,
+.Forecast__alerts {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+}
+.Weather__EITFilters,
+.Forecast__alerts {
+  flex: 0 0 40%;
+  display: flex;
+}
+.Weather__fluxes,
+.Forecast__graphs {
+  flex: 0 0 60%;
 }
 .Panel__header {
   position: relative;
@@ -239,17 +259,6 @@ a {
 }
 .Panel__content:after {
   right: 0;
-}
-.Weather {
-  flex: 1;
-  display: flex;
-}
-.Weather__EITFilters {
-  flex: 0 0 40%;
-  display: flex;
-}
-.Weather__fluxes {
-  flex: 0 0 60%;
 }
 .Sun {
   display: flex;

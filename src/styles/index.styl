@@ -152,20 +152,20 @@ a
         right 0
 
 // ----------------------------------------------------------
-// Weather Panel
+// Weather Section
 
 .Weather
-    flex 1
-    display flex
+    @extend $Section
+
+.Weather.isActive
+    @extend $Section--active
 
 .Weather__EITFilters
-    @extend $Panel
-    flex 0 0 40%
-    display flex
+    @extend $Panel--40
 
 .Weather__fluxes
-    @extend $Panel
-    flex 0 0 60%
+    @extend $Panel--60
+
 
 // ----------------------------------------------------------
 // Sun visualization
@@ -178,4 +178,17 @@ a
     width 100%
     height auto
 
+// ----------------------------------------------------------
+// Forecast Section
 
+.Forecast
+    @extend $Section
+
+.Forecast.isActive
+    @extend $Section--active
+
+.Forecast__graphs
+    @extend $Panel--60
+
+.Forecast__alerts
+    @extend $Panel--40
