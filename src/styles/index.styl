@@ -217,37 +217,42 @@ a
 .Alert
     @extend $Alert
 
-.Alert:before
+.Alert__basicInfo:before
     @extend $Alert__decor
 
 .Alert--summary
-    &:before
+    .Alert__basicInfo:before
         background-color $colorAlertSummary
 
 .Alert--warning
-    &:before
+    .Alert__basicInfo:before
         background-color $colorAlertWarning
 
 .Alert--watch
-    &:before
+    .Alert__basicInfo:before
         background-color $colorAlertWatch
 
 .Alert--extendedWarning
-    &:before
+    .Alert__basicInfo:before
         background-color $colorAlertWarning
 
 .Alert--cancelWarning
-    &:before
+    .Alert__basicInfo:before
         background-color $colorAlertCancelWarning
 
 .Alert:hover
     .Alert__message
         color $colorHighlight
-    &:before
+    .Alert__basicInfo
+        background-color alpha($colorDim, .3)
+.Alert:hover .Alert__basicInfo:before
+.Alert__input:checked ~ .Alert__basicInfo:before
         width 6rem
         transition width .2s $easeInCubic
 
 .Alert__basicInfo
+    display block
+    padding-bottom 1rem
     cursor pointer
 
 .Alert__input
