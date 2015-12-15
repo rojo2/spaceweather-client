@@ -1,3 +1,22 @@
+.Alert__metadata {
+  display: flex;
+  font-size: 0.75rem;
+  color: #73858c;
+}
+.Alert {
+  position: relative;
+  padding: 0.5rem 1rem;
+}
+.Alert:before {
+  position: absolute;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 1px;
+  width: 2rem;
+  background-color: #cc8533;
+  transition: width 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
 .Weather,
 .Forecast {
   flex: 0 0 100%;
@@ -25,6 +44,7 @@
   flex: 0 0 60%;
 }
 .Panel__header {
+  flex: 0 0 auto;
   position: relative;
   font-size: 0.875rem;
   display: flex;
@@ -57,7 +77,9 @@
   padding: 0.5rem 0;
 }
 .Panel__content {
-  flex: 1 0 auto;
+  flex: 1 0;
+  position: relative;
+  display: flex;
   border-bottom: 1px solid #2e3538;
 }
 .Nav__item.isActive,
@@ -173,6 +195,18 @@ a {
   color: #c7ced1;
   text-decoration: none;
 }
+::-webkit-scrollbar {
+  width: 1px;
+}
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner,
+::-webkit-scrollbar-track-piece {
+  display: none;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #2e3538;
+}
 .Background {
   position: fixed;
   top: 0;
@@ -199,7 +233,7 @@ a {
 }
 .Page__top:before,
 .Page__top:after {
-  bottom: -1px;
+  top: 0;
 }
 .Page__top:before {
   left: 0;
@@ -208,7 +242,7 @@ a {
   right: 0;
 }
 .Page__content {
-  flex: 1 0 auto;
+  flex: 1 0;
   display: flex;
 }
 .Logo {
@@ -252,7 +286,6 @@ a {
 }
 .Panel__content {
   position: relative;
-  display: flex;
 }
 .Panel__content:before,
 .Panel__content:after {
@@ -273,15 +306,59 @@ a {
   width: 100%;
   height: auto;
 }
+.Alerts {
+  position: absolute;
+  top: 1rem;
+  left: 0;
+  width: 100%;
+  bottom: 1rem;
+  overflow-y: scroll;
+}
+.Alert--summary:before {
+  background-color: #b39e4d;
+}
+.Alert--warning:before {
+  background-color: #f56e3d;
+}
+.Alert--watch:before {
+  background-color: #cc8533;
+}
+.Alert--extendedWarning:before {
+  background-color: #f56e3d;
+}
+.Alert--cancelWarning:before {
+  background-color: $colorAlertCancelWarning;
+}
+.Alert:hover .Alert__message {
+  color: #f1f3f4;
+}
+.Alert:hover:before {
+  width: 4rem;
+  transition: width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+}
+.Alert__basicInfo {
+  cursor: pointer;
+}
 .Alert__input {
   width: 0;
   height: 0;
   display: none;
 }
+.Alert__issueTime {
+  margin-right: 1rem;
+}
+.Alert__message {
+  color: #c7ced1;
+  text-transform: uppercase;
+}
 .Alert__extendedInfo {
   max-height: 0;
   overflow: hidden;
+  transform: translate3d(0, 0, 0);
+  transition: max-height 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 .Alert__input:checked ~ .Alert__extendedInfo {
   max-height: 20rem;
+  transform: translate3d(0, 0, 0);
+  transition: max-height 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }

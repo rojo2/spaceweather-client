@@ -3,20 +3,54 @@
 
 $hue-general = 198
 
-$color-dim = hsla($hue-general, 10%, 20%, 1)
-$color-base = hsla($hue-general, 10%, 50%, 1)
-$color-link = hsla($hue-general, 10%, 80%, 1)
-$color-highlight = hsla($hue-general, 10%, 95%, 1)
-$color-title = hsla(32, 60%, 50%, 1)
+$colorDim = hsla($hue-general, 10%, 20%, 1)
+$colorBase = hsla($hue-general, 10%, 50%, 1)
+$colorLink = hsla($hue-general, 10%, 80%, 1)
+$colorHighlight = hsla($hue-general, 10%, 95%, 1)
+$colorTitle = hsla(32, 60%, 50%, 1)
+
+$colorAlert = hsla(32, 60%, 50%, 1)
+$colorAlertSummary = hsla(48, 40%, 50%, 1)
+$colorAlertWarning = hsla(16, 90%, 60%, 1)
+$colorCancelWarning = hsla(16, 90%, 60%, 1)
+$colorAlertWatch = hsla(32, 60%, 50%, 1)
+
+$easeInCubic = cubic-bezier(0.550, 0.055, 0.675, 0.190)
+
+// ----------------------------------------------------------
+// Elements
+
+$Metadata
+    display flex
+    font-size .75rem
+    color $colorBase
+
+$Alert
+    position relative
+    padding .5rem 1rem
+//  border-left 1px solid $colorAlert
+
+$Alert__decor
+    position absolute
+    content ''
+    top 0
+    left 0
+    height 1px
+    width 2rem
+    background-color $colorAlert
+    transition width .4s $easeInCubic
 
 //----------------------------------------------------------
-// Components
+// Sections
 
 $Section
     flex 0 0 100%
     display none
 $Section--active
     display flex
+
+// ----------------------------------------------------------
+// Panels
 
 $Panel
     padding 2rem
@@ -33,28 +67,29 @@ $Panel--60
     flex 0 0 60%
 
 $Panel__header
+    flex 0 0 auto
     position relative
     font-size .875rem
     display flex
-    border-bottom 1px solid $color-dim
-    border-top 1px solid $color-dim
+    border-bottom 1px solid $colorDim
+    border-top 1px solid $colorDim
 $Panel__decor
     position absolute
     content ''
     width 1rem
     height 1px
-    background-color $color-base
+    background-color $colorBase
 $Panel__decor--long
     position absolute
     content ''
     width 2rem
     height 1px
-    background-color $color-base
+    background-color $colorBase
 
 $Panel__title
     flex 1 0 auto
     text-transform uppercase
-    color $color-title
+    color $colorTitle
     font-weight 500
     padding 0.5rem 0
 
@@ -62,29 +97,34 @@ $Panel__menu
     flex 0 0 auto
 
 $Panel__content
-    flex 1 0 auto
-    border-bottom 1px solid $color-dim
+    flex 1 0
+    position relative
+    display flex
+    border-bottom 1px solid $colorDim
+
+// ----------------------------------------------------------
+// Navigation
 
 $NavActive
-    background-color $color-dim
+    background-color $colorDim
     pointer-events none
-    color $color-highlight
+    color $colorHighlight
     border-radius .125rem
-    box-shadow inset 0 0 1rem alpha($color-highlight, 0.12)
+    box-shadow inset 0 0 1rem alpha($colorHighlight, 0.12)
 
 $NavHover
-    color $color-highlight
+    color $colorHighlight
     animation AnimHover .1s ease-in-out
-    background-color $color-dim
+    background-color $colorDim
 
 @keyframes AnimHover
     0%
-        box-shadow inset 0 0 0 $color-highlight
+        box-shadow inset 0 0 0 $colorHighlight
         background-color black
     66%
-        box-shadow inset 0 -2rem 0 $color-highlight
+        box-shadow inset 0 -2rem 0 $colorHighlight
         color black
         background-color black
     100%
-        box-shadow inset 0 -2rem 0 $color-dim
+        box-shadow inset 0 -2rem 0 $colorDim
         background-color black
