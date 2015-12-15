@@ -3,24 +3,27 @@ import {initBackground} from "./ui/background";
 import {initSounds} from "./ui/sounds";
 import {HistoryRouter} from "./router/Router";
 
+function siblings(el, fn) {
+
+  let current = el.nextElementSibling;
+  while (current) {
+    fn(current);
+    current = current.nextElementSibling;
+  }
+
+  current = el.previousElementSibling;
+  while (current) {
+    fn(current);
+    current = current.previousElementSibling;
+  }
+}
+
 function isActive(el) {
-
   el.classList.add("isActive");
-
-  let current = el.nextElementSibling
-  while (current !== null) {
-    el.classList.remove("isActive");
-    current = el.nextElementSibling;
-  }
-
-  current = el.previousElementSibling
-  while (current !== null) {
-    el.classList.remove("isActive");
-    current = el.previousElementSibling;
-  }
-
+  siblings(el, (current) => {
+    current.classList.remove("isActive");
+  });
   return el;
-
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -34,9 +37,11 @@ window.addEventListener("DOMContentLoaded", () => {
     isActive(document.querySelector(".Sunspots"));
   }).route("solar-cycle", () => {
     isActive(document.querySelector(".SolarCycle"));
-  });
+  }).start();
 
-  router.navigate("weather");
+  window.router = router;
+
+  //router.navigate("weather");
 
   // init background.
   initBackground();

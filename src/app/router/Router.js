@@ -1,15 +1,28 @@
 export class HistoryRouter {
   constructor() {
     this.routes = [];
-    window.addEventListener("popstate", (e) => {
-      console.log(e);
-    });
+    this.handlePopState = this.handlePopState.bind(this);
+  }
+
+  handlePopState(e) {
+    console.log(e);
+  }
+
+  start() {
+    window.addEventListener("popstate", this.handlePopState);
+    return this;
+  }
+
+  stop() {
+    window.removeEventListener("popstate", this.handlePopState);
+    return this;
   }
 
   route(re, fn) {
+    const pattern = (re instanceof RegExp ? re : new RegExp("^" + re));
     this.routes.push({
-      re: new RegExp(re),
-      fn: fn
+      pattern: pattern,
+      delegate: fn
     });
     return this;
   }
@@ -17,9 +30,11 @@ export class HistoryRouter {
   dispatch(url) {
     for (let index = 0; index < this.routes.length; index++) {
       const route = this.routes[index];
-      if (route.re.test(url)) {
-        const matches = route.re.exec(url);
-        route.fn(matches);
+      console.log(route, url);
+      if (route.pattern.test(url)) {
+        console.log("OK!");
+        const matches = route.pattern.exec(url);
+        //route.delegate();
         return true;
       }
     }
@@ -27,10 +42,9 @@ export class HistoryRouter {
   }
 
   navigate(url) {
-    this.dispatch(url);
     window.history.pushState({
       url
     }, "", url);
-    return this;
+    return this.dispatch(url);
   }
 }
