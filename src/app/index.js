@@ -1,8 +1,8 @@
-import {getProtonFlux} from "./api/protonflux";
+import API from "./api";
 import {initBackground} from "./ui/background";
 
-getProtonFlux().then((res) => {
-  console.log(res.body);
+API.getAll().then((res) => {
+  console.log(res);
 });
 
 window.addEventListener("DOMContentLoaded", () => {

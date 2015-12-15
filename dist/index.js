@@ -4901,6 +4901,29 @@ module.exports = vec4;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.getAlerts = getAlerts;
+exports.getAlertTypes = getAlertTypes;
+
+var _config = require("./config");
+
+var _url = require("./url");
+
+var _httpRequest = require("../http/request");
+
+function getAlerts() {
+  return (0, _httpRequest.request)((0, _url.url)("alerts/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getAlertTypes() {
+  return (0, _httpRequest.request)((0, _url.url)("xtypes/?format=json"), _config.config.CREDENTIALS);
+}
+
+},{"../http/request":19,"./config":12,"./url":17}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 var config = {
   URL: "http://localhost:8000/api/",
   CREDENTIALS: {
@@ -4910,14 +4933,90 @@ var config = {
 };
 exports.config = config;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getElectronFlux = getElectronFlux;
+exports.getElectronFluxTypes = getElectronFluxTypes;
+
+var _config = require("./config");
+
+var _url = require("./url");
+
+var _httpRequest = require("../http/request");
+
+function getElectronFlux() {
+  return (0, _httpRequest.request)((0, _url.url)("electronflux/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getElectronFluxTypes() {
+  return (0, _httpRequest.request)((0, _url.url)("etypes/?format=json"), _config.config.CREDENTIALS);
+}
+
+},{"../http/request":19,"./config":12,"./url":17}],14:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _protonflux = require("./protonflux");
+
+var _electronflux = require("./electronflux");
+
+var _xrayflux = require("./xrayflux");
+
+var _sunspots = require("./sunspots");
+
+var _alerts = require("./alerts");
+
+var API = {
+
+  getAll: function getAll() {
+
+    return Promise.all([
+    // load types.
+    (0, _protonflux.getProtonFluxTypes)(), (0, _electronflux.getElectronFluxTypes)(), (0, _xrayflux.getXrayFluxTypes)(), (0, _alerts.getAlertTypes)(), (0, _sunspots.getSunspotTypes)(),
+
+    // load flux data.
+    (0, _protonflux.getProtonFlux)(), (0, _electronflux.getElectronFlux)(), (0, _xrayflux.getXrayFlux)(),
+
+    // load sunspots.
+    (0, _sunspots.getSunspots)(), (0, _sunspots.getSunspotRegions)()]);
+  },
+
+  getProtonFlux: _protonflux.getProtonFlux,
+  getProtonFluxTypes: _protonflux.getProtonFluxTypes,
+
+  getElectronFlux: _electronflux.getElectronFlux,
+  getElectronFluxTypes: _electronflux.getElectronFluxTypes,
+
+  getXrayFlux: _xrayflux.getXrayFlux,
+  getXrayFluxTypes: _xrayflux.getXrayFluxTypes,
+
+  getSunspots: _sunspots.getSunspots,
+  getSunspotTypes: _sunspots.getSunspotTypes,
+  getSunspotRegions: _sunspots.getSunspotRegions,
+
+  getAlerts: _alerts.getAlerts,
+  getAlertTypes: _alerts.getAlertTypes
+
+};
+
+exports.API = API;
+exports["default"] = API;
+
+},{"./alerts":11,"./electronflux":13,"./protonflux":15,"./sunspots":16,"./xrayflux":18}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getProtonFlux = getProtonFlux;
-exports.getProtonTypes = getProtonTypes;
+exports.getProtonFluxTypes = getProtonFluxTypes;
 
 var _config = require("./config");
 
@@ -4929,11 +5028,39 @@ function getProtonFlux() {
   return (0, _httpRequest.request)((0, _url.url)("protonflux/?format=json"), _config.config.CREDENTIALS);
 }
 
-function getProtonTypes() {
+function getProtonFluxTypes() {
   return (0, _httpRequest.request)((0, _url.url)("ptypes/?format=json"), _config.config.CREDENTIALS);
 }
 
-},{"../http/request":14,"./config":11,"./url":13}],13:[function(require,module,exports){
+},{"../http/request":19,"./config":12,"./url":17}],16:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getSunspots = getSunspots;
+exports.getSunspotTypes = getSunspotTypes;
+exports.getSunspotRegions = getSunspotRegions;
+
+var _config = require("./config");
+
+var _url = require("./url");
+
+var _httpRequest = require("../http/request");
+
+function getSunspots() {
+  return (0, _httpRequest.request)((0, _url.url)("sunspot/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getSunspotTypes() {
+  return (0, _httpRequest.request)((0, _url.url)("sunspottypes/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getSunspotRegions() {
+  return (0, _httpRequest.request)((0, _url.url)("sunspotregion/?format=json"), _config.config.CREDENTIALS);
+}
+
+},{"../http/request":19,"./config":12,"./url":17}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4952,7 +5079,30 @@ function url(url) {
   return _config.config.URL + url;
 }
 
-},{"./config":11}],14:[function(require,module,exports){
+},{"./config":12}],18:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getXrayFlux = getXrayFlux;
+exports.getXrayFluxTypes = getXrayFluxTypes;
+
+var _config = require("./config");
+
+var _url = require("./url");
+
+var _httpRequest = require("../http/request");
+
+function getXrayFlux() {
+  return (0, _httpRequest.request)((0, _url.url)("xrayflux/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getXrayFluxTypes() {
+  return (0, _httpRequest.request)((0, _url.url)("xtypes/?format=json"), _config.config.CREDENTIALS);
+}
+
+},{"../http/request":19,"./config":12,"./url":17}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5030,15 +5180,19 @@ function request(url) {
   });
 }
 
-},{}],15:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
-var _apiProtonflux = require("./api/protonflux");
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _api = require("./api");
+
+var _api2 = _interopRequireDefault(_api);
 
 var _uiBackground = require("./ui/background");
 
-(0, _apiProtonflux.getProtonFlux)().then(function (res) {
-  console.log(res.body);
+_api2["default"].getAll().then(function (res) {
+  console.log(res);
 });
 
 window.addEventListener("DOMContentLoaded", function () {
@@ -5046,7 +5200,7 @@ window.addEventListener("DOMContentLoaded", function () {
   (0, _uiBackground.initBackground)();
 });
 
-},{"./api/protonflux":12,"./ui/background":16}],16:[function(require,module,exports){
+},{"./api":14,"./ui/background":21}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5056,119 +5210,124 @@ exports.initBackground = initBackground;
 
 var _glMatrix = require("gl-matrix");
 
+var NUM_POINTS = 100000;
+var TIME = 50000;
+var ANGLE_INCREMENT = 0.000125;
+
 function initBackground() {
 
-  var canvas = document.querySelector("canvas"),
-      gl = canvas.getContext("webgl", {
-    antialias: true
-  });
+  var canvas = document.querySelector("canvas");
+  if (canvas) {
+    (function () {
+      var render = function render(now) {
 
-  var vertexShader = gl.createShader(gl.VERTEX_SHADER);
-  gl.shaderSource(vertexShader, "\n  precision mediump float;\n\n  uniform mat4 mvp;\n\n  attribute vec3 position;\n\n  varying float alpha;\n\n  void main(void) {\n\n    vec4 finalPosition = mvp * vec4(position, 1.0);\n\n    gl_Position = finalPosition;\n\n    alpha = (max(0.0, min(1.0, gl_Position.z)) * 0.5) + 0.5;\n\n    if (gl_Position.w > 0.0) {\n      gl_PointSize = 4.0 / gl_Position.w;\n    } else {\n      gl_PointSize = 0.0;\n    }\n\n  }");
-  gl.compileShader(vertexShader);
-  if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(vertexShader));
+        angle += ANGLE_INCREMENT;
+
+        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+
+        gl.viewport(0, 0, canvas.width, canvas.height);
+
+        // P * V * M
+        //mat4.translate(mvpMatrix, mvpMatrix, position);
+        _glMatrix.mat4.identity(mMatrix);
+
+        position[2] = Math.sin(now / TIME);
+
+        _glMatrix.mat4.identity(vMatrix);
+        _glMatrix.mat4.translate(vMatrix, vMatrix, position);
+        _glMatrix.mat4.rotateX(vMatrix, vMatrix, angle);
+        _glMatrix.mat4.rotateY(vMatrix, vMatrix, angle);
+        _glMatrix.mat4.rotateZ(vMatrix, vMatrix, angle);
+
+        _glMatrix.mat4.invert(ivMatrix, vMatrix);
+
+        _glMatrix.mat4.multiply(mvMatrix, ivMatrix, mMatrix);
+        _glMatrix.mat4.multiply(mvpMatrix, pMatrix, mvMatrix);
+
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(attributes.position);
+        gl.uniformMatrix4fv(uniforms.mvp, false, mvpMatrix);
+        gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 3 * 4, 0);
+        gl.drawArrays(gl.POINTS, 0, NUM_POINTS);
+
+        window.requestAnimationFrame(render);
+      };
+
+      var resize = function resize() {
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        _glMatrix.mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
+      };
+
+      var gl = canvas.getContext("webgl", {
+        antialias: true
+      });
+
+      var vertexShader = gl.createShader(gl.VERTEX_SHADER);
+      gl.shaderSource(vertexShader, "\n    precision mediump float;\n\n    uniform mat4 mvp;\n\n    attribute vec3 position;\n\n    varying float alpha;\n\n    void main(void) {\n\n      vec4 finalPosition = mvp * vec4(position, 1.0);\n\n      gl_Position = finalPosition;\n\n      alpha = (max(0.0, min(1.0, gl_Position.z)) * 0.5) + 0.5;\n\n      if (gl_Position.w > 0.0) {\n        gl_PointSize = 4.0 / gl_Position.w;\n      } else {\n        gl_PointSize = 0.0;\n      }\n\n    }");
+      gl.compileShader(vertexShader);
+      if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(vertexShader));
+      }
+
+      var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
+      gl.shaderSource(fragmentShader, "\n    precision highp float;\n\n    const vec4 begin = vec4(1.0, 1.0, 1.0, 0.5);\n    const vec4 end = vec4(1.0, 1.0, 1.0, 0.5);\n\n    vec4 interpolate4f(vec4 a,vec4 b, float p) {\n      return a + (b - a) * p;\n    }\n\n    varying float alpha;\n\n    void main(void) {\n\n      vec2 pc = (gl_PointCoord - 0.5) * 2.0;\n\n      float dist = (1.0 - sqrt(pc.x * pc.x + pc.y * pc.y));\n      vec4 color = interpolate4f(begin, end, dist);\n\n      gl_FragColor = vec4(dist, dist, dist, dist * alpha) * color;\n\n    }");
+
+      gl.compileShader(fragmentShader);
+      if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+        console.error(gl.getShaderInfoLog(fragmentShader));
+      }
+
+      var program = gl.createProgram();
+      gl.attachShader(program, vertexShader);
+      gl.attachShader(program, fragmentShader);
+      gl.linkProgram(program);
+
+      var attributes = {
+        position: gl.getAttribLocation(program, "position")
+      },
+          uniforms = {
+        mvp: gl.getUniformLocation(program, "mvp")
+      };
+
+      var points = [];
+      for (var index = 0; index < NUM_POINTS; index++) {
+        points.push((Math.random() - 0.5) * 8);
+        points.push((Math.random() - 0.5) * 8);
+        points.push((Math.random() - 0.5) * 8);
+      }
+
+      var buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+
+      var pMatrix = _glMatrix.mat4.create(),
+          vMatrix = _glMatrix.mat4.create(),
+          ivMatrix = _glMatrix.mat4.create(),
+          mMatrix = _glMatrix.mat4.create(),
+          mvMatrix = _glMatrix.mat4.create(),
+          mvpMatrix = _glMatrix.mat4.create(),
+          position = _glMatrix.vec3.create();
+
+      _glMatrix.mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
+
+      _glMatrix.vec3.set(position, 0.0, 0.0, 0.0);
+
+      var angle = 0.0;
+
+      render();
+
+      resize();
+
+      window.addEventListener("resize", resize);
+    })();
   }
-
-  var fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-  gl.shaderSource(fragmentShader, "\n  precision highp float;\n\n  const vec4 begin = vec4(1.0, 1.0, 1.0, 0.5);\n  const vec4 end = vec4(1.0, 1.0, 1.0, 0.5);\n\n  vec4 interpolate4f(vec4 a,vec4 b, float p) {\n    return a + (b - a) * p;\n  }\n\n  varying float alpha;\n\n  void main(void) {\n\n    vec2 pc = (gl_PointCoord - 0.5) * 2.0;\n\n    float dist = (1.0 - sqrt(pc.x * pc.x + pc.y * pc.y));\n    vec4 color = interpolate4f(begin, end, dist);\n\n    gl_FragColor = vec4(dist, dist, dist, dist * alpha) * color;\n\n  }");
-
-  gl.compileShader(fragmentShader);
-  if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(fragmentShader));
-  }
-
-  var program = gl.createProgram();
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-
-  var attributes = {
-    position: gl.getAttribLocation(program, "position")
-  },
-      uniforms = {
-    mvp: gl.getUniformLocation(program, "mvp")
-  };
-
-  var NUM_POINTS = 100000;
-  var points = [];
-  for (var index = 0; index < NUM_POINTS; index++) {
-    points.push((Math.random() - 0.5) * 8);
-    points.push((Math.random() - 0.5) * 8);
-    points.push((Math.random() - 0.5) * 8);
-  }
-
-  var buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
-
-  gl.enable(gl.BLEND);
-  gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
-
-  var pMatrix = _glMatrix.mat4.create(),
-      vMatrix = _glMatrix.mat4.create(),
-      ivMatrix = _glMatrix.mat4.create(),
-      mMatrix = _glMatrix.mat4.create(),
-      mvMatrix = _glMatrix.mat4.create(),
-      mvpMatrix = _glMatrix.mat4.create(),
-      position = _glMatrix.vec3.create();
-
-  _glMatrix.mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
-
-  _glMatrix.vec3.set(position, 0.0, 0.0, 0.0);
-
-  var angle = 0.0;
-
-  function render(now) {
-
-    angle += 0.000125;
-
-    gl.clearColor(0.0, 0.0, 0.0, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT);
-
-    gl.viewport(0, 0, canvas.width, canvas.height);
-
-    // P * V * M
-    //mat4.translate(mvpMatrix, mvpMatrix, position);
-    _glMatrix.mat4.identity(mMatrix);
-
-    position[2] = Math.sin(now / 50000);
-
-    _glMatrix.mat4.identity(vMatrix);
-    _glMatrix.mat4.translate(vMatrix, vMatrix, position);
-    _glMatrix.mat4.rotateX(vMatrix, vMatrix, angle);
-    _glMatrix.mat4.rotateY(vMatrix, vMatrix, angle);
-    _glMatrix.mat4.rotateZ(vMatrix, vMatrix, angle);
-
-    _glMatrix.mat4.invert(ivMatrix, vMatrix);
-
-    _glMatrix.mat4.multiply(mvMatrix, ivMatrix, mMatrix);
-    _glMatrix.mat4.multiply(mvpMatrix, pMatrix, mvMatrix);
-
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(attributes.position);
-    gl.uniformMatrix4fv(uniforms.mvp, false, mvpMatrix);
-    gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 3 * 4, 0);
-    gl.drawArrays(gl.POINTS, 0, NUM_POINTS);
-
-    //console.count("render");
-
-    window.requestAnimationFrame(render);
-  }
-
-  render();
-
-  function resize() {
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    _glMatrix.mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
-  }
-
-  resize();
-
-  window.addEventListener("resize", resize);
 }
 
-},{"gl-matrix":1}]},{},[15]);
+},{"gl-matrix":1}]},{},[20]);
