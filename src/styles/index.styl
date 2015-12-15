@@ -44,6 +44,9 @@ a
     color $colorLink
     text-decoration none
 
+p:first-line
+    margin-left 2rem
+
 ::-webkit-scrollbar
     width 1px
 ::-webkit-scrollbar-button
@@ -322,7 +325,7 @@ a
     @extend $Text__header
 
 .Text__header:before
-    @extend $Panel__decor--long
+    @extend $Panel__decor
     top 0
     right 0
 
@@ -330,7 +333,7 @@ a
     @extend $Text__body
 
 .Text__body:after
-    @extend $Panel__decor--long
+    @extend $Panel__decor
     bottom 0
     right 0
 
