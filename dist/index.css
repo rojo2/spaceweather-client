@@ -15,7 +15,7 @@
   height: 1px;
   width: 2rem;
   background-color: #cc8533;
-  transition: width 0.4s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  transition: width 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 .Weather,
 .Forecast {
@@ -333,7 +333,7 @@ a {
   color: #f1f3f4;
 }
 .Alert:hover:before {
-  width: 4rem;
+  width: 6rem;
   transition: width 0.2s cubic-bezier(0.55, 0.055, 0.675, 0.19);
 }
 .Alert__basicInfo {
