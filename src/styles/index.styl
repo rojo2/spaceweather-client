@@ -100,19 +100,26 @@ a
 // Nav
 
 .Logo
-    font-weight 500
-    font-size 1rem
+    font-weight 200
+    font-size 1.25rem
+    display flex
+    align-items center
+    height 2rem
     color $colorBase
 
 .Nav
     flex 1
     display flex
     justify-content flex-end
+
 .Nav__item
-    font-size 1rem
+    font-size 1.25rem
+    display flex
+    height 2rem
+    align-items center
     text-transform uppercase
     margin-left .5rem
-    padding 0.25rem 1rem
+    padding 0 1rem
 
 .Nav__item.isActive
     @extend $NavActive
@@ -152,8 +159,7 @@ a
     @extend $Panel__title
 
 .Panel__menu
-    display flex
-    padding 0.25rem 0
+    @extend $Panel__menu
 
 .Panel__menuItem
     @extend $MenuItem
@@ -183,12 +189,6 @@ a
 // ----------------------------------------------------------
 // Weather Section
 
-.Weather
-    @extend $Section
-
-.Weather.isActive
-    @extend $Section--active
-
 .Weather__EITFilters
     @extend $Panel--40
 
@@ -209,12 +209,6 @@ a
 
 // ----------------------------------------------------------
 // Forecast Section
-
-.Forecast
-    @extend $Section
-
-.Forecast.isActive
-    @extend $Section--active
 
 .Forecast__graphs
     @extend $Panel--60
@@ -300,17 +294,26 @@ a
     transition max-height .2s $easeInCubic
 
 // ----------------------------------------------------------
-// Solar Cycle Section
+// Sections
 
+.Weather
+.Sunspots
 .SolarCycle
+.Forecast
     @extend $Section
 
+.Weather.isActive
+.Sunspots.isActive
 .SolarCycle.isActive
+.Forecast.isActive
     @extend $Section--active
 
+
+.Sunspots__image
 .SolarCycle__graph
     @extend $Panel--60
 
+.Sunspots__description
 .SolarCycle__description
     flex 0 0 40%
     padding 2rem
@@ -318,5 +321,21 @@ a
 .Text__header
     @extend $Text__header
 
+.Text__header:before
+    @extend $Panel__decor--long
+    top 0
+    right 0
+
 .Text__body
     @extend $Text__body
+
+.Text__body:after
+    @extend $Panel__decor--long
+    bottom 0
+    right 0
+
+// ----------------------------------------------------------
+// Sunspots
+
+
+
