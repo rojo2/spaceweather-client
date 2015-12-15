@@ -5191,12 +5191,9 @@ var _api2 = _interopRequireDefault(_api);
 
 var _uiBackground = require("./ui/background");
 
-_api2["default"].getAll().then(function (res) {
-  console.log(res);
-});
-
 window.addEventListener("DOMContentLoaded", function () {
 
+  // init background.
   (0, _uiBackground.initBackground)();
 });
 
