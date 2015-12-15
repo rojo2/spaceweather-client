@@ -11,8 +11,8 @@ export function initBackground() {
   if (canvas) {
 
     const gl = canvas.getContext("webgl", {
-            antialias: true
-          });
+      antialias: true
+    });
 
     const vertexShader = gl.createShader(gl.VERTEX_SHADER);
     gl.shaderSource(vertexShader, `

@@ -6,6 +6,9 @@ const gulp = require("gulp"),
   browserify = require("browserify"),
   babelify = require("babelify"),
   source = require("vinyl-source-stream"),
+  proxy = require("proxy-middleware"),
+  url = require("url"),
+  fs = require("fs"),
   bs = require("browser-sync").create();
 
 const config = {
@@ -112,9 +115,23 @@ gulp.task("watch", ["build"], () => {
   gulp.watch(config.srcs.scripts, ["scripts"]);
 
   if (config.run.browserSync) {
+
+    let proxyOptions = url.parse('http://localhost:3000/');
+    proxyOptions.route = '/';
+
     bs.init({
       server: {
-        baseDir: config.build.path
+        baseDir: config.build.path,
+        middleware(req, res, next) {
+          let fileName = url.parse(req.url);
+          fileName = fileName.href.split(fileName.search).join("");
+
+          const fileExists = fs.existsSync(path.join(config.build.path, fileName));
+          if (!fileExists && fileName.indexOf("browser-sync-client") < 0) {
+            req.url = "/index.html";
+          }
+          return next();
+        }
       }
     });
   }
