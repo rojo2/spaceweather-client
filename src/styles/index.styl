@@ -22,21 +22,35 @@ html
     width 100%
     height 100%
     background-color black
-    color $color-base
+    color $colorBase
     margin 0
     padding 0
 
 body
-    font-family 'FiraSans'
-    font-weight 200
     height 100%
     overflow hidden
     margin 0
     padding 0
 
+body
+label
+input
+    font-family 'FiraSans'
+    font-weight 200
+
 a
-    color $color-link
+    color $colorLink
     text-decoration none
+
+::-webkit-scrollbar
+    width 1px
+::-webkit-scrollbar-button
+::-webkit-scrollbar-track
+::-webkit-scrollbar-corner
+::-webkit-scrollbar-track-piece
+    display none
+::-webkit-scrollbar-thumb
+    background-color $colorDim
 
 // ----------------------------------------------------------
 // Page background
@@ -71,14 +85,14 @@ a
     &:before
     &:after
         @extend $Panel__decor--long
-        bottom -1px
+        top 0
     &:before
         left 0
     &:after
         right 0
 
 .Page__content
-    flex 1 0 auto
+    flex 1 0
     display flex
 // ----------------------------------------------------------
 // Nav
@@ -86,7 +100,7 @@ a
 .Logo
     font-weight 500
     font-size 1rem
-    color $color-base
+    color $colorBase
 
 .Nav
     flex 1
@@ -136,12 +150,11 @@ a
     @extend $NavHover
 
 .Unit
-    color $color-base
+    color $colorBase
 
 .Panel__content
     @extend $Panel__content
     position relative
-    display flex
     &:before
     &:after
         @extend $Panel__decor
@@ -152,20 +165,20 @@ a
         right 0
 
 // ----------------------------------------------------------
-// Weather Panel
+// Weather Section
 
 .Weather
-    flex 1
-    display flex
+    @extend $Section
+
+.Weather.isActive
+    @extend $Section--active
 
 .Weather__EITFilters
-    @extend $Panel
-    flex 0 0 40%
-    display flex
+    @extend $Panel--40
 
 .Weather__fluxes
-    @extend $Panel
-    flex 0 0 60%
+    @extend $Panel--60
+
 
 // ----------------------------------------------------------
 // Sun visualization
@@ -178,4 +191,92 @@ a
     width 100%
     height auto
 
+// ----------------------------------------------------------
+// Forecast Section
 
+.Forecast
+    @extend $Section
+
+.Forecast.isActive
+    @extend $Section--active
+
+.Forecast__graphs
+    @extend $Panel--60
+
+.Forecast__alerts
+    @extend $Panel--40
+
+.Alerts
+    position absolute
+    top 1rem
+    left 0
+    width 100%
+    bottom 1rem
+    overflow-y scroll
+
+.Alert
+    @extend $Alert
+
+.Alert__basicInfo:before
+    @extend $Alert__decor
+
+.Alert--summary
+    .Alert__basicInfo:before
+        background-color $colorAlertSummary
+
+.Alert--warning
+    .Alert__basicInfo:before
+        background-color $colorAlertWarning
+
+.Alert--watch
+    .Alert__basicInfo:before
+        background-color $colorAlertWatch
+
+.Alert--extendedWarning
+    .Alert__basicInfo:before
+        background-color $colorAlertWarning
+
+.Alert--cancelWarning
+    .Alert__basicInfo:before
+        background-color $colorAlertCancelWarning
+
+.Alert:hover
+    .Alert__message
+        color $colorHighlight
+    .Alert__basicInfo
+        background-color alpha($colorDim, .3)
+.Alert:hover .Alert__basicInfo:before
+.Alert__input:checked ~ .Alert__basicInfo:before
+        width 6rem
+        transition width .2s $easeInCubic
+
+.Alert__basicInfo
+    display block
+    padding-bottom 1rem
+    cursor pointer
+
+.Alert__input
+    width 0
+    height 0
+    display none
+
+.Alert__metadata
+    @extend $Metadata
+
+.Alert__issueTime
+    margin-right 1rem
+
+.Alert__message
+    color $colorLink
+    text-transform uppercase
+
+.Alert__extendedInfo
+    max-height 0
+    overflow hidden
+    transform translate3d(0,0,0)
+    transition max-height .4s $easeInCubic
+
+.Alert__input:checked ~ .Alert__extendedInfo
+    max-height 20rem
+    transform translate3d(0,0,0)
+    transition max-height .2s $easeInCubic
