@@ -4,7 +4,7 @@ block content
     canvas.Background
     .Page
         .Page__top
-            .Logo Project SOL
+            .Logo AURORA
             .Nav
                 a.Nav__item.isActive(href="") Weather
                 a.Nav__item(href="") Sunspots
@@ -33,8 +33,7 @@ block content
                                 .Value Corona
                     .Panel__content
                         .Sun
-                            svg.Sun__image(width="1024", height="1024", viewBox="0 0 1024 1024")
-                                circle(cx="512", cy="512", r="512", fill="#cc9900")
+                            img.Sun__image(src="images/giphy.gif")
                 .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes
@@ -45,8 +44,20 @@ block content
                             a.Panel__menuItem(href="") X-Ray Flux
                     .Panel__content
                         h2 Graph
+            // Sunspots
+            section.Sunspots.isActive
+                .Sunspots__image
+                    .Panel__header
+                        .Panel__title Sunspots
+                    .Panel__content
+                        h2 Graph
+                .Sunspots__description
+                    .Text__header Lorem ipsum dolor sit amet
+                    .Text__body
+                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             // Solar cycle
-            section.SolarCycle.isActive
+            section.SolarCycle
                 .SolarCycle__graph
                     .Panel__header
                         .Panel__title Solar Cycle

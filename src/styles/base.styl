@@ -1,13 +1,13 @@
 // ----------------------------------------------------------
 // Variables
 
-$hue-general = 182
+$hueGeneral = 182
 
-$colorDim = hsla($hue-general, 10%, 20%, 0.75)
-$colorBase = hsla($hue-general, 10%, 50%, 1)
-$colorLink = hsla($hue-general, 10%, 80%, 1)
-$colorHighlight = hsla($hue-general, 10%, 95%, 1)
-$colorTitle = hsla(32, 60%, 50%, 1)
+$colorDim = hsla($hueGeneral, 10%, 60%, 0.25)
+$colorBase = hsla($hueGeneral, 10%, 60%, 1)
+$colorLink = hsla($hueGeneral, 40%, 80%, 1)
+$colorHighlight = hsla($hueGeneral, 10%, 95%, 1)
+$colorTitle = hsla(32, 60%, 60%, 1)
 
 $colorAlert = hsla(32, 60%, 50%, 1)
 $colorAlertSummary = hsla(48, 40%, 50%, 1)
@@ -58,12 +58,16 @@ $ControlButton--active
 // Text formats
 
 $Text__header
+    position relative
     font-size 2rem
+    padding-top .5rem
     text-transform uppercase
     color $colorTitle
 
 $Text__body
+    position relative
     color $colorBase
+    padding-bottom 1rem
 
 // ----------------------------------------------------------
 // Sections
@@ -94,6 +98,7 @@ $Panel--60
 $Panel__header
     flex 0 0 auto
     position relative
+    height 3rem
     display flex
     align-items center
     border-bottom 1px solid $colorDim
@@ -120,6 +125,9 @@ $Panel__title
 
 $Panel__menu
     flex 0 0 auto
+    font-size .875rem
+    display flex
+    padding 0.25rem 0
 
 $Panel__content
     flex 1 0
@@ -134,11 +142,12 @@ $NavActive
     background-color $colorDim
     pointer-events none
     color $colorHighlight
-    border-radius .125rem
+    border-radius .2rem
     box-shadow inset 0 0 1rem alpha($colorHighlight, 0.12)
 
 $NavHover
     color $colorHighlight
+    border-radius .2rem
     animation AnimHover .1s ease-in-out
     background-color $colorDim
 

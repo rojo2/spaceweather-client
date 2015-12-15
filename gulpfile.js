@@ -16,7 +16,8 @@ const config = {
   build: {
     path: "./dist",
     fonts: "./dist/fonts/",
-    sounds: "./dist/sounds/"
+    sounds: "./dist/sounds/",
+    images: "./dist/images/"
   },
   index: {
     script: "./src/app/index.js",
@@ -28,7 +29,8 @@ const config = {
     templates: "./src/templates/**/*.jade",
     styles: "./src/styles/**/*.styl",
     fonts: "./src/assets/fonts/**/*.ttf",
-    sounds: "./src/assets/sounds/**/*.mp3"
+    sounds: "./src/assets/sounds/**/*.mp3",
+    images: "./src/assets/images/**/*.*"
   }
 };
 
@@ -75,6 +77,13 @@ gulp.task("sounds", () => {
 
 });
 
+gulp.task("images", () => {
+
+  gulp.src(config.srcs.images)
+    .pipe(gulp.dest(config.build.images));
+
+});
+
 gulp.task("styles", () => {
 
   const stream = gulp.src(config.index.style)
@@ -107,6 +116,7 @@ gulp.task("scripts", () => {
 gulp.task("watch", ["build"], () => {
 
   gulp.watch(config.srcs.fonts, ["fonts"]);
+  gulp.watch(config.srcs.images, ["images"]);
   gulp.watch(config.srcs.templates, ["templates"]);
   gulp.watch(config.srcs.styles, ["styles"]);
   gulp.watch(config.srcs.scripts, ["scripts"]);
@@ -121,6 +131,6 @@ gulp.task("watch", ["build"], () => {
 
 });
 
-gulp.task("build", ["templates", "styles", "scripts", "fonts", "sounds"]);
+gulp.task("build", ["templates", "styles", "scripts", "fonts", "images", "sounds"]);
 
 gulp.task("default", ["watch"]);
