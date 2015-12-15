@@ -12,7 +12,7 @@ block content
                 a.Nav__item(href="/forecast") Forecast
         .Page__content
             // Weather section
-            section.Weather
+            section.Weather.isActive
                 .Weather__EITFilters
                     .Panel__header
                         .Panel__title EIT Filters
@@ -34,6 +34,9 @@ block content
                     .Panel__content
                         .Sun
                             img.Sun__image(src="images/giphy.gif")
+                        .Timeline
+                            .Timeline__base
+                            .Timeline__mark
                 .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes
@@ -45,7 +48,7 @@ block content
                     .Panel__content
                         h2 Graph
             // Sunspots
-            section.Sunspots.isActive
+            section.Sunspots
                 .Sunspots__image
                     .Panel__header
                         .Panel__title Sunspots

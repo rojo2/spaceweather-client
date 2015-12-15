@@ -142,7 +142,6 @@ p:first-line
 .Controls__sound.isOn
     @extend $ControlButton--active
 
-
 // ----------------------------------------------------------
 // Panel
 
@@ -203,12 +202,35 @@ p:first-line
 // Sun visualization
 
 .Sun
+    flex 1
     display flex
     align-items center
     justify-content center
 .Sun__image
     width 100%
     height auto
+
+// ----------------------------------------------------------
+// Timeline
+
+.Timeline
+    position relative
+    flex 0 0 auto
+    border-top 1px solid $colorDim
+    border-bottom 1px solid $colorDim
+
+.Timeline__base
+    height 0.5rem
+    margin .5rem 0
+    background-color $colorDim
+
+.Timeline__mark
+    width 1px
+    height 100%
+    position absolute
+    top 0
+    left 40%
+    background-color $colorHighlight
 
 // ----------------------------------------------------------
 // Forecast Section
