@@ -9,6 +9,7 @@ export class HistoryRouter {
   }
 
   start() {
+    this.dispatch(location.pathname);
     window.addEventListener("popstate", this.handlePopState);
     return this;
   }
@@ -28,13 +29,15 @@ export class HistoryRouter {
   }
 
   dispatch(url) {
+    if (/^https?:\/\//.test(url)) {
+      url = url.replace(/^https?:\/\//,"");
+      url = url.substr(url.indexOf("/"));
+    }
+
     for (let index = 0; index < this.routes.length; index++) {
       const route = this.routes[index];
-      console.log(route, url);
       if (route.pattern.test(url)) {
-        console.log("OK!");
-        const matches = route.pattern.exec(url);
-        //route.delegate();
+        route.delegate();
         return true;
       }
     }

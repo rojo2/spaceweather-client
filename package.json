@@ -34,6 +34,7 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
+    "d3": "^3.5.11",
     "gl-matrix": "^2.3.1"
   }
 }

@@ -3,6 +3,14 @@ import {initBackground} from "./ui/background";
 import {initSounds} from "./ui/sounds";
 import {HistoryRouter} from "./router/Router";
 
+function query(selector) {
+  return document.querySelector(selector);
+}
+
+function queryAll(selector) {
+  return Array.prototype.slice.apply(document.querySelectorAll(selector));
+}
+
 function siblings(el, fn) {
 
   let current = el.nextElementSibling;
@@ -29,17 +37,25 @@ function isActive(el) {
 window.addEventListener("DOMContentLoaded", () => {
 
   const router = new HistoryRouter();
-  router.route("weather", () => {
-    isActive(document.querySelector(".Weather"));
-  }).route("forecast", () => {
-    isActive(document.querySelector(".Forecast"));
-  }).route("sunspots", () => {
-    isActive(document.querySelector(".Sunspots"));
-  }).route("solar-cycle", () => {
-    isActive(document.querySelector(".SolarCycle"));
+  router.route("/weather", () => {
+    isActive(query("section.Weather"));
+  }).route("/forecast", () => {
+    isActive(query("section.Forecast"));
+  }).route("/sunspots", () => {
+    isActive(query("section.Sunspots"));
+  }).route("/solar-cycle", () => {
+    isActive(query("section.SolarCycle"));
   }).start();
 
   window.router = router;
+
+  queryAll(".Nav a").map((current) => {
+    current.addEventListener("click", (e) => {
+      e.preventDefault();
+      isActive(e.currentTarget);
+      router.navigate(e.currentTarget.href);
+    });
+  });
 
   //router.navigate("weather");
 
