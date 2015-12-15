@@ -5191,13 +5191,16 @@ var _api2 = _interopRequireDefault(_api);
 
 var _uiBackground = require("./ui/background");
 
+var _uiSounds = require("./ui/sounds");
+
 window.addEventListener("DOMContentLoaded", function () {
 
   // init background.
   (0, _uiBackground.initBackground)();
+  (0, _uiSounds.initSounds)();
 });
 
-},{"./api":14,"./ui/background":21}],21:[function(require,module,exports){
+},{"./api":14,"./ui/background":21,"./ui/sounds":22}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5327,4 +5330,43 @@ function initBackground() {
   }
 }
 
-},{"gl-matrix":1}]},{},[20]);
+},{"gl-matrix":1}],22:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.initSounds = initSounds;
+
+function initSounds() {
+
+  document.addEventListener("visibilitychange", function (e) {
+
+    if (document.visibilityState === "visible") {
+      ambient.play();
+    } else {
+      ambient.pause();
+    }
+  });
+
+  var ambient = document.createElement("audio");
+  ambient.src = "sounds/background.mp3";
+  ambient.loop = true;
+  ambient.play();
+
+  var volume = 1.0;
+  return Object.defineProperties({}, {
+    volume: {
+      set: function set(value) {
+        ambient.volume = volume = value;
+      },
+      get: function get() {
+        return volume;
+      },
+      configurable: true,
+      enumerable: true
+    }
+  });
+}
+
+},{}]},{},[20]);
