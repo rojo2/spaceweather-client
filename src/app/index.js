@@ -1,13 +1,12 @@
-import {getProtonFlux} from "./api/protonflux";
+import API from "./api";
 import {initBackground} from "./ui/background";
-
-getProtonFlux().then((res) => {
-  console.log(res.body);
-});
+import {initSounds} from "./ui/sounds";
 
 window.addEventListener("DOMContentLoaded", () => {
 
+  // init background.
   initBackground();
+  initSounds();
 
 });
 

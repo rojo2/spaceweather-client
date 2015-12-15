@@ -15,7 +15,8 @@ const config = {
   },
   build: {
     path: "./dist",
-    fonts: "./dist/fonts/"
+    fonts: "./dist/fonts/",
+    sounds: "./dist/sounds/"
   },
   index: {
     script: "./src/app/index.js",
@@ -26,7 +27,8 @@ const config = {
     scripts: "./src/app/**/*.js",
     templates: "./src/templates/**/*.jade",
     styles: "./src/styles/**/*.styl",
-    fonts: "./src/assets/fonts/**/*.ttf"
+    fonts: "./src/assets/fonts/**/*.ttf",
+    sounds: "./src/assets/sounds/**/*.mp3"
   }
 };
 
@@ -63,6 +65,13 @@ gulp.task("fonts", () => {
   gulp.src(config.srcs.fonts)
     .pipe(plugins.ttf2woff2())
     .pipe(gulp.dest(config.build.fonts));
+
+});
+
+gulp.task("sounds", () => {
+
+  gulp.src(config.srcs.sounds)
+    .pipe(gulp.dest(config.build.sounds));
 
 });
 
@@ -112,6 +121,6 @@ gulp.task("watch", ["build"], () => {
 
 });
 
-gulp.task("build", ["templates", "styles", "scripts", "fonts"]);
+gulp.task("build", ["templates", "styles", "scripts", "fonts", "sounds"]);
 
 gulp.task("default", ["watch"]);
