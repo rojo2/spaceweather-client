@@ -5336,12 +5336,28 @@ function initBackground() {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.sound = sound;
 exports.initSounds = initSounds;
+
+function sound(src) {
+  var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+  options = Object.assign({
+    volume: 1.0,
+    loop: false,
+    mute: false
+  }, options);
+
+  var element = document.createElement("audio");
+  element.src = src;
+  element.volume = options.volume;
+  element.loop = options.loop;
+  return element;
+}
 
 function initSounds() {
 
   document.addEventListener("visibilitychange", function (e) {
-
     if (document.visibilityState === "visible") {
       ambient.play();
     } else {
@@ -5349,10 +5365,18 @@ function initSounds() {
     }
   });
 
-  var ambient = document.createElement("audio");
-  ambient.src = "sounds/background.mp3";
-  ambient.loop = true;
+  var ambient = sound("sounds/background.mp3", { loop: true });
   ambient.play();
+
+  function handleMouseOver(e) {
+    var over = sound("sounds/over.mp3");
+    over.play();
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll("[class*=item], [class*=menuItem]")).map(function (el) {
+    el.addEventListener("mouseover", handleMouseOver, false);
+    return el;
+  });
 
   var volume = 1.0;
   return Object.defineProperties({}, {
