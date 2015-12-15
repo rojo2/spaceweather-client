@@ -4917,6 +4917,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getProtonFlux = getProtonFlux;
+exports.getProtonTypes = getProtonTypes;
 
 var _config = require("./config");
 
@@ -4926,6 +4927,10 @@ var _httpRequest = require("../http/request");
 
 function getProtonFlux() {
   return (0, _httpRequest.request)((0, _url.url)("protonflux/?format=json"), _config.config.CREDENTIALS);
+}
+
+function getProtonTypes() {
+  return (0, _httpRequest.request)((0, _url.url)("ptypes/?format=json"), _config.config.CREDENTIALS);
 }
 
 },{"../http/request":14,"./config":11,"./url":13}],13:[function(require,module,exports){
