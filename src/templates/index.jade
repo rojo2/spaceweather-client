@@ -45,8 +45,20 @@ block content
                             a.Panel__menuItem(href="") X-Ray Flux
                     .Panel__content
                         h2 Graph
+            // Solar cycle
+            section.SolarCycle.isActive
+                .SolarCycle__graph
+                    .Panel__header
+                        .Panel__title Solar Cycle
+                    .Panel__content
+                        h2 Graphs
+                .SolarCycle__description
+                    .Text__header Lorem ipsum dolor sit amet
+                    .Text__body
+                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             // Forecast Section
-            section.Forecast.isActive
+            section.Forecast
                 .Forecast__graphs
                     .Panel__header
                         .Panel__title 3-day Forecast
@@ -107,4 +119,5 @@ block content
                                 .Alert__extendedInfo
                                     .Alert__payload Extension to Serial Number: 2736\r\nValid From: 2015 Dec 09 2005 UTC\r\nNow Valid Until: 2015 Dec 12 0400 UTC\r\nWarning Condition: Persistence\r\nwww.swpc.noaa.gov/noaa-scales-explanation\r\nPotential Impacts: Area of impact primarily poleward of 65 degrees Geomagnetic Latitude.\r\nInduced Currents - Weak power grid fluctuations can occur.\r\nAurora - Aurora may be visible at high latitudes such as Canada and Alaska.
         .Page__bottom
-            .Timeline
+            .Controls
+                a.Controls__sound(href="") Audio

@@ -1,4 +1,4 @@
-//----------------------------------------------------------
+// ----------------------------------------------------------
 // Variables
 
 $hue-general = 182
@@ -40,7 +40,32 @@ $Alert__decor
     background-color $colorAlert
     transition width .1s $easeInCubic
 
-//----------------------------------------------------------
+$MenuItem
+    text-transform uppercase
+    padding 0 1rem
+    height 2rem
+    margin-left 0.25rem
+    display flex
+    align-items center
+
+$ControlButton
+    color $colorBase
+
+$ControlButton--active
+    color $colorHighlight
+
+// ----------------------------------------------------------
+// Text formats
+
+$Text__header
+    font-size 2rem
+    text-transform uppercase
+    color $colorTitle
+
+$Text__body
+    color $colorBase
+
+// ----------------------------------------------------------
 // Sections
 
 $Section
@@ -69,8 +94,8 @@ $Panel--60
 $Panel__header
     flex 0 0 auto
     position relative
-    font-size .875rem
     display flex
+    align-items center
     border-bottom 1px solid $colorDim
     border-top 1px solid $colorDim
 $Panel__decor
