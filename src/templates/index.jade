@@ -53,10 +53,20 @@ block content
                     .Panel__header
                     .Panel__content
                         .Alerts
-                            .Alert Hola
-                            .Alert Hola
-                            .Alert Hola
-                            .Alert Hola
-                            .Alert Hola
+                            .Alert
+                                input.Alert__input(type="checkbox", id="alert-001")
+                                label.Alert__basicInfo(for="alert-001")
+                                    .Alert__date 2015 Dec 15 0338 UTC - WARK04
+                                    .Alert__title Geomagnetic K-index of 4 expected
+                                .Alert__extendedInfo
+                                    h2 hola
+                            .Alert
+                                input.Alert__input(type="checkbox", id="alert-002")
+                                label.Alert__basicInfo(for="alert-002")
+                                    .Alert__date 2015 Dec 15 0338 UTC - WARK04
+                                    .Alert__title Geomagnetic K-index of 4 expected
+                                .Alert__extendedInfo
+                                    h2 hola
+
         .Page__bottom
             .Timeline

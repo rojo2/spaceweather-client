@@ -27,12 +27,16 @@ html
     padding 0
 
 body
-    font-family 'FiraSans'
-    font-weight 200
     height 100%
     overflow hidden
     margin 0
     padding 0
+
+body
+label
+input
+    font-family 'FiraSans'
+    font-weight 200
 
 a
     color $color-link
@@ -192,3 +196,15 @@ a
 
 .Forecast__alerts
     @extend $Panel--40
+
+.Alert__input
+    width 0
+    height 0
+    display none
+
+.Alert__extendedInfo
+    max-height 0
+    overflow hidden
+
+.Alert__input:checked ~ .Alert__extendedInfo
+    max-height 20rem
