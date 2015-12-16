@@ -37,9 +37,16 @@ block content
                                 img.Sun__image(src="images/giphy.gif")
                     .Panel__footer
                         .Timeline
-                            .Timeline__base
-                            .Timeline__mark
-                            .Timeline__currentDate 2015-12-16 03:12
+                            .Timeline__progress
+                                .Timeline__bar
+                                    .Timeline__fill(style="transform: scaleX(0.44);")
+                                .Timeline__mark(style="left: 44%;")
+                                    .Timeline__markTop
+                                    .Timeline__markBottom
+                            .Timeline__dates
+                                .Timeline__dateStart 2015-12-24 12:45
+                                .Timeline__dateCurrent 2015-12-24 12:45
+                                .Timeline__dateEnd 2015-12-25 14:45
                 .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes

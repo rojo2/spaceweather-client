@@ -269,27 +269,76 @@ p:first-line
 // Timeline
 
 .Timeline
-    margin 1rem 0 0
-    position relative
-    padding 1rem 0
+    margin 1rem 0 1rem
     flex 1 0 auto
-.Timeline__base
-    height 1px
+.Timeline__progress
+    height 1.5rem
+    position relative
+.Timeline__progress:before
+.Timeline__progress:after
+    position absolute
+    content ''
+    top .75rem
+    bottom 0
+    width 1px
+    background-color $colorDim
+.Timeline__progress:before
+    left 0
+.Timeline__progress:after
+    right 0
+.Timeline__bar
+    position absolute
+    width 100%
+    top .75rem
+    margin-top -1px
+    height 2px
     background-color $colorDim
 
+.Timeline__fill
+    position absolute
+    height 2px
+    top 0
+    left 0
+    width 100%
+    transform-origin 0 0
+    background-color $colorBase
+
 .Timeline__mark
-    width 2px
     cursor pointer
-    height 1rem
+    height 1.5rem
     position absolute
     top 0
-    left 40%
+    margin-left -.4rem
     background-color $colorHighlight
 
-.Timeline__currentDate
-    margin-top 1rem
+.Timeline__markTop
+.Timeline__markBottom
+    position absolute
+    width 0
+    height 0
+    border .4rem solid transparent
+.Timeline__markTop
+    border-top-color $colorTitle
+    top 0
+.Timeline__markBottom
+    border-bottom-color $colorTitle
+    bottom 0
+
+.Timeline__dates
+    display flex
+    font-size .875rem
+    padding-top .5rem
+
+.Timeline__dateCurrent
+    flex 1 0 50%
     font-size 1.25rem
-    color $colorBase
+    text-align center
+    color $colorHighlight
+.Timeline__dateStart
+    flex 0 0 25%
+.Timeline__dateEnd
+    flex 0 0 25%
+    text-align right
 
 // ----------------------------------------------------------
 // Forecast Section
@@ -339,7 +388,7 @@ p:first-line
         color $colorHighlight
     .Alert__basicInfo
         transition background-color .1s $easeInCubic
-        background-color alpha($colorDim, .3)
+        background-color alpha($colorDim, .1)
 .Alert:hover .Alert__basicInfo:before
 .Alert__input:checked ~ .Alert__basicInfo:before
         width 6rem

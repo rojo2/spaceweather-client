@@ -4,8 +4,8 @@
 $hueGeneral = 164
 $hueAccent = 24
 
-$colorDim = hsla($hueGeneral, 20%, 50%, 0.2)
-$colorBase = hsla($hueGeneral, 40%, 60%, 1)
+$colorDim = hsla($hueGeneral, 25%, 50%, 0.2)
+$colorBase = hsla($hueGeneral, 25%, 50%, 1)
 $colorLink = hsla($hueGeneral, 60%, 80%, 1)
 $colorHighlight = hsla($hueGeneral, 60%, 95%, 1)
 $colorTitle = hsla($hueAccent, 80%, 60%, 1)
@@ -112,6 +112,7 @@ $Panel__header
     display flex
     align-items center
     border-bottom 1px solid $colorDim
+    background-color alpha($colorDim, 0.1)
     border-top 1px solid $colorDim
 $Panel__decor
     position absolute
