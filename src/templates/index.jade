@@ -1,3 +1,13 @@
+mixin loader(id)
+    .Loader(id=id)
+        svg.Loader__spinner(viewBox="0 0 32 128", width="32", height="128")
+            rect.Loader01(x="0", y="0", width="1", height="128")
+            rect.Loader02(x="6", y="0", width="1", height="128")
+            rect.Loader03(x="12", y="0", width="1", height="128")
+            rect.Loader04(x="18", y="0", width="1", height="128")
+            rect.Loader05(x="24", y="0", width="1", height="128")
+            rect.Loader06(x="30", y="0", width="1", height="128")
+
 extends base
 
 block content
@@ -56,6 +66,7 @@ block content
                             a.Panel__menuItem(href="/weather",data-param-name="flux",data-param-value="electron") Electron Flux
                             a.Panel__menuItem(href="/weather",data-param-name="flux",data-param-value="x-ray") X-Ray Flux
                     .Panel__content
+                        +loader("#weather")
                         .Graph
                             .Graph__content
                             .Graph__legends
@@ -85,14 +96,7 @@ block content
                     .Panel__header
                         .Panel__title Solar Cycle
                     .Panel__content
-                        .Loader.isActive
-                            svg.Loader__spinner(viewBox="0 0 32 128", width="32", height="128")
-                                rect.Loader01(x="0", y="0", width="1", height="128")
-                                rect.Loader02(x="6", y="0", width="1", height="128")
-                                rect.Loader03(x="12", y="0", width="1", height="128")
-                                rect.Loader04(x="18", y="0", width="1", height="128")
-                                rect.Loader05(x="24", y="0", width="1", height="128")
-                                rect.Loader06(x="30", y="0", width="1", height="128")
+                        +loader("#solar-cycle")
                     .Panel__footer
                 .SolarCycle__description
                     .Text__header Lorem ipsum dolor sit amet
@@ -175,11 +179,4 @@ block content
                         rect.Sound1(x="18", y="0", width="1", height="16")
                         rect.Sound3(x="21", y="0", width="1", height="16")
                     .Button__label Audio On
-    .Loader
-        svg.Loader__spinner(viewBox="0 0 32 128", width="32", height="128")
-            rect.Loader01(x="0", y="0", width="1", height="128")
-            rect.Loader02(x="6", y="0", width="1", height="128")
-            rect.Loader03(x="12", y="0", width="1", height="128")
-            rect.Loader04(x="18", y="0", width="1", height="128")
-            rect.Loader05(x="24", y="0", width="1", height="128")
-            rect.Loader06(x="30", y="0", width="1", height="128")
+    +loader("main")
