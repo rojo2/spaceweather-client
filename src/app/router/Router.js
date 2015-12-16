@@ -1,5 +1,62 @@
 import queryString from "query-string";
 
+class Route {
+  constructor(re, delegate) {
+    const pattern = (re instanceof RegExp ? re : new RegExp("^" + re));
+
+    this.pattern = pattern;
+    this.delegate = delegate;
+    this.params = {};
+  }
+
+  get currentPath() {
+    return location.pathname;
+  }
+
+  get query() {
+    return queryString.parse(location.search);
+  }
+
+  param(param, delegate) {
+    this.params[param] = delegate;
+    return this;
+  }
+
+  match(url) {
+    return this.pattern.test(url);
+  }
+
+  dispatch(url) {
+
+    const index = url.indexOf("?");
+    if (index > -1) {
+
+      const path = url.substr(0, index);
+      this.delegate();
+
+      const query = queryString.parse(url.substr(index));
+
+      const names = Object.keys(query);
+      for (let index = 0; index < names.length; index++) {
+        const name = names[index],
+              value = query[name];
+
+        if (name in this.params) {
+          const delegate = this.params[name];
+          delegate(value);
+        }
+      }
+
+    } else {
+
+      this.delegate();
+
+    }
+
+  }
+
+}
+
 export class HistoryRouter {
   constructor() {
     this.routes = [];
@@ -10,12 +67,16 @@ export class HistoryRouter {
     return location.pathname;
   }
 
+  get query() {
+    return queryString.parse(location.search);
+  }
+
   handlePopState(e) {
-    console.log(e);
+    this.dispatch(e.state.url);
   }
 
   start() {
-    this.dispatch(location.pathname);
+    this.dispatch(location.href);
     window.addEventListener("popstate", this.handlePopState);
     return this;
   }
@@ -26,12 +87,9 @@ export class HistoryRouter {
   }
 
   route(re, fn) {
-    const pattern = (re instanceof RegExp ? re : new RegExp("^" + re));
-    this.routes.push({
-      pattern: pattern,
-      delegate: fn
-    });
-    return this;
+    const route = new Route(re, fn);
+    this.routes.push(route);
+    return route;
   }
 
   dispatch(url) {
@@ -42,27 +100,30 @@ export class HistoryRouter {
 
     for (let index = 0; index < this.routes.length; index++) {
       const route = this.routes[index];
-      if (route.pattern.test(url)) {
-        route.delegate();
+      if (route.match(url)) {
+        route.dispatch(url);
         return true;
       }
     }
     return false;
   }
 
-  navigate(url, query = null) {
-
+  replace(url, query = null) {
     if (query) {
-      url += "?" + queryString.stringify(Object.assign(queryString.parse(location.search), query));
-      console.log(url);
+      url += "?" + queryString.stringify(Object.assign({}, this.query, query));
     }
+    this.dispatch(url);
+    window.history.replaceState({ url }, "", url);
+    return this;
+  }
 
-    window.history.pushState({
-      url
-    }, "", url);
-
-    return this.dispatch(url);
-
+  navigate(url, query = null) {
+    if (query) {
+      url += "?" + queryString.stringify(Object.assign({}, this.query, query));
+    }
+    this.dispatch(url);
+    window.history.pushState({ url }, "", url);
+    return this;
   }
 
 }

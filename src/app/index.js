@@ -11,12 +11,20 @@ function queryAll(selector) {
   return Array.prototype.slice.apply(document.querySelectorAll(selector));
 }
 
-function children(el, fn) {
+function each(list, fn) {
   for (let index = 0; index < el.children.length; index++) {
-    const current = el.children[index];
-    fn(current);
+    const current = el.children[index],
+          result = fn(current);
+
+    if (result) {
+      return result;
+    }
   }
-  return el;
+  return null;
+}
+
+function children(el, fn) {
+  return each(el.children, fn);
 }
 
 function siblings(el, fn) {
@@ -45,18 +53,49 @@ function activate(el) {
   return el;
 }
 
+function getAttr(el, name) {
+  return el.getAttribute(name);
+}
+
+function setAttr(el, name, value) {
+  return el.setAttribute(name, value);
+}
+
+function getActive(list) {
+  return each(list, (current) => {
+    if (current.classList.contains("isActive")) {
+      return current;
+    }
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
 
   const router = new HistoryRouter();
   router.route("/weather", () => {
     activate(query("section.Weather"));
-  }).route("/forecast", () => {
+  }).param("filter", (value) => {
+    activate(query(`.Panel__menuItem[data-name="filter"][data-value="${value}"]`));
+  }).param("flux", (value) => {
+    activate(query(`.Panel__menuItem[data-name="flux"][data-value="${value}"]`));
+  });
+
+  router.route("/forecast", () => {
     activate(query("section.Forecast"));
-  }).route("/sunspots", () => {
+  }).param("type", (value) => {
+    activate(query(`.Panel__menuItem[data-name="type"][data-value="${value}"]`));
+  });
+
+  router.route("/sunspots", () => {
     activate(query("section.Sunspots"));
-  }).route("/solar-cycle", () => {
+  });
+
+  router.route("/solar-cycle", () => {
     activate(query("section.SolarCycle"));
-  }).start();
+  });
+
+  // start routing.
+  router.start();
 
   // global navigation.
   queryAll(".Nav__item").map((current) => {
