@@ -17,19 +17,19 @@ block content
                     .Panel__header
                         .Panel__title EIT Filters
                         .Panel__menu
-                            a.Panel__menuItem(href="")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="171")
                                 .Value 171
                                 .Unit Å
-                            a.Panel__menuItem(href="")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="195")
                                 .Value 195
                                 .Unit Å
-                            a.Panel__menuItem.isActive(href="")
+                            a.Panel__menuItem.isActive(href="/weather",data-param-name="filter",data-param-value="284")
                                 .Value 284
                                 .Unit Å
-                            a.Panel__menuItem(href="")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="304")
                                 .Value 304
                                 .Unit Å
-                            a.Panel__menuItem(href="")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="corona")
                                 .Value Corona
                     .Panel__content
                         .Sun
@@ -51,10 +51,10 @@ block content
                     .Panel__header
                         .Panel__title Fluxes
                         .Panel__menu
-                            a.Panel__menuItem(href="") Solar Wind
-                            a.Panel__menuItem.isActive(href="") Particle Flux
-                            a.Panel__menuItem(href="") Electron Flux
-                            a.Panel__menuItem(href="") X-Ray Flux
+                            a.Panel__menuItem(href="/weather",data-param-name="flux",data-param-value="solar-wind") Solar Wind
+                            a.Panel__menuItem.isActive(href="/weather",data-param-name="flux",data-param-value="particle") Particle Flux
+                            a.Panel__menuItem(href="/weather",data-param-name="flux",data-param-value="electron") Electron Flux
+                            a.Panel__menuItem(href="/weather",data-param-name="flux",data-param-value="x-ray") X-Ray Flux
                     .Panel__content
                         .Graph
                             .Graph__content
@@ -98,9 +98,9 @@ block content
                     .Panel__header
                         .Panel__title 3-day Forecast
                         .Panel__menu
-                            a.Panel__menuItem(href="") Geomagnetic Activity
-                            a.Panel__menuItem.isActive(href="") Solar Radiation Activity
-                            a.Panel__menuItem(href="") Radio Blackout Activity
+                            a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="geomagnetic") Geomagnetic Activity
+                            a.Panel__menuItem.isActive(href="/forecast",data-param-name="type",data-param-value="solar-radiation") Solar Radiation Activity
+                            a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="radio-blackout") Radio Blackout Activity
                     .Panel__content
                         h2 Graphs
                     .Panel__footer

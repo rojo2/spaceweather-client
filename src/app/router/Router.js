@@ -1,16 +1,57 @@
-export class HistoryRouter {
+import queryString from "query-string";
+
+export class Router {
+
   constructor() {
-    this.routes = [];
     this.handlePopState = this.handlePopState.bind(this);
+
+    this.middleware = [];
+    this.routes = [];
+
+    this.notFoundDelegate = null;
+  }
+
+  createURL(href, query = null) {
+    const url = new URL(href);
+    if (query) {
+      url.search = "?" + queryString.stringify(Object.assign({}, queryString.parse(location.search), query));
+    }
+    return url.toString();
+  }
+
+  get path() {
+    return location.pathname;
+  }
+
+  get query() {
+    return queryString.parse(location.search);
   }
 
   handlePopState(e) {
-    console.log(e);
+    this.dispatch(e.state.url);
+  }
+
+  all(fn) {
+    this.middleware.push(fn);
+    return this;
+  }
+
+  route(re, fn) {
+    this.routes.push({
+      pattern: (re instanceof RegExp ? re : new RegExp("^" + re)),
+      delegate: fn
+    });
+    return this;
+  }
+
+  notFound(fn) {
+    this.notFoundDelegate = fn;
+    return this;
   }
 
   start() {
-    this.dispatch(location.pathname);
     window.addEventListener("popstate", this.handlePopState);
+    this.dispatch(location.href);
     return this;
   }
 
@@ -19,29 +60,32 @@ export class HistoryRouter {
     return this;
   }
 
-  route(re, fn) {
-    const pattern = (re instanceof RegExp ? re : new RegExp("^" + re));
-    this.routes.push({
-      pattern: pattern,
-      delegate: fn
-    });
-    return this;
-  }
-
   dispatch(url) {
-    if (/^https?:\/\//.test(url)) {
-      url = url.replace(/^https?:\/\//,"");
-      url = url.substr(url.indexOf("/"));
+    for (let index = 0; index < this.middleware.length; index++) {
+      const middleware = this.middleware[index];
+      middleware(this,url);
     }
 
     for (let index = 0; index < this.routes.length; index++) {
       const route = this.routes[index];
-      if (route.pattern.test(url)) {
-        route.delegate();
-        return true;
+      if (route.pattern.test(new URL(url).pathname)) {
+        route.delegate(this);
+        return this;
       }
     }
-    return false;
+
+    if (this.notFoundDelegate) {
+      this.notFoundDelegate(this);
+    }
+
+    return this;
+  }
+
+  replace(url) {
+    window.history.replaceState({
+      url
+    }, "", url);
+    return this.dispatch(url);
   }
 
   navigate(url) {
@@ -50,4 +94,6 @@ export class HistoryRouter {
     }, "", url);
     return this.dispatch(url);
   }
+
 }
+

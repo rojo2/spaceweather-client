@@ -1,18 +1,23 @@
-export function sound(src, options = {}) {
-  options = Object.assign({
-    volume: 1.0,
-    loop: false,
-    mute: false
-  }, options);
-
-  const element = document.createElement("audio");
-  element.src = src;
-  element.volume = options.volume;
-  element.loop = options.loop;
-  return element;
-}
-
 export function initSounds() {
+
+  function sound(src, options = {}) {
+    options = Object.assign({
+      volume: 1.0,
+      loop: false,
+      mute: false
+    }, options);
+
+    const element = document.createElement("audio");
+    element.src = src;
+    element.volume = options.volume;
+    element.loop = options.loop;
+    return element;
+  }
+
+  function handleMouseEnter(e) {
+    const over = sound("sounds/over.mp3");
+    over.play();
+  }
 
   document.addEventListener("visibilitychange", (e) => {
     if (document.visibilityState === "visible") {
@@ -25,13 +30,8 @@ export function initSounds() {
   const ambient = sound("sounds/background.mp3", { loop: true });
   ambient.play();
 
-  function handleMouseOver(e) {
-    const over = sound("sounds/over.mp3");
-    over.play();
-  }
-
   Array.prototype.slice.call(document.querySelectorAll("[class*=item], [class*=menuItem]")).map((el) => {
-    el.addEventListener("mouseover", handleMouseOver, false);
+    el.addEventListener("mouseenter", handleMouseEnter, false);
     return el;
   });
 
