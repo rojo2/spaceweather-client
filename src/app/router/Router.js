@@ -1,7 +1,13 @@
+import queryString from "query-string";
+
 export class HistoryRouter {
   constructor() {
     this.routes = [];
     this.handlePopState = this.handlePopState.bind(this);
+  }
+
+  get currentPath() {
+    return location.pathname;
   }
 
   handlePopState(e) {
@@ -44,10 +50,19 @@ export class HistoryRouter {
     return false;
   }
 
-  navigate(url) {
+  navigate(url, query = null) {
+
+    if (query) {
+      url += "?" + queryString.stringify(Object.assign(queryString.parse(location.search), query));
+      console.log(url);
+    }
+
     window.history.pushState({
       url
     }, "", url);
+
     return this.dispatch(url);
+
   }
+
 }

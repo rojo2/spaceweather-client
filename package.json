@@ -36,6 +36,7 @@
   },
   "dependencies": {
     "d3": "^3.5.11",
-    "gl-matrix": "^2.3.1"
+    "gl-matrix": "^2.3.1",
+    "query-string": "^3.0.0"
   }
 }

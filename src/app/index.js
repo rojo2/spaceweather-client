@@ -11,8 +11,15 @@ function queryAll(selector) {
   return Array.prototype.slice.apply(document.querySelectorAll(selector));
 }
 
-function siblings(el, fn) {
+function children(el, fn) {
+  for (let index = 0; index < el.children.length; index++) {
+    const current = el.children[index];
+    fn(current);
+  }
+  return el;
+}
 
+function siblings(el, fn) {
   let current = el.nextElementSibling;
   while (current) {
     fn(current);
@@ -24,13 +31,17 @@ function siblings(el, fn) {
     fn(current);
     current = current.previousElementSibling;
   }
+  return el;
 }
 
-function isActive(el) {
+function deactivate(el) {
+  el.classList.remove("isActive");
+  return el;
+}
+
+function activate(el) {
   el.classList.add("isActive");
-  siblings(el, (current) => {
-    current.classList.remove("isActive");
-  });
+  siblings(el, deactivate);
   return el;
 }
 
@@ -38,24 +49,38 @@ window.addEventListener("DOMContentLoaded", () => {
 
   const router = new HistoryRouter();
   router.route("/weather", () => {
-    isActive(query("section.Weather"));
+    activate(query("section.Weather"));
   }).route("/forecast", () => {
-    isActive(query("section.Forecast"));
+    activate(query("section.Forecast"));
   }).route("/sunspots", () => {
-    isActive(query("section.Sunspots"));
+    activate(query("section.Sunspots"));
   }).route("/solar-cycle", () => {
-    isActive(query("section.SolarCycle"));
+    activate(query("section.SolarCycle"));
   }).start();
 
-  queryAll(".Nav a").map((current) => {
+  // global navigation.
+  queryAll(".Nav__item").map((current) => {
     current.addEventListener("click", (e) => {
       e.preventDefault();
-      isActive(e.currentTarget);
+      activate(e.currentTarget);
       router.navigate(e.currentTarget.href);
     });
   });
 
-  //router.navigate("weather");
+  // panel navigation.
+  queryAll(".Panel__menuItem").map((current) => {
+    current.addEventListener("click", (e) => {
+      e.preventDefault();
+      activate(e.currentTarget);
+
+      const name = e.currentTarget.getAttribute("data-name"),
+            value = e.currentTarget.getAttribute("data-value");
+
+      router.navigate(e.currentTarget.href, {
+        [name]: value
+      });
+    });
+  });
 
   // init background.
   initBackground();
