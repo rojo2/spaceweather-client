@@ -1,4 +1,5 @@
 @import 'base.styl'
+@import 'graph.styl'
 
 // ----------------------------------------------------------
 // Base styles
@@ -494,8 +495,8 @@ p:first-line
 
 .Graph__content
     flex 1
+    position relative
     margin-bottom 2rem
-    border 1px solid $colorDim
 
 .Graph__legends
     flex 0 0 2rem
@@ -517,19 +518,6 @@ p:first-line
 .Graph__legendLabel
     font-size .875rem
 
-.Graph__area
-    fill $colorBase
-
-.Graph__line
-    stroke $colorBase
-    stroke-width 1px
-
-.Graph__axis
-    fill none
-    stroke $colorBase
-    shape-rendering crispEdges
-
-
 // ----------------------------------------------------------
 // Graph
 
@@ -543,6 +531,7 @@ p:first-line
     display flex
     align-items center
     justify-content center
+    z-index 100
 
 .Loader__spinner
     fill $colorBase

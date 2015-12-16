@@ -186,6 +186,7 @@ function graph(el, data, options = {}) {
 
   const svg = d3.select(container)
     .append("svg")
+    .attr("class", "Graph__image")
     .attr("width", "100%")
     .attr("height", "100%")
     .attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
@@ -219,6 +220,7 @@ function graph(el, data, options = {}) {
     .attr("class", "Graph__axis")
     .call(yAxis)
     .append("text")
+    .attr("class", "Graph__text")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
     .text("MeV");
