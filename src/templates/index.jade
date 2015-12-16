@@ -16,10 +16,15 @@ block content
         .Page__top
             .Logo AURORA
             .Nav
-                a.Nav__item.isActive(href="/weather") Weather
-                a.Nav__item(href="/sunspots") Sunspots
-                a.Nav__item(href="/solar-cycle") Solar cycle
-                a.Nav__item(href="/forecast") Forecast
+                a.Nav__item.isActive(href="/weather")
+                    .Nav__itemLabel Weather
+                a.Nav__item(href="/sunspots")
+                    .Nav__itemLabel Sunspots
+                a.Nav__item(href="/solar-cycle")
+                    .Nav__itemLabel Solar cycle
+                a.Nav__item(href="/forecast")
+                    .Nav__itemLabel Forecast
+                    .Nav__itemAlert
         .Page__content
             // Weather section
             section.Weather.isActive

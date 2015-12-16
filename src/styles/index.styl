@@ -117,16 +117,26 @@ p:first-line
     justify-content flex-end
 
 .Nav__item
+    position relative
     font-size 1.25rem
     display flex
     height 2rem
     align-items center
     text-transform uppercase
     margin-left .5rem
-    padding 0 1rem
+    padding 0 2rem
 
 .Nav__item.isActive
     @extend $NavActive
+
+.Nav__itemAlert
+    position absolute
+    top .5rem
+    right .5rem
+    background-color $colorTitle
+    width .5rem
+    height .5rem
+    border-radius .5rem
 
 // ----------------------------------------------------------
 // Controls
@@ -313,6 +323,12 @@ p:first-line
     margin-top 1px
     margin-left -.4rem
     background-color $colorHighlight
+
+.Timeline__mark:hover
+    .Timeline__markTop
+        border-top-color $colorHighlight
+    .Timeline__markBottom
+        border-bottom-color $colorHighlight
 
 .Timeline__markTop
 .Timeline__markBottom
@@ -535,10 +551,12 @@ p:first-line
 .Loader05
 .Loader06
     transform-origin 50% 50%
+    transform scaleY(0)
 
 .Loader.isActive
     opacity 1
     .Loader01
+
         animation AnimLoader 1s ease-in-out infinite alternate
     .Loader02
         animation AnimLoader 1s ease-in-out infinite alternate .1s
