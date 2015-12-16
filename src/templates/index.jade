@@ -85,7 +85,14 @@ block content
                     .Panel__header
                         .Panel__title Solar Cycle
                     .Panel__content
-                        h2 Graphs
+                        .Loader.isActive
+                            svg.Loader__spinner(viewBox="0 0 32 128", width="32", height="128")
+                                rect.Loader01(x="0", y="0", width="1", height="128")
+                                rect.Loader02(x="6", y="0", width="1", height="128")
+                                rect.Loader03(x="12", y="0", width="1", height="128")
+                                rect.Loader04(x="18", y="0", width="1", height="128")
+                                rect.Loader05(x="24", y="0", width="1", height="128")
+                                rect.Loader06(x="30", y="0", width="1", height="128")
                     .Panel__footer
                 .SolarCycle__description
                     .Text__header Lorem ipsum dolor sit amet
