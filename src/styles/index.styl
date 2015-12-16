@@ -186,7 +186,7 @@ p:first-line
     @extend $Panel__header
     &:before
     &:after
-        top -1px
+        top -2px
         @extend $Panel__decor
     &:before
         left 0
@@ -279,6 +279,7 @@ p:first-line
 
 .Timeline__mark
     width 2px
+    cursor pointer
     height 1rem
     position absolute
     top 0
@@ -287,8 +288,8 @@ p:first-line
 
 .Timeline__currentDate
     margin-top 1rem
-    font-size 1rem
-    color $ColorDim
+    font-size 1.25rem
+    color $colorBase
 
 // ----------------------------------------------------------
 // Forecast Section
@@ -405,7 +406,7 @@ p:first-line
 
 .Text__header:before
     @extend $Panel__decor
-    top 0
+    top -.125rem
     right 0
 
 .Text__body
@@ -413,7 +414,7 @@ p:first-line
 
 .Text__body:after
     @extend $Panel__decor
-    bottom 0
+    bottom -.125rem
     right 0
 
 // ----------------------------------------------------------
