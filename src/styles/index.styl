@@ -245,14 +245,16 @@ p:first-line
 
 .Sun
     position absolute
-    top 0
+    top 1rem
     left 0
+    bottom 1rem
     width 100%
-    height 100%
+    //height 100%
 .Sun__container
     width 100%
     height 100%
     background-color black
+    border 1px solid $colorDim
 .Sun__date
     position absolute
     right 0
@@ -272,16 +274,16 @@ p:first-line
     margin 1rem 0 1rem
     flex 1 0 auto
 .Timeline__progress
-    height 1.5rem
+    height 1rem
     position relative
 .Timeline__progress:before
 .Timeline__progress:after
     position absolute
     content ''
-    top .75rem
-    bottom 0
+    top 0
+    height .5rem
     width 1px
-    background-color $colorDim
+    background-color $colorBase
 .Timeline__progress:before
     left 0
 .Timeline__progress:after
@@ -289,8 +291,8 @@ p:first-line
 .Timeline__bar
     position absolute
     width 100%
-    top .75rem
-    margin-top -1px
+    top 0
+    //margin-top -1px
     height 2px
     background-color $colorDim
 
@@ -307,7 +309,8 @@ p:first-line
     cursor pointer
     height 1.5rem
     position absolute
-    top 0
+    top -.75rem
+    margin-top 1px
     margin-left -.4rem
     background-color $colorHighlight
 
@@ -327,11 +330,10 @@ p:first-line
 .Timeline__dates
     display flex
     font-size .875rem
-    padding-top .5rem
+    height 1rem
 
 .Timeline__dateCurrent
     flex 1 0 50%
-    font-size 1.25rem
     text-align center
     color $colorHighlight
 .Timeline__dateStart
@@ -467,7 +469,32 @@ p:first-line
     right 0
 
 // ----------------------------------------------------------
-// Sunspots
+// Graph
 
+.Graph
+    flex 1
+    display flex
+    flex-direction column
 
+.Graph__content
+    flex 1
 
+.Graph__legends
+    flex 0 0 2rem
+    display flex
+    padding-top 1rem
+    border-top 1px solid $colorDim
+
+.Graph__legend
+    display flex
+    align-items center
+    margin-right 2rem
+
+.Graph__legendColor
+    width 1rem
+    height .5rem
+    background-color $colorTitle
+    margin-right .5rem
+
+.Graph__legendLabel
+    font-size .875rem

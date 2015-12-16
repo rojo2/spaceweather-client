@@ -31,7 +31,7 @@ block content
                                 .Unit Å
                             a.Panel__menuItem(href="")
                                 .Value Corona
-                    .Panel__content--noPadding
+                    .Panel__content
                         .Sun
                             .Sun__container
                                 img.Sun__image(src="images/giphy.gif")
@@ -56,7 +56,15 @@ block content
                             a.Panel__menuItem(href="") Electron Flux
                             a.Panel__menuItem(href="") X-Ray Flux
                     .Panel__content
-                        h2 Graph
+                        .Graph
+                            .Graph__content
+                            .Graph__legends
+                                a.Graph__legend(href="#")
+                                    .Graph__legendColor
+                                    .Graph__legendLabel P>10MeV
+                                a.Graph__legend(href="#")
+                                    .Graph__legendColor
+                                    .Graph__legendLabel P>100MeV
                     .Panel__footer
             // Sunspots
             section.Sunspots
