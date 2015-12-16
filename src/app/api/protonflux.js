@@ -2,10 +2,14 @@ import {config} from "./config";
 import {url} from "./url";
 import {request} from "../http/request";
 
-export function getProtonFlux() {
-  return request(url("protonflux/?format=json"), config.CREDENTIALS);
+export function getProtonFlux(data = {}) {
+  return request(url("protonflux", Object.assign(data, {
+    format: "json"
+  })), config.CREDENTIALS);
 }
 
-export function getProtonFluxTypes() {
-  return request(url("ptypes/?format=json"), config.CREDENTIALS);
+export function getProtonFluxTypes(data = {}) {
+  return request(url("ptypes", Object.assign(data, {
+    format: "json"
+  })), config.CREDENTIALS);
 }

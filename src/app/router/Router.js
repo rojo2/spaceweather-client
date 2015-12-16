@@ -49,7 +49,10 @@ export class Router {
     return this;
   }
 
-  start() {
+  start(fn = null) {
+    if (typeof fn === "function") {
+      fn(this);
+    }
     window.addEventListener("popstate", this.handlePopState);
     this.dispatch(location.href);
     return this;
@@ -79,6 +82,16 @@ export class Router {
     }
 
     return this;
+  }
+
+  redirect(query = {}) {
+    return this.replace(this.createURL(location.href, query));
+  }
+
+  redirectTo(path, query = {}) {
+    const newURL = new URL(location.href);
+    newURL.pathname = path;
+    return this.replace(this.createURL(newURL.toString(), query));
   }
 
   replace(url) {
