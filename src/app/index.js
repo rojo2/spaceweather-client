@@ -1,7 +1,7 @@
 import API from "./api";
 import {initBackground} from "./ui/background";
 import {initSounds} from "./ui/sounds";
-import {HistoryRouter} from "./router/Router";
+import {Router} from "./router/Router";
 
 function query(selector) {
   return document.querySelector(selector);
@@ -61,6 +61,10 @@ function setAttr(el, name, value) {
   return el.setAttribute(name, value);
 }
 
+function hasAttr(el, name) {
+  return el.hasAttribute(name);
+}
+
 function getActive(list) {
   return each(list, (current) => {
     if (current.classList.contains("isActive")) {
@@ -71,53 +75,79 @@ function getActive(list) {
 
 window.addEventListener("DOMContentLoaded", () => {
 
-  const router = new HistoryRouter();
-  router.route("/weather", () => {
-    activate(query("section.Weather"));
-  }).param("filter", (value) => {
-    activate(query(`.Panel__menuItem[data-name="filter"][data-value="${value}"]`));
-  }).param("flux", (value) => {
-    activate(query(`.Panel__menuItem[data-name="flux"][data-value="${value}"]`));
-  });
+  const router = new Router();
+  router
+  .all((url) => {
 
-  router.route("/forecast", () => {
-    activate(query("section.Forecast"));
-  }).param("type", (value) => {
-    activate(query(`.Panel__menuItem[data-name="type"][data-value="${value}"]`));
-  });
+  }).route("/weather", (router) => {
+    if (!router.query.filter && !router.query.flux) {
+      console.log("redirecting");
+      return router.replace(router.createURL(location.href, {
+        filter: 171,
+        flux: "solar-wind"
+      }));
+    }
 
-  router.route("/sunspots", () => {
-    activate(query("section.Sunspots"));
-  });
+    activate(query(".Weather"));
+    activate(query(`[data-param-name="filter"][data-param-value="${router.query.filter}"]`));
+    activate(query(`[data-param-name="flux"][data-param-value="${router.query.flux}"]`));
 
-  router.route("/solar-cycle", () => {
-    activate(query("section.SolarCycle"));
-  });
+  }).route("/sunspots", (router) => {
 
-  // start routing.
-  router.start();
+    console.log("sunspots");
+    activate(query(".Sunspots"));
 
-  // global navigation.
-  queryAll(".Nav__item").map((current) => {
+  }).route("/solar-cycle", (router) => {
+
+    console.log("solar-cycle");
+    activate(query(".SolarCycle"));
+
+  }).route("/forecast", (router) => {
+
+    if (!router.query.type) {
+      return router.replace(router.createURL(location.href, {
+        type: "geomagnetic"
+      }));
+    }
+
+    console.log("forecast");
+    activate(query(".Forecast"));
+    activate(query(`[data-param-name="type"][data-param-value="${router.query.type}"]`));
+
+  }).notFound((router) => {
+
+    // TODO: Redirigir a /weather.
+    const newURL = new URL(location.href);
+    newURL.pathname = "/weather";
+
+    return router.replace(router.createURL(newURL.toString(), {
+      filter: 171,
+      flux: "solar-wind"
+    }));
+
+  }).start();
+
+  // start navigation.
+  queryAll("a").map((current) => {
     current.addEventListener("click", (e) => {
+
       e.preventDefault();
       activate(e.currentTarget);
-      router.navigate(e.currentTarget.href);
-    });
-  });
 
-  // panel navigation.
-  queryAll(".Panel__menuItem").map((current) => {
-    current.addEventListener("click", (e) => {
-      e.preventDefault();
-      activate(e.currentTarget);
+      let url;
+      if (hasAttr(e.currentTarget, "data-param-name") && hasAttr(e.currentTarget, "data-param-value")) {
+        const name = getAttr(e.currentTarget, "data-param-name"),
+              value = getAttr(e.currentTarget, "data-param-value");
 
-      const name = e.currentTarget.getAttribute("data-name"),
-            value = e.currentTarget.getAttribute("data-value");
+        url = router.createURL(e.currentTarget.href, {
+          [name]: value
+        });
+      } else {
+        url = router.createURL(e.currentTarget.href);
+      }
 
-      router.navigate(e.currentTarget.href, {
-        [name]: value
-      });
+      router.navigate(url.toString());
+
     });
   });
 

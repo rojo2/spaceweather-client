@@ -1,69 +1,25 @@
 import queryString from "query-string";
 
-class Route {
-  constructor(re, delegate) {
-    const pattern = (re instanceof RegExp ? re : new RegExp("^" + re));
+export class Router {
 
-    this.pattern = pattern;
-    this.delegate = delegate;
-    this.params = {};
-  }
-
-  get currentPath() {
-    return location.pathname;
-  }
-
-  get query() {
-    return queryString.parse(location.search);
-  }
-
-  param(param, delegate) {
-    this.params[param] = delegate;
-    return this;
-  }
-
-  match(url) {
-    return this.pattern.test(url);
-  }
-
-  dispatch(url) {
-
-    const index = url.indexOf("?");
-    if (index > -1) {
-
-      const path = url.substr(0, index);
-      this.delegate();
-
-      const query = queryString.parse(url.substr(index));
-
-      const names = Object.keys(query);
-      for (let index = 0; index < names.length; index++) {
-        const name = names[index],
-              value = query[name];
-
-        if (name in this.params) {
-          const delegate = this.params[name];
-          delegate(value);
-        }
-      }
-
-    } else {
-
-      this.delegate();
-
-    }
-
-  }
-
-}
-
-export class HistoryRouter {
   constructor() {
-    this.routes = [];
     this.handlePopState = this.handlePopState.bind(this);
+
+    this.middleware = [];
+    this.routes = [];
+
+    this.notFoundDelegate = null;
   }
 
-  get currentPath() {
+  createURL(href, query = null) {
+    const url = new URL(href);
+    if (query) {
+      url.search = "?" + queryString.stringify(Object.assign({}, queryString.parse(location.search), query));
+    }
+    return url.toString();
+  }
+
+  get path() {
     return location.pathname;
   }
 
@@ -75,9 +31,27 @@ export class HistoryRouter {
     this.dispatch(e.state.url);
   }
 
+  all(fn) {
+    this.middleware.push(fn);
+    return this;
+  }
+
+  route(re, fn) {
+    this.routes.push({
+      pattern: (re instanceof RegExp ? re : new RegExp("^" + re)),
+      delegate: fn
+    });
+    return this;
+  }
+
+  notFound(fn) {
+    this.notFoundDelegate = fn;
+    return this;
+  }
+
   start() {
-    this.dispatch(location.href);
     window.addEventListener("popstate", this.handlePopState);
+    this.dispatch(location.href);
     return this;
   }
 
@@ -86,44 +60,40 @@ export class HistoryRouter {
     return this;
   }
 
-  route(re, fn) {
-    const route = new Route(re, fn);
-    this.routes.push(route);
-    return route;
-  }
-
   dispatch(url) {
-    if (/^https?:\/\//.test(url)) {
-      url = url.replace(/^https?:\/\//,"");
-      url = url.substr(url.indexOf("/"));
+    for (let index = 0; index < this.middleware.length; index++) {
+      const middleware = this.middleware[index];
+      middleware(this,url);
     }
 
     for (let index = 0; index < this.routes.length; index++) {
       const route = this.routes[index];
-      if (route.match(url)) {
-        route.dispatch(url);
-        return true;
+      if (route.pattern.test(new URL(url).pathname)) {
+        route.delegate(this);
+        return this;
       }
     }
-    return false;
-  }
 
-  replace(url, query = null) {
-    if (query) {
-      url += "?" + queryString.stringify(Object.assign({}, this.query, query));
+    if (this.notFoundDelegate) {
+      this.notFoundDelegate(this);
     }
-    this.dispatch(url);
-    window.history.replaceState({ url }, "", url);
+
     return this;
   }
 
-  navigate(url, query = null) {
-    if (query) {
-      url += "?" + queryString.stringify(Object.assign({}, this.query, query));
-    }
-    this.dispatch(url);
-    window.history.pushState({ url }, "", url);
-    return this;
+  replace(url) {
+    window.history.replaceState({
+      url
+    }, "", url);
+    return this.dispatch(url);
+  }
+
+  navigate(url) {
+    window.history.pushState({
+      url
+    }, "", url);
+    return this.dispatch(url);
   }
 
 }
+
