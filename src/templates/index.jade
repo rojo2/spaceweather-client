@@ -44,6 +44,7 @@ block content
                     .Panel__content
                         .Sun
                             .Sun__container
+                                +loader("#sun")
                                 img.Sun__image(src="images/giphy.gif")
                     .Panel__footer
                         .Timeline
@@ -116,6 +117,7 @@ block content
                             a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="radio-blackout") Radio Blackout Activity
                     .Panel__content
                         h2 Graphs
+                        +loader("#forecast")
                         .Graph
                             .Graph__content
                     .Panel__footer

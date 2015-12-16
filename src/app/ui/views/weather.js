@@ -18,8 +18,6 @@ export function view(router) {
   utils.activate(utils.query(`[data-param-name="filter"][data-param-value="${router.query.filter}"]`));
   utils.activate(utils.query(`[data-param-name="flux"][data-param-value="${router.query.flux}"]`));
 
-  console.log("heY!");
-
   switch(router.query.flux) {
     default:
     case "solar-wind":
