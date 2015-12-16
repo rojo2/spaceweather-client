@@ -12,7 +12,7 @@ block content
                 a.Nav__item(href="/forecast") Forecast
         .Page__content
             // Weather section
-            section.Weather
+            section.Weather.isActive
                 .Weather__EITFilters
                     .Panel__header
                         .Panel__title EIT Filters
@@ -31,9 +31,22 @@ block content
                                 .Unit Å
                             a.Panel__menuItem(href="")
                                 .Value Corona
-                    .Panel__content
+                    .Panel__content--noPadding
                         .Sun
-                            img.Sun__image(src="images/giphy.gif")
+                            .Sun__container
+                                img.Sun__image(src="images/giphy.gif")
+                    .Panel__footer
+                        .Timeline
+                            .Timeline__progress
+                                .Timeline__bar
+                                    .Timeline__fill(style="transform: scaleX(0.44);")
+                                .Timeline__mark(style="left: 44%;")
+                                    .Timeline__markTop
+                                    .Timeline__markBottom
+                            .Timeline__dates
+                                .Timeline__dateStart 2015-12-24 12:45
+                                .Timeline__dateCurrent 2015-12-24 12:45
+                                .Timeline__dateEnd 2015-12-25 14:45
                 .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes
@@ -44,13 +57,15 @@ block content
                             a.Panel__menuItem(href="") X-Ray Flux
                     .Panel__content
                         h2 Graph
+                    .Panel__footer
             // Sunspots
-            section.Sunspots.isActive
+            section.Sunspots
                 .Sunspots__image
                     .Panel__header
                         .Panel__title Sunspots
                     .Panel__content
                         h2 Graph
+                    .Panel__footer
                 .Sunspots__description
                     .Text__header Lorem ipsum dolor sit amet
                     .Text__body
@@ -63,6 +78,7 @@ block content
                         .Panel__title Solar Cycle
                     .Panel__content
                         h2 Graphs
+                    .Panel__footer
                 .SolarCycle__description
                     .Text__header Lorem ipsum dolor sit amet
                     .Text__body
@@ -79,6 +95,7 @@ block content
                             a.Panel__menuItem(href="") Radio Blackout Activity
                     .Panel__content
                         h2 Graphs
+                    .Panel__footer
                 .Forecast__alerts
                     .Panel__header
                         .Panel__title Alerts
@@ -129,6 +146,19 @@ block content
                                     .Alert__message Geomagnetic K-index of 4 expected
                                 .Alert__extendedInfo
                                     .Alert__payload Extension to Serial Number: 2736\r\nValid From: 2015 Dec 09 2005 UTC\r\nNow Valid Until: 2015 Dec 12 0400 UTC\r\nWarning Condition: Persistence\r\nwww.swpc.noaa.gov/noaa-scales-explanation\r\nPotential Impacts: Area of impact primarily poleward of 65 degrees Geomagnetic Latitude.\r\nInduced Currents - Weak power grid fluctuations can occur.\r\nAurora - Aurora may be visible at high latitudes such as Canada and Alaska.
+                    .Panel__footer
         .Page__bottom
             .Controls
-                a.Controls__sound(href="") Audio
+                a.Button--sound.isOn(href="")
+                    svg.Icon--sound(viewBox="0 0 22 16", x="0", y="0", width="22", height="16")
+                        rect.Sound1(x="0", y="0", width="1", height="16")
+                        rect.Sound2(x="3", y="0", width="1", height="16")
+                        rect.Sound3(x="6", y="0", width="1", height="16")
+                        rect.Sound1(x="9", y="0", width="1", height="16")
+                        rect.Sound4(x="12", y="0", width="1", height="16")
+                        rect.Sound2(x="15", y="0", width="1", height="16")
+                        rect.Sound1(x="18", y="0", width="1", height="16")
+                        rect.Sound3(x="21", y="0", width="1", height="16")
+                    .Button__label Audio On
+
+

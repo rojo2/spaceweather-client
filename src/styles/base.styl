@@ -1,19 +1,20 @@
 // ----------------------------------------------------------
 // Variables
 
-$hueGeneral = 182
+$hueGeneral = 164
+$hueAccent = 24
 
-$colorDim = hsla($hueGeneral, 10%, 60%, 0.25)
-$colorBase = hsla($hueGeneral, 10%, 60%, 1)
-$colorLink = hsla($hueGeneral, 40%, 80%, 1)
-$colorHighlight = hsla($hueGeneral, 10%, 95%, 1)
-$colorTitle = hsla(32, 60%, 60%, 1)
+$colorDim = hsla($hueGeneral, 25%, 50%, 0.2)
+$colorBase = hsla($hueGeneral, 25%, 50%, 1)
+$colorLink = hsla($hueGeneral, 60%, 80%, 1)
+$colorHighlight = hsla($hueGeneral, 60%, 95%, 1)
+$colorTitle = hsla($hueAccent, 80%, 60%, 1)
 
-$colorAlert = hsla(32, 60%, 50%, 1)
+$colorAlert = hsla($hueAccent, 60%, 50%, 1)
 $colorAlertSummary = hsla(48, 40%, 50%, 1)
 $colorAlertWarning = hsla(16, 90%, 50%, 1)
 $colorAlertCancelWarning = hsla(92, 20%, 50%, 1)
-$colorAlertWatch = hsla(32, 60%, 50%, 1)
+$colorAlertWatch = hsla($hueAccent, 60%, 50%, 1)
 
 $easeInCubic = cubic-bezier(0.550, 0.055, 0.675, 0.190)
 
@@ -49,7 +50,11 @@ $MenuItem
     align-items center
 
 $ControlButton
+    text-transform uppercase
     color $colorBase
+    font-size .75rem
+    display flex
+    align-items center
 
 $ControlButton--active
     color $colorHighlight
@@ -88,7 +93,12 @@ $Panel
 
 $Panel--40
     @extend $Panel
-    flex 0 0 40%
+    flex 0 1 40%
+    display flex
+
+$Panel--50
+    @extend $Panel
+    flex 0 1 50%
     display flex
 
 $Panel--60
@@ -102,12 +112,14 @@ $Panel__header
     display flex
     align-items center
     border-bottom 1px solid $colorDim
+    background-color alpha($colorDim, 0.1)
     border-top 1px solid $colorDim
 $Panel__decor
     position absolute
     content ''
-    width 1rem
-    height 1px
+    width .25rem
+    height .25rem
+    transform rotate(45deg)
     background-color $colorBase
 $Panel__decor--long
     position absolute
@@ -133,6 +145,19 @@ $Panel__content
     flex 1 0
     position relative
     display flex
+    flex-direction column
+    padding 1rem 0
+
+$Panel__content--noPadding
+    @extend $Panel__content
+    padding 0
+
+$Panel__footer
+    flex 0 0 auto
+    position relative
+    //height 3rem
+    display flex
+    align-items center
     border-bottom 1px solid $colorDim
 
 // ----------------------------------------------------------

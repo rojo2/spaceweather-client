@@ -1,9 +1,9 @@
 
 import {mat4,vec3} from "gl-matrix";
 
-const NUM_POINTS = 100000;
-const TIME = 50000;
-const ANGLE_INCREMENT = 0.000125;
+const NUM_POINTS = 20000;
+const TIME = 100000;
+const ANGLE_INCREMENT = 0.00033;
 
 export function initBackground() {
 
