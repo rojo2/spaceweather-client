@@ -498,3 +498,58 @@ p:first-line
 
 .Graph__legendLabel
     font-size .875rem
+
+// ----------------------------------------------------------
+// Graph
+
+.Loader
+    position absolute
+    top 0
+    left 0
+    width 100%
+    height 100%
+    background-color black
+    display flex
+    align-items center
+    justify-content center
+
+.Loader__spinner
+    fill $colorBase
+.Loader01
+.Loader02
+.Loader03
+.Loader04
+.Loader05
+.Loader06
+    transform-origin 50% 50%
+
+.Loader.isActive
+    opacity 1
+    .Loader01
+        animation AnimLoader 1s ease-in-out infinite alternate
+    .Loader02
+        animation AnimLoader 1s ease-in-out infinite alternate .1s
+    .Loader03
+        animation AnimLoader 1s ease-in-out infinite alternate .2s
+    .Loader04
+        animation AnimLoader 1s ease-in-out infinite alternate .3s
+    .Loader05
+        animation AnimLoader 1s ease-in-out infinite alternate .4s
+    .Loader06
+        animation AnimLoader 1s ease-in-out infinite alternate .5s
+
+.Loader:not(.isActive)
+    opacity 0
+    pointer-events none
+
+
+@keyframes AnimLoader
+    0%
+        fill $colorBase
+        transform scaleY(0.1)
+    50%
+        fill $colorTitle
+        transform scaleY(1)
+    100%
+        fill $colorBase
+        transform scaleY(0.1)
