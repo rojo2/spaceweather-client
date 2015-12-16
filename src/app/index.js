@@ -47,8 +47,6 @@ window.addEventListener("DOMContentLoaded", () => {
     isActive(query("section.SolarCycle"));
   }).start();
 
-  window.router = router;
-
   queryAll(".Nav a").map((current) => {
     current.addEventListener("click", (e) => {
       e.preventDefault();
