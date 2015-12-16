@@ -1,5 +1,40 @@
 import d3 from "d3";
 
+export function timeline(el) {
+  const progress = el,
+        fill = query(".Timeline__fill", progress),
+        mark = query(".Timeline__mark", progress);
+
+  function updateFromEvent(e) {
+    const rect = progress.getBoundingClientRect();
+
+    const value = Math.max(0,Math.min(1,(e.clientX - rect.left) / rect.width));
+    mark.style.left = (value * 100) + "%";
+    fill.style.transform = `scaleX(${value})`;
+  }
+
+  function handleClick(e) {
+    updateFromEvent(e);
+  }
+
+  function handleMove(e) {
+    updateFromEvent(e);
+  }
+
+  function handleDown(e) {
+    document.addEventListener("mousemove", handleMove);
+    document.addEventListener("mouseup", handleUp);
+  }
+
+  function handleUp(e) {
+    document.removeEventListener("mousemove", handleMove);
+    document.removeEventListener("mouseup", handleUp);
+  }
+
+  mark.addEventListener("mousedown", handleDown);
+  progress.addEventListener("click", handleClick);
+}
+
 export function query(selector, el = document) {
   return el.querySelector(selector);
 }
@@ -87,7 +122,12 @@ export function remove(el, child) {
   return el;
 }
 
-export function fluxGraph(el, data) {
+function graph(el, data, options = {}) {
+
+  options = Object.assign({
+    yStart: Infinity,
+    yEnd: Infinity
+  }, options);
 
   const container = query(".Graph__content", el);
   clear(container);
@@ -151,7 +191,11 @@ export function fluxGraph(el, data) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([1,120000]);
+  if (Number.isFinite(options.yStart) && Number.isFinite(options.yEnd)) {
+    y.domain([options.yStart,options.yEnd]);
+  } else {
+    y.domain(d3.extent(data, function(d) { return d.value; }));
+  }
 
   svg.append("path")
     .datum(data)
@@ -176,5 +220,31 @@ export function fluxGraph(el, data) {
     .style("text-anchor", "end")
     .text("MeV");
 
+  return el;
 
+}
+
+export function sunspotsGraph(el, data) {
+  return graph(el, data);
+}
+
+export function xrayFluxGraph(el, data) {
+  return graph(el, data, {
+    yStart: 0.000000000000001,
+    yEnd: 0.00006
+  });
+}
+
+export function protonFluxGraph(el, data) {
+  return graph(el, data, {
+    yStart: 1,
+    yEnd: 120
+  });
+}
+
+export function electronFluxGraph(el, data) {
+  return graph(el, data, {
+    yStart: 1,
+    yEnd: 120000
+  });
 }

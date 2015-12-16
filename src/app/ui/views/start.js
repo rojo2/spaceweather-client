@@ -25,6 +25,8 @@ export function view(router) {
     });
   });
 
+  utils.timeline(utils.query(".Weather .Timeline"));
+
   // init background.
   initBackground();
   initSounds();

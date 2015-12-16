@@ -26,11 +26,11 @@ export function view(router) {
       break;
 
     case "particle":
-      API.getXrayFlux({
+      API.getProtonFlux({
         ptype: 1
       }).then((res) => {
         utils.deactivate(utils.query(".Weather__fluxes .Loader", container));
-        utils.fluxGraph(container, res.body);
+        utils.protonFluxGraph(container, res.body);
       });
       break;
 
@@ -39,7 +39,7 @@ export function view(router) {
         etype: 2
       }).then((res) => {
         utils.deactivate(utils.query(".Weather__fluxes .Loader", container));
-        utils.fluxGraph(container, res.body);
+        utils.electronFluxGraph(container, res.body);
       });
       break;
 
@@ -48,7 +48,7 @@ export function view(router) {
         xtype: 2
       }).then((res) => {
         utils.deactivate(utils.query(".Weather__fluxes .Loader", container));
-        utils.fluxGraph(container, res.body);
+        utils.xrayFluxGraph(container, res.body);
       });
       break;
   }

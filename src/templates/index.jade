@@ -97,6 +97,8 @@ block content
                         .Panel__title Solar Cycle
                     .Panel__content
                         +loader("#solar-cycle")
+                        .Graph
+                            .Graph__content
                     .Panel__footer
                 .SolarCycle__description
                     .Text__header Lorem ipsum dolor sit amet
@@ -114,6 +116,8 @@ block content
                             a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="radio-blackout") Radio Blackout Activity
                     .Panel__content
                         h2 Graphs
+                        .Graph
+                            .Graph__content
                     .Panel__footer
                 .Forecast__alerts
                     .Panel__header
