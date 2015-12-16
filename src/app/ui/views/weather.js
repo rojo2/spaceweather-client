@@ -14,9 +14,17 @@ export function view(router) {
 
   utils.activate(container);
   utils.activate(utils.query("[href=\"/weather\"]"));
+  utils.activate(utils.query(".Weather__EITFilters .Loader", container));
   utils.activate(utils.query(".Weather__fluxes .Loader", container));
   utils.activate(utils.query(`[data-param-name="filter"][data-param-value="${router.query.filter}"]`));
   utils.activate(utils.query(`[data-param-name="flux"][data-param-value="${router.query.flux}"]`));
+
+  API.getImageChannels({
+    channeltype: router.query.filter
+  }).then((res) => {
+    console.log(res.body);
+    utils.deactivate(utils.query(".Weather__EITFilters .Loader", container));
+  });
 
   switch(router.query.flux) {
     default:

@@ -80,6 +80,9 @@ export function deactivate(el) {
 }
 
 export function activate(el) {
+  if (!el) {
+    debugger;
+  }
   el.classList.add("isActive");
   siblings(el, deactivate);
   return el;

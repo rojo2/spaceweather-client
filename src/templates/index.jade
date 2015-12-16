@@ -27,24 +27,24 @@ block content
                     .Panel__header
                         .Panel__title EIT Filters
                         .Panel__menu
-                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="171")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="1")
                                 .Value 171
                                 .Unit Å
-                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="195")
-                                .Value 195
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="2")
+                                .Value 193
                                 .Unit Å
-                            a.Panel__menuItem.isActive(href="/weather",data-param-name="filter",data-param-value="284")
-                                .Value 284
+                            a.Panel__menuItem.isActive(href="/weather",data-param-name="filter",data-param-value="3")
+                                .Value 211
                                 .Unit Å
-                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="304")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="4")
                                 .Value 304
                                 .Unit Å
-                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="corona")
+                            a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="5")
                                 .Value Corona
                     .Panel__content
+                        +loader("#sun")
                         .Sun
                             .Sun__container
-                                +loader("#sun")
                                 img.Sun__image(src="images/giphy.gif")
                     .Panel__footer
                         .Timeline
