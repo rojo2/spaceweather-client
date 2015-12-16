@@ -31,13 +31,15 @@ block content
                                 .Unit Å
                             a.Panel__menuItem(href="")
                                 .Value Corona
-                    .Panel__content
+                    .Panel__content--noPadding
                         .Sun
-                            img.Sun__image(src="images/giphy.gif")
+                            .Sun__container
+                                img.Sun__image(src="images/giphy.gif")
                     .Panel__footer
                         .Timeline
                             .Timeline__base
                             .Timeline__mark
+                            .Timeline__currentDate 2015-12-16 03:12
                 .Weather__fluxes
                     .Panel__header
                         .Panel__title Fluxes
@@ -140,4 +142,16 @@ block content
                     .Panel__footer
         .Page__bottom
             .Controls
-                a.Controls__sound(href="") Audio
+                a.Button--sound.isOn(href="")
+                    svg.Icon--sound(viewBox="0 0 22 16", x="0", y="0", width="22", height="16")
+                        rect.Sound1(x="0", y="0", width="1", height="16")
+                        rect.Sound2(x="3", y="0", width="1", height="16")
+                        rect.Sound3(x="6", y="0", width="1", height="16")
+                        rect.Sound1(x="9", y="0", width="1", height="16")
+                        rect.Sound4(x="12", y="0", width="1", height="16")
+                        rect.Sound2(x="15", y="0", width="1", height="16")
+                        rect.Sound1(x="18", y="0", width="1", height="16")
+                        rect.Sound3(x="21", y="0", width="1", height="16")
+                    .Button__label Audio On
+
+

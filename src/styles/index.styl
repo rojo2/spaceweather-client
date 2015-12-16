@@ -97,8 +97,9 @@ p:first-line
         right 0
 
 .Page__content
-    flex 1 0
+    flex 1 1
     display flex
+    align-items stretch
 // ----------------------------------------------------------
 // Nav
 
@@ -136,11 +137,47 @@ p:first-line
     bottom 2rem
     right 2rem
 
-.Controls__sound
+.Button--sound
     @extend $ControlButton
+    .Icon--sound
+        margin-right .5rem
+        fill $colorDim
 
-.Controls__sound.isOn
+
+.Button--sound.isOn
     @extend $ControlButton--active
+    .Icon--sound
+        fill $colorHighlight
+    .Sound1
+        transform-origin 50% 50%
+        animation AnimSound 1s ease-in-out infinite
+    .Sound2
+        transform-origin 50% 50%
+        animation AnimSound .9s ease-in-out infinite
+    .Sound3
+        transform-origin 50% 50%
+        animation AnimSound .7s ease-in-out infinite
+    .Sound4
+        transform-origin 50% 50%
+        animation AnimSound .2s ease-in-out infinite
+
+@keyframes AnimSound
+    0%
+        transform scaleY(0.1)
+        fill $colorBase
+    20%
+        transform scaleY(1)
+    40%
+        transform scaleY(0.4)
+    60%
+        transform scaleY(0.75)
+    80%
+        transform scaleY(0.2)
+        fill $colorBase
+    100%
+        transform scaleY(0.1)
+        fill $colorBase
+
 
 // ----------------------------------------------------------
 // Panel
@@ -200,40 +237,58 @@ p:first-line
 .Weather__fluxes
     @extend $Panel--60
 
+.Panel__content--noPadding
+    @extend $Panel__content--noPadding
 
 // ----------------------------------------------------------
 // Sun visualization
 
 .Sun
-    flex 1
-    display flex
-    align-items center
-    justify-content center
-.Sun__image
+    position absolute
+    top 0
+    left 0
     width 100%
-    height auto
+    height 100%
+.Sun__container
+    width 100%
+    height 100%
+    background-color black
+.Sun__date
+    position absolute
+    right 0
+    font-size 1.25rem
+    bottom 1rem
+    color $colorBase
+.Sun__image
+    display block
+    margin auto
+    max-width 100%
+    max-height 100%
 
 // ----------------------------------------------------------
 // Timeline
 
 .Timeline
+    margin 1rem 0 0
     position relative
-    flex 1
-    border-top 1px solid $colorDim
-    border-bottom 1px solid $colorDim
-
+    padding 1rem 0
+    flex 1 0 auto
 .Timeline__base
-    height 0.5rem
-    margin .5rem 0
+    height 1px
     background-color $colorDim
 
 .Timeline__mark
-    width 1px
-    height 100%
+    width 2px
+    height 1rem
     position absolute
     top 0
     left 40%
     background-color $colorHighlight
+
+.Timeline__currentDate
+    margin-top 1rem
+    font-size 1rem
+    color $ColorDim
 
 // ----------------------------------------------------------
 // Forecast Section
@@ -335,7 +390,6 @@ p:first-line
 .SolarCycle.isActive
 .Forecast.isActive
     @extend $Section--active
-
 
 .Sunspots__image
 .SolarCycle__graph
