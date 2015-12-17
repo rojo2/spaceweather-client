@@ -486,7 +486,10 @@ export function sunspots(el, data) {
   const container = query(".Graph__content", el);
   clear(container);
 
-  const r = rect(container);
+  const r = rect(container),
+        hw = r.width * 0.5,
+        hh = r.height * 0.5,
+        radius = Math.min(hw,hh);
 
   const svg = d3.select(container)
     .append("svg")
@@ -497,17 +500,21 @@ export function sunspots(el, data) {
     .append("g");
 
   data.forEach((sunspot) => {
+
     const position = parseSunspot(sunspot.location);
 
     svg.append("circle")
       .attr("class", "Graph__sunspot")
-      .attr("cx", r.width * 0.5 + (position.x * r.width))
-      .attr("cy", r.height * 0.5 + (position.y * r.height))
-      .attr("r", 10)
-      .append("text")
-      .attr("class", "Graph__text")
-      //.text(sunspot.);
+      .attr("cx", hw + (position.x * radius))
+      .attr("cy", hh + (position.y * radius))
+      .attr("r", 10);
 
   });
+
+  svg.append("circle")
+    .attr("class", "Graph__sun")
+    .attr("cx", hw)
+    .attr("cy", hh)
+    .attr("r", radius);
 
 }
