@@ -119,103 +119,96 @@ block content
                 .Forecast__graphs
                     .Panel__header
                         .Panel__title 3-day Forecast
-                        .Panel__menu
-                            a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="geomagnetic") Geomagnetic Activity
-                            a.Panel__menuItem.isActive(href="/forecast",data-param-name="type",data-param-value="solar-radiation") Solar Radiation Activity
-                            a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="radio-blackout") Radio Blackout Activity
                     .Panel__content
                         // +loader("#forecast")
                         .Forecast__days
                             .Forecast__day
-                                .EnergyBars
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 99
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 1
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 80
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 20
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 90
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 10
-                                            .EnergyBar__line--low
-                                            - i ++
                                 .Forecast__dayLabel Dec 26
+                                .Forecast__dayData
+                                    svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
+                                        g
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
+                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
+                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                        g
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="0")
+                                        g
+                                            circle.RadialDanger__base--initial(cx="50", cy="50", r="10")
+                                            circle.RadialDanger__base(cx="50", cy="50", r="50")
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--geomagnetic Geomagnetic Activity
+                                        .Forecast__statsValue--geomagnetic 2
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--solar Solar Radiation Activity
+                                        .Forecast__statsValue--solar 5%
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--blackout Radio Blackout Activity
+                                        .Forecast__statsValue--blackout 10%
                             .Forecast__day
-                                .EnergyBars
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 99
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 1
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 80
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 20
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 90
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 10
-                                            .EnergyBar__line--low
-                                            - i ++
                                 .Forecast__dayLabel Dec 27
+                                .Forecast__dayData
+                                    svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
+                                        g
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
+                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
+                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                        g
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="0")
+                                        g
+                                            circle.RadialDanger__base--initial(cx="50", cy="50", r="10")
+                                            circle.RadialDanger__base(cx="50", cy="50", r="50")
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--geomagnetic Geomagnetic Activity
+                                        .Forecast__statsValue--geomagnetic 2
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--solar Solar Radiation Activity
+                                        .Forecast__statsValue--solar 5%
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--blackout Radio Blackout Activity
+                                        .Forecast__statsValue--blackout 10%
                             .Forecast__day
-                                .EnergyBars
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 99
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 1
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 80
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 20
-                                            .EnergyBar__line--low
-                                            - i ++
-                                    .EnergyBar
-                                        - var i = 0
-                                        while i < 90
-                                            .EnergyBar__line
-                                            - i ++
-                                        - var i = 0
-                                        while i < 10
-                                            .EnergyBar__line--low
-                                            - i ++
                                 .Forecast__dayLabel Dec 28
+                                .Forecast__dayData
+                                    svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
+                                        g
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
+                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
+                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                        g
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="100")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="50")
+                                            line.RadialDanger__divider(x1="50", y1="50", x2="0", y2="0")
+                                        g
+                                            circle.RadialDanger__base--initial(cx="50", cy="50", r="10")
+                                            circle.RadialDanger__base(cx="50", cy="50", r="50")
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--geomagnetic Geomagnetic Activity
+                                        .Forecast__statsValue--geomagnetic 2
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--solar Solar Radiation Activity
+                                        .Forecast__statsValue--solar 5%
+                                    .Forecast__stats
+                                        .Forecast__statsLabel--blackout Radio Blackout Activity
+                                        .Forecast__statsValue--blackout 10%
                     .Panel__footer
                 .Forecast__alerts
                     .Panel__header

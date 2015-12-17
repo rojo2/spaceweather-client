@@ -312,7 +312,6 @@ function graph(el, data, options = {}) {
     .text("MeV");
 
   return el;
-
 }
 
 export function solarCycleGraph(el, type1, type2, type3) {
@@ -448,7 +447,6 @@ export function solarCycleGraph(el, type1, type2, type3) {
     .text("MeV");
 
   return el;
-
 }
 
 export function xrayFluxGraph(el, data) {
