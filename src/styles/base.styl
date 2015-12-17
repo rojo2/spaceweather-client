@@ -16,6 +16,14 @@ $colorAlertWarning = hsla(16, 90%, 50%, 1)
 $colorAlertCancelWarning = hsla(92, 20%, 50%, 1)
 $colorAlertWatch = hsla($hueAccent, 60%, 50%, 1)
 
+$colorMagnitude1 = hsla($hueAccent, 80%, 60%, 1)
+$colorMagnitude2 = hsla(64, 80%, 60%, 1)
+$colorMagnitude3 = hsla($hueGeneral, 80%, 60%, 1)
+
+$colorGeomagnetic = $colorMagnitude1
+$colorSolar = $colorMagnitude2
+$colorBlackout = $colorMagnitude3
+
 $easeInCubic = cubic-bezier(0.550, 0.055, 0.675, 0.190)
 
 // ----------------------------------------------------------
@@ -121,12 +129,14 @@ $Panel__decor
     height .25rem
     transform rotate(45deg)
     background-color $colorHighlight
+    z-index 101
 $Panel__decor--long
     position absolute
     content ''
     width 2rem
     height 1px
     background-color $colorHighlight
+    z-index 101
 
 $Panel__title
     flex 1 0 auto
