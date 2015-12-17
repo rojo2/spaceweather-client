@@ -8,11 +8,20 @@
     stroke $colorTitle
 
 .Graph__area
-    fill alpha($colorTitle, 0.2)
+    fill alpha($colorTitle, 0.06)
 
 .Graph__axis
     fill transparent
-    shape-rendering crispEdges
+    //shape-rendering crispEdges
 
 .Graph__text
     fill $colorBase
+
+.tick
+    line
+        stroke alpha($colorDim, 0.1)
+    text
+        font-family 'FiraSans'
+        font-weight 200
+        font-size .75rem
+        stroke $colorBase
