@@ -124,10 +124,26 @@ block content
                             a.Panel__menuItem.isActive(href="/forecast",data-param-name="type",data-param-value="solar-radiation") Solar Radiation Activity
                             a.Panel__menuItem(href="/forecast",data-param-name="type",data-param-value="radio-blackout") Radio Blackout Activity
                     .Panel__content
-                        h2 Graphs
-                        +loader("#forecast-graphs")
-                        .Graph
-                            .Graph__content
+                        // +loader("#forecast")
+                        .Forecast__days
+                            .Forecast__day
+                                .Forecast_energyBars
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                .Forecast__dayLabel Dec 26
+                            .Forecast__day
+                                .Forecast_energyBars
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                .Forecast__dayLabel Dec 27
+                            .Forecast__day
+                                .Forecast_energyBars
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                    .Forecast_energyBar
+                                .Forecast__dayLabel Dec 28
                     .Panel__footer
                 .Forecast__alerts
                     .Panel__header

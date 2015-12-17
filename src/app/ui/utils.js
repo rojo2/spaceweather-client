@@ -227,8 +227,8 @@ function graph(el, data, options = {}) {
   const margin = {
       top: 0,
       right: 0,
-      bottom: 36,
-      left: 64
+      bottom: 32,
+      left: 42
     },
     width = r.width - margin.left - margin.right,
     height = r.height - margin.top - margin.bottom,
