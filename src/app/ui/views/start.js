@@ -4,6 +4,7 @@ import {initBackground} from "../background";
 import {initSounds} from "../sounds";
 
 export function view(router) {
+
   // start navigation.
   utils.queryAll("a").map((current) => {
     current.addEventListener("click", (e) => {

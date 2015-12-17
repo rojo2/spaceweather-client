@@ -272,7 +272,7 @@ export function sunspotsGraph(el, data) {
 
 export function xrayFluxGraph(el, data) {
   return graph(el, data, {
-    yStart: 0.000000000000001,
+    yStart: 0.00000001,
     yEnd: 0.00006
   });
 }
