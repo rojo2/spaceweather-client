@@ -533,7 +533,10 @@ export function solarWindGraph(el, data) {
   const x = d3.time.scale()
     .range([0, width]);
 
-  const y = d3.scale.linear()
+  const yd = d3.scale.linear()
+    .range([height, 0]);
+
+  const yt = d3.scale.linear()
     .range([height, 0]);
 
   const xAxis = d3.svg.axis()
@@ -543,31 +546,16 @@ export function solarWindGraph(el, data) {
     .tickPadding(16);
 
   const yAxisLeft = d3.svg.axis()
-    .scale(y)
+    .scale(yd)
     .orient("left")
     .tickSize(-width)
     .tickPadding(16);
 
   const yAxisRight = d3.svg.axis()
-    .scale(y)
+    .scale(yt)
     .orient("right")
     .tickSize(width)
     .tickPadding(16);
-
-  const line1 = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.density); });
-
-  const line2 = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.temperature); });
-
-  const line3 = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.radialspeed); });
 
   const svg = d3.select(container)
     .append("svg")
@@ -581,22 +569,33 @@ export function solarWindGraph(el, data) {
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain([minDate, maxDate]);
-  y.domain([minDensity, maxDensity]);
 
-  svg.append("path")
-    .datum(data)
-    .attr("class", "Graph__line Graph__density")
-    .attr("d", line1);
+  yd.domain([minDensity, maxDensity]);
+  yt.domain([minTemperature, maxTemperature]);
 
-  /*svg.append("path")
-    .datum(type2)
-    .attr("class", "Graph__line Graph__temperature")
-    .attr("d", line2);
+  svg.append("g")
+    .attr("class", "Graph__density")
+    .selectAll(".Graph__density")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "Graph__dot")
+    .attr("x", function(d) { return x(d.date); })
+    .attr("y", function(d) { return yd(d.density); })
+    .attr("width",1)
+    .attr("height",1)
 
-  svg.append("path")
-    .datum(type3)
-    .attr("class", "Graph__line Graph__speed")
-    .attr("d", line3);*/
+  svg.append("g")
+    .attr("class", "Graph__temperature")
+    .selectAll(".Graph__temperature")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "Graph__dot")
+    .attr("x", function(d) { return x(d.date); })
+    .attr("y", function(d) { return yt(d.temperature); })
+    .attr("width",1)
+    .attr("height",1)
 
   svg.append("g")
     .attr("class", "Graph__axis")

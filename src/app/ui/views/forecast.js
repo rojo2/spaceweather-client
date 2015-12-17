@@ -23,7 +23,7 @@ export function view(router) {
 
     const radioBlackout = res[0].body;
     radioBlackout.forEach((item) => {
-
+      utils.text(utils.query(".Forecast__statsValue--solar", days[index]), (item.value + "%"));
     });
 
     const solarRadiation = res[1].body;
@@ -31,7 +31,8 @@ export function view(router) {
       utils.text(utils.query(".Forecast__statsValue--solar", days[index]), (item.value + "%"));
     });
 
-    let minGeomagnetic = Number.MAX_VALUE, maxGeomagnetic = Number.MIN_VALUE;
+    let minGeomagnetic = Number.MAX_VALUE,
+        maxGeomagnetic = Number.MIN_VALUE;
 
     const geomagnetic = res[2].body,
           geomagneticPerDay = {};
@@ -55,9 +56,7 @@ export function view(router) {
 
     const keys = Object.keys(geomagneticPerDay);
     keys.forEach((day, index) => {
-
       utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (day.minGeomagnetic + " / " + day.maxGeomagnetic));
-
     });
 
   });

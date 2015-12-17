@@ -3,7 +3,8 @@ import API from "../../api";
 
 let lastQuery,
     timeline,
-    images;
+    images,
+    cachedImages = {};
 
 function updateImage(el, value = 0) {
 
@@ -28,6 +29,14 @@ export function view(router) {
     });
   }
 
+  const currentDate = new Date(),
+        minDate = (function() {
+          const date = new Date();
+          date.setTime(currentDate.getTime() - (86400 * 7))
+          return date;
+        })(),
+        minDateFormatted = utils.dateYMD(minDate);
+
   const container = utils.query(".Weather");
   const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
   const imageContainer = utils.query("img", eitFiltersContainer);
@@ -51,15 +60,26 @@ export function view(router) {
     utils.activate(utils.query(".Loader", eitFiltersContainer));
 
     API.getImageChannels({
-      channeltype: router.query.filter
+      channeltype: router.query.filter,
+      date_min: minDateFormatted
     }).then((res) => {
 
       images = res.body;
 
+      if (!cachedImages[router.query.filter]) {
+        cachedImages[router.query.filter] = [];
+      }
+
       let minDate = Number.MAX_VALUE, maxDate = Number.MIN_VALUE;
-      images.forEach((image) => {
+      images.forEach((image, index) => {
 
         image.date = new Date(image.date);
+
+        if (!cachedImages[router.query.filter][index]) {
+          const img = new Image();
+          img.src = image.image;
+          cachedImages[router.query.filter][index] = img;
+        }
 
         minDate = Math.min(image.date.getTime(), minDate);
         maxDate = Math.max(image.date.getTime(), maxDate);
@@ -90,7 +110,8 @@ export function view(router) {
       default:
       case "solar-wind":
         API.getSolarWind({
-          ptype: 1
+          ptype: 1,
+          date_min: minDateFormatted
         }).then((res) => {
           utils.deactivate(fluxesLoader);
           utils.solarWindGraph(container, res.body);
@@ -99,7 +120,8 @@ export function view(router) {
 
       case "particle":
         API.getProtonFlux({
-          ptype: 1
+          ptype: 1,
+          date_min: minDateFormatted
         }).then((res) => {
           utils.deactivate(fluxesLoader);
           utils.protonFluxGraph(container, res.body);
@@ -108,7 +130,8 @@ export function view(router) {
 
       case "electron":
         API.getElectronFlux({
-          etype: 2
+          etype: 2,
+          date_min: minDateFormatted
         }).then((res) => {
           utils.deactivate(fluxesLoader);
           utils.electronFluxGraph(container, res.body);
@@ -117,7 +140,8 @@ export function view(router) {
 
       case "x-ray":
         API.getXrayFlux({
-          xtype: 2
+          xtype: 2,
+          date_min: minDateFormatted
         }).then((res) => {
           utils.deactivate(fluxesLoader);
           utils.xrayFluxGraph(container, res.body);
