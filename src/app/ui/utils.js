@@ -544,7 +544,7 @@ export function solarWindGraph(el, data) {
   const yAxisRight = d3.svg.axis()
     .scale(y)
     .orient("right")
-    .tickSize(-width)
+    .tickSize(width)
     .tickPadding(16);
 
   const line1 = d3.svg.line()
@@ -607,10 +607,11 @@ export function solarWindGraph(el, data) {
 
   svg.append("g")
     .attr("class", "Graph__axis")
+    .attr("transform", "translate(" + width + ",0)")
     .call(yAxisRight)
     .append("text")
     .attr("class", "Graph__text")
-    .attr("transform", "rotate(-90)")
+    .attr("transform", "rotate(90)")
     .style("text-anchor", "end")
     .text("Temperature");
 
