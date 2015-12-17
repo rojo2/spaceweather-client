@@ -472,6 +472,152 @@ export function electronFluxGraph(el, data) {
   });
 }
 
+export function solarWindGraph(el, data) {
+
+  const container = query(".Graph__content", el);
+  clear(container);
+
+  const parseDate = d3.time.format("%Y-%m-%dT%H:%M:%SZ").parse;
+
+  let minDate = Number.MAX_VALUE,
+      maxDate = Number.MIN_VALUE,
+      minDensity = Number.MAX_VALUE,
+      maxDensity = Number.MIN_VALUE,
+      minTemperature = Number.MAX_VALUE,
+      maxTemperature = Number.MIN_VALUE,
+      minSpeed = Number.MAX_VALUE,
+      maxSpeed = Number.MIN_VALUE;
+
+  data.forEach(function(d) {
+
+    d.date = parseDate(d.date);
+
+    minDate = Math.min(d.date.getTime(), minDate);
+    maxDate = Math.max(d.date.getTime(), maxDate);
+
+    minDensity = Math.min(d.density, minDensity);
+    maxDensity = Math.max(d.density, maxDensity);
+
+    minTemperature = Math.min(d.temperature, minTemperature);
+    maxTemperature = Math.max(d.temperature, maxTemperature);
+
+    minSpeed = Math.min(d.radialspeed, minSpeed);
+    maxSpeed = Math.max(d.radialspeed, maxSpeed);
+
+  });
+
+  console.log("density", minDensity, maxDensity);
+  console.log("temperature", minTemperature, maxTemperature);
+  console.log("speed", minSpeed, maxSpeed);
+
+  const r = rect(container);
+
+  const margin = {
+      top: 0,
+      right: 0,
+      bottom: 36,
+      left: 64
+    },
+    width = r.width - margin.left - margin.right,
+    height = r.height - margin.top - margin.bottom,
+    sWidth = r.width + margin.left,
+    sHeight = r.height + margin.top;
+
+  const x = d3.time.scale()
+    .range([0, width]);
+
+  const y = d3.scale.linear()
+    .range([height, 0]);
+
+  const xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom")
+    .tickSize(-height, 0)
+    .tickPadding(16);
+
+  const yAxisLeft = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .tickSize(-width)
+    .tickPadding(16);
+
+  const yAxisRight = d3.svg.axis()
+    .scale(y)
+    .orient("right")
+    .tickSize(-width)
+    .tickPadding(16);
+
+  const line1 = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.density); });
+
+  const line2 = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.temperature); });
+
+  const line3 = d3.svg.line()
+    .interpolate("basis")
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.radialspeed); });
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("class", "Graph__image")
+    .attr("width", r.width)
+    .attr("height", r.height)
+    //.attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
+    .attr("viewBox","0 0 " + r.width + " " + r.height)
+    //.attr("preserveAspectRatio", "none")
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  x.domain([minDate, maxDate]);
+  y.domain([minDensity, maxDensity]);
+
+  svg.append("path")
+    .datum(data)
+    .attr("class", "Graph__line Graph__density")
+    .attr("d", line1);
+
+  /*svg.append("path")
+    .datum(type2)
+    .attr("class", "Graph__line Graph__temperature")
+    .attr("d", line2);
+
+  svg.append("path")
+    .datum(type3)
+    .attr("class", "Graph__line Graph__speed")
+    .attr("d", line3);*/
+
+  svg.append("g")
+    .attr("class", "Graph__axis")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+
+  svg.append("g")
+    .attr("class", "Graph__axis")
+    .call(yAxisLeft)
+    .append("text")
+    .attr("class", "Graph__text")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "end")
+    .text("Density");
+
+  svg.append("g")
+    .attr("class", "Graph__axis")
+    .call(yAxisRight)
+    .append("text")
+    .attr("class", "Graph__text")
+    .attr("transform", "rotate(-90)")
+    .style("text-anchor", "end")
+    .text("Temperature");
+
+
+  return el;
+}
+
 function sunspotCoord(value, positive = false) {
   return Math.sin(Math.PI * (positive ? 0.5 : -0.5)) * Math.sin(value);
 }

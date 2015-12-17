@@ -89,6 +89,12 @@ export function view(router) {
     switch(router.query.flux) {
       default:
       case "solar-wind":
+        API.getSolarWind({
+          ptype: 1
+        }).then((res) => {
+          utils.deactivate(fluxesLoader);
+          utils.solarWindGraph(container, res.body);
+        });
         break;
 
       case "particle":

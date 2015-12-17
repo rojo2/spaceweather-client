@@ -4,6 +4,7 @@ import {getXrayFlux,getXrayFluxTypes} from "./xrayflux";
 import {getSunspots,getSunspotTypes,getSunspotRegions} from "./sunspots";
 import {getAlerts,getAlertTypes} from "./alerts";
 import {getImageChannels,getImageChannelTypes} from "./channels";
+import {getSolarWind} from "./solarwind";
 
 export const API = {
 
@@ -46,7 +47,9 @@ export const API = {
   getAlertTypes,
 
   getImageChannels,
-  getImageChannelTypes
+  getImageChannelTypes,
+
+  getSolarWind
 
 };
 
