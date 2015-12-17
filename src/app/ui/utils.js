@@ -661,6 +661,12 @@ export function sunspots(el, data) {
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     .append("g");
 
+  svg.append("circle")
+    .attr("class", "Graph__sun")
+    .attr("cx", hw)
+    .attr("cy", hh)
+    .attr("r", radius);
+
   data.forEach((sunspot) => {
 
     const position = parseSunspot(sunspot.location);
@@ -672,11 +678,5 @@ export function sunspots(el, data) {
       .attr("r", 10);
 
   });
-
-  svg.append("circle")
-    .attr("class", "Graph__sun")
-    .attr("cx", hw)
-    .attr("cy", hh)
-    .attr("r", radius);
 
 }
