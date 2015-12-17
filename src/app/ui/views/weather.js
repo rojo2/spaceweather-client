@@ -29,13 +29,7 @@ export function view(router) {
     });
   }
 
-  const currentDate = new Date(),
-        minDate = (function() {
-          const date = new Date();
-          date.setTime(currentDate.getTime() - (86400 * 7))
-          return date;
-        })(),
-        minDateFormatted = utils.dateYMD(minDate);
+  const minDateFormatted = utils.daysFrom(7);
 
   const container = utils.query(".Weather");
   const eitFiltersContainer = utils.query(".Weather__EITFilters", container);

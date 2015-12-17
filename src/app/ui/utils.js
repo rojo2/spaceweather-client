@@ -479,6 +479,16 @@ export function electronFluxGraph(el, data) {
   });
 }
 
+export function daysFrom(days) {
+  const currentDate = new Date(),
+      minDate = (function() {
+        const date = new Date();
+        date.setTime(currentDate.getTime() - (86400 * days))
+        return date;
+      })(),
+      minDateFormatted = dateYMD(minDate);
+  return minDateFormatted}
+
 export function solarWindGraph(el, data) {
 
   const container = query(".Graph__content", el);
@@ -642,7 +652,7 @@ function parseSunspot(data) {
   return { x, y };
 }
 
-export function sunspots(el, data) {
+export function sunspots(el, images, data) {
 
   const container = query(".Graph__content", el);
   clear(container);
@@ -659,6 +669,11 @@ export function sunspots(el, data) {
     .attr("height", r.height)
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     .append("g");
+
+  svg.append("image")
+    .attr("width", r.width)
+    .attr("height", r.height)
+    .attr("xlink:href", images[0].image);
 
   svg.append("circle")
     .attr("class", "Graph__sun")
