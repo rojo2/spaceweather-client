@@ -535,7 +535,7 @@ p:first-line
     font-size .875rem
 
 // ----------------------------------------------------------
-// Graph
+// Loader
 
 .Loader
     position absolute
@@ -591,3 +591,39 @@ p:first-line
     100%
         fill $colorBase
         transform scaleY(0.1)
+
+
+// ----------------------------------------------------------
+// Forecast graphs
+
+.Forecast__days
+    flex 1
+    display flex
+    align-items stretch
+.Forecast__day
+    flex 1
+    display flex
+    flex-direction column
+    align-items center
+
+.EnergyBars
+    flex 1 0 auto
+    display flex
+    align-items stretch
+
+.EnergyBar
+    margin 1rem .5rem
+    display flex
+    flex-direction column
+.EnergyBar__line
+    flex 1
+    width 2rem
+    border-top 1px solid $colorDim
+.EnergyBar__line--low
+    @extend .EnergyBar__line
+    border-top 1px solid $colorTitle
+
+.Forecast__dayLabel
+    text-transform uppercase
+    flex 0 0 auto
+    text-align center
