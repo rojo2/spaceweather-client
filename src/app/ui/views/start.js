@@ -28,11 +28,6 @@ export function view(router) {
     });
   });
 
-  // set the timeline.
-  utils.timeline(utils.query(".Weather .Timeline"), (value) => {
-    console.log("value", value);
-  });
-
   // init background.
   initBackground();
   initSounds();

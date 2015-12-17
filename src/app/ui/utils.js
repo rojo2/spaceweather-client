@@ -22,7 +22,9 @@ export function timeline(el, fn) {
   }
 
   function handleClick(e) {
-    updateFromEvent(e);
+    if (e.button === 0) {
+      updateFromEvent(e);
+    }
   }
 
   function handleMove(e) {
@@ -30,17 +32,23 @@ export function timeline(el, fn) {
   }
 
   function handleDown(e) {
-    document.addEventListener("mousemove", handleMove);
-    document.addEventListener("mouseup", handleUp);
+    if (e.button === 0) {
+      document.addEventListener("mousemove", handleMove);
+      document.addEventListener("mouseup", handleUp);
+    }
   }
 
   function handleUp(e) {
-    document.removeEventListener("mousemove", handleMove);
-    document.removeEventListener("mouseup", handleUp);
+    if (e.button === 0) {
+      document.removeEventListener("mousemove", handleMove);
+      document.removeEventListener("mouseup", handleUp);
+    }
   }
 
   mark.addEventListener("mousedown", handleDown);
   progress.addEventListener("click", handleClick);
+
+  return el;
 }
 
 export function query(selector, el = document) {

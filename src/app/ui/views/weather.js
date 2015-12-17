@@ -1,7 +1,23 @@
 import * as utils from "../utils";
 import API from "../../api";
 
-let lastQuery;
+let lastQuery,
+    timeline,
+    images;
+
+function updateImage(el, value = 0) {
+
+  if (images) {
+
+    const imageIndex = Math.floor(value * (images.length - 1));
+
+    const r = utils.rect(el.parentElement);
+    utils.setAttr(el, "width", Math.min(r.width,r.height));
+    utils.setAttr(el, "src", images[imageIndex].image);
+
+  }
+
+}
 
 export function view(router) {
 
@@ -13,15 +29,24 @@ export function view(router) {
   }
 
   const container = utils.query(".Weather");
+  const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
+  const imageContainer = utils.query("img", eitFiltersContainer);
 
   utils.activate(container);
   utils.activate(utils.query("[href=\"/weather\"]"));
   utils.activate(utils.query(`[data-param-name="filter"][data-param-value="${router.query.filter}"]`));
   utils.activate(utils.query(`[data-param-name="flux"][data-param-value="${router.query.flux}"]`));
 
-  if (!lastQuery || (lastQuery.filter !== router.query.filter)) {
+  if (!timeline) {
+    timeline = utils.timeline(utils.query(".Timeline", container), (value) => {
+      if (images) {
+        updateImage(imageContainer, value);
+      }
+      console.log("value", value);
+    });
+  }
 
-    const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
+  if (!lastQuery || (lastQuery.filter !== router.query.filter)) {
 
     utils.activate(utils.query(".Loader", eitFiltersContainer));
 
@@ -29,7 +54,7 @@ export function view(router) {
       channeltype: router.query.filter
     }).then((res) => {
 
-      const images = res.body;
+      images = res.body;
 
       let minDate = Number.MAX_VALUE, maxDate = Number.MIN_VALUE;
       images.forEach((image) => {
@@ -49,11 +74,7 @@ export function view(router) {
 
       utils.deactivate(utils.query(".Loader", eitFiltersContainer));
 
-      const image = utils.query("img", eitFiltersContainer);
-
-      const r = utils.rect(utils.query(".Sun__container", eitFiltersContainer));
-      utils.setAttr(image, "width", Math.min(r.width,r.height));
-      utils.setAttr(image, "src", images[0].image);
+      updateImage(imageContainer);
 
     });
 
