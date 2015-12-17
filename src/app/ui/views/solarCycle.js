@@ -21,7 +21,7 @@ export function view(router) {
     })
   ]).then((res) => {
     utils.deactivate(utils.query(".SolarCycle .Loader", container));
-    utils.sunspotsGraph(container, res[0].body,res[1].body,res[2].body);
+    utils.solarCycleGraph(container, res[0].body,res[1].body,res[2].body);
   });
 
 }

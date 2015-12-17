@@ -307,7 +307,7 @@ function graph(el, data, options = {}) {
 
 }
 
-export function sunspotsGraph(el, type1, type2, type3) {
+export function solarCycleGraph(el, type1, type2, type3) {
 
   const container = query(".Graph__content", el);
   clear(container);
@@ -462,4 +462,52 @@ export function electronFluxGraph(el, data) {
     yStart: 1,
     yEnd: 120000
   });
+}
+
+function sunspotCoord(value, positive = false) {
+  return Math.sin(Math.PI * (positive ? 0.5 : -0.5)) * Math.sin(value);
+}
+
+function parseSunspot(data) {
+  const NS = (data.substr(0,1) === "N" ? false : true);
+  const WE = (data.substr(3,1) === "W" ? true : false);
+
+  const alpha = parseInt(data.substr(1,2),10) / 90 * Math.PI * 0.5,
+        beta = parseInt(data.substr(4,2),10) / 90 * Math.PI * 0.5;
+
+  const x = sunspotCoord(beta, WE),
+        y = sunspotCoord(alpha, NS);
+
+  return { x, y };
+}
+
+export function sunspots(el, data) {
+
+  const container = query(".Graph__content", el);
+  clear(container);
+
+  const r = rect(container);
+
+  const svg = d3.select(container)
+    .append("svg")
+    .attr("class", "Graph__image")
+    .attr("width", r.width)
+    .attr("height", r.height)
+    .attr("viewBox","0 0 " + r.width + " " + r.height)
+    .append("g");
+
+  data.forEach((sunspot) => {
+    const position = parseSunspot(sunspot.location);
+
+    svg.append("circle")
+      .attr("class", "Graph__sunspot")
+      .attr("cx", r.width * 0.5 + (position.x * r.width))
+      .attr("cy", r.height * 0.5 + (position.y * r.height))
+      .attr("r", 10)
+      .append("text")
+      .attr("class", "Graph__text")
+      //.text(sunspot.);
+
+  });
+
 }
