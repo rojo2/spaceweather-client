@@ -181,7 +181,7 @@ function graph(el, data, options = {}) {
     d.date = parseDate(d.date);
   });
 
-  const rect = rect(container);
+  const r = rect(container);
 
   const margin = {
       top: 0,
@@ -189,10 +189,10 @@ function graph(el, data, options = {}) {
       bottom: 36,
       left: 64
     },
-    width = rect.width - margin.left - margin.right,
-    height = rect.height - margin.top - margin.bottom,
-    sWidth = rect.width + margin.left,
-    sHeight = rect.height + margin.top;
+    width = r.width - margin.left - margin.right,
+    height = r.height - margin.top - margin.bottom,
+    sWidth = r.width + margin.left,
+    sHeight = r.height + margin.top;
 
   const x = d3.time.scale()
     .range([0, width]);
@@ -229,10 +229,10 @@ function graph(el, data, options = {}) {
   const svg = d3.select(container)
     .append("svg")
     .attr("class", "Graph__image")
-    .attr("width", rect.width)
-    .attr("height", rect.height)
+    .attr("width", r.width)
+    .attr("height", r.height)
     //.attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
-    .attr("viewBox","0 0 " + rect.width + " " + rect.height)
+    .attr("viewBox","0 0 " + r.width + " " + r.height)
     //.attr("preserveAspectRatio", "none")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -317,7 +317,7 @@ export function sunspotsGraph(el, type1, type2, type3) {
 
   });
 
-  const rect = rect(container);
+  const r = rect(container);
 
   const margin = {
       top: 0,
@@ -325,10 +325,10 @@ export function sunspotsGraph(el, type1, type2, type3) {
       bottom: 36,
       left: 64
     },
-    width = rect.width - margin.left - margin.right,
-    height = rect.height - margin.top - margin.bottom,
-    sWidth = rect.width + margin.left,
-    sHeight = rect.height + margin.top;
+    width = r.width - margin.left - margin.right,
+    height = r.height - margin.top - margin.bottom,
+    sWidth = r.width + margin.left,
+    sHeight = r.height + margin.top;
 
   const x = d3.time.scale()
     .range([0, width]);
@@ -366,10 +366,10 @@ export function sunspotsGraph(el, type1, type2, type3) {
   const svg = d3.select(container)
     .append("svg")
     .attr("class", "Graph__image")
-    .attr("width", rect.width)
-    .attr("height", rect.height)
+    .attr("width", r.width)
+    .attr("height", r.height)
     //.attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
-    .attr("viewBox","0 0 " + rect.width + " " + rect.height)
+    .attr("viewBox","0 0 " + r.width + " " + r.height)
     //.attr("preserveAspectRatio", "none")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
