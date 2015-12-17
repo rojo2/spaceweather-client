@@ -5,7 +5,7 @@ export function view(router) {
 
   if (!router.query.filter && !router.query.flux) {
     return router.redirect({
-      filter: 171,
+      filter: 1,
       flux: "solar-wind"
     });
   }
