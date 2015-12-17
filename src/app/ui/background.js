@@ -48,8 +48,8 @@ export function initBackground() {
     gl.shaderSource(fragmentShader, `
     precision highp float;
 
-    const vec4 begin = vec4(1.0, 1.0, 1.0, 0.5);
-    const vec4 end = vec4(1.0, 1.0, 1.0, 0.5);
+    const vec4 begin = vec4(1.0, 1.0, 1.0, 1);
+    const vec4 end = vec4(1.0, 1.0, 1.0, 1);
 
     vec4 interpolate4f(vec4 a,vec4 b, float p) {
       return a + (b - a) * p;
