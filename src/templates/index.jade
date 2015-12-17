@@ -45,7 +45,7 @@ block content
                                 .Value 304
                                 .Unit Å
                             a.Panel__menuItem(href="/weather",data-param-name="filter",data-param-value="5")
-                                .Value Corona
+                                .Value HMI
                     .Panel__content
                         +loader("#sun")
                         .Sun
@@ -92,6 +92,15 @@ block content
                         +loader("#sunspots")
                         .Graph
                             .Graph__content
+                    .Panel__footer
+
+                // .Sunspots__data
+                    .Panel__header
+                        .Panel__title Data
+                    .Panel__content
+                        //+loader("#sunspots")
+                        .Sunspots__dataTable
+                            h2 Hola
                     .Panel__footer
                 .Sunspots__description
                     .Text__header Lorem ipsum dolor sit amet
