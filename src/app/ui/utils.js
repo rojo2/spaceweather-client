@@ -654,13 +654,15 @@ function parseSunspot(data) {
 
 export function sunspots(el, images, data) {
 
+  const MARGIN = 10;
+
   const container = query(".Graph__content", el);
   clear(container);
 
   const r = rect(container),
         hw = r.width * 0.5,
         hh = r.height * 0.5,
-        radius = Math.min(hw,hh);
+        radius = Math.min(hw,hh) - MARGIN;
 
   const svg = d3.select(container)
     .append("svg")
