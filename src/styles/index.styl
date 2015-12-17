@@ -1,4 +1,5 @@
 @import 'base.styl'
+@import 'graph.styl'
 
 // ----------------------------------------------------------
 // Base styles
@@ -117,16 +118,26 @@ p:first-line
     justify-content flex-end
 
 .Nav__item
+    position relative
     font-size 1.25rem
     display flex
     height 2rem
     align-items center
     text-transform uppercase
     margin-left .5rem
-    padding 0 1rem
+    padding 0 2rem
 
 .Nav__item.isActive
     @extend $NavActive
+
+.Nav__itemAlert
+    position absolute
+    top .5rem
+    right .5rem
+    background-color $colorTitle
+    width .5rem
+    height .5rem
+    border-radius .5rem
 
 // ----------------------------------------------------------
 // Controls
@@ -254,7 +265,7 @@ p:first-line
     width 100%
     height 100%
     background-color black
-    border 1px solid $colorDim
+    //border 1px solid $colorDim
 .Sun__date
     position absolute
     right 0
@@ -313,6 +324,12 @@ p:first-line
     margin-top 1px
     margin-left -.4rem
     background-color $colorHighlight
+
+.Timeline__mark:hover
+    .Timeline__markTop
+        border-top-color $colorHighlight
+    .Timeline__markBottom
+        border-bottom-color $colorHighlight
 
 .Timeline__markTop
 .Timeline__markBottom
@@ -478,6 +495,8 @@ p:first-line
 
 .Graph__content
     flex 1
+    position relative
+    margin 1rem 0 2rem
 
 .Graph__legends
     flex 0 0 2rem
@@ -499,19 +518,6 @@ p:first-line
 .Graph__legendLabel
     font-size .875rem
 
-.Graph__area
-    fill $colorBase
-
-.Graph__line
-    stroke $colorBase
-    stroke-width 1px
-
-.Graph__axis
-    fill none
-    stroke $colorBase
-    shape-rendering crispEdges
-
-
 // ----------------------------------------------------------
 // Graph
 
@@ -525,6 +531,7 @@ p:first-line
     display flex
     align-items center
     justify-content center
+    z-index 100
 
 .Loader__spinner
     fill $colorBase
@@ -535,10 +542,12 @@ p:first-line
 .Loader05
 .Loader06
     transform-origin 50% 50%
+    transform scaleY(0)
 
 .Loader.isActive
     opacity 1
     .Loader01
+
         animation AnimLoader 1s ease-in-out infinite alternate
     .Loader02
         animation AnimLoader 1s ease-in-out infinite alternate .1s

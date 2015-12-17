@@ -1,0 +1,27 @@
+.Graph__image
+    position absolute
+    bottom 0
+    left 0
+
+.Graph__line
+    fill transparent
+    stroke $colorTitle
+
+.Graph__area
+    fill alpha($colorTitle, 0.06)
+
+.Graph__axis
+    fill transparent
+    //shape-rendering crispEdges
+
+.Graph__text
+    fill $colorBase
+
+.tick
+    line
+        stroke alpha($colorDim, 0.1)
+    text
+        font-family 'FiraSans'
+        font-weight 200
+        font-size .75rem
+        stroke $colorBase

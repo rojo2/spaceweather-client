@@ -180,10 +180,10 @@ function graph(el, data, options = {}) {
   const rect = container.getBoundingClientRect();
 
   const margin = {
-      top: 20,
-      right: 20,
-      bottom: 30,
-      left: 50
+      top: 0,
+      right: 0,
+      bottom: 36,
+      left: 64
     },
     width = rect.width - margin.left - margin.right,
     height = rect.height - margin.top - margin.bottom,
@@ -201,13 +201,13 @@ function graph(el, data, options = {}) {
     .scale(x)
     .orient("bottom")
     .tickSize(-height, 0)
-    .tickPadding(6);
+    .tickPadding(16);
 
   const yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
     .tickSize(-width)
-    .tickPadding(6);
+    .tickPadding(16);
 
   const line = d3.svg.line()
     .interpolate("basis")
@@ -222,10 +222,12 @@ function graph(el, data, options = {}) {
 
   const svg = d3.select(container)
     .append("svg")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
-    .attr("preserveAspectRatio", "none")
+    .attr("class", "Graph__image")
+    .attr("width", rect.width)
+    .attr("height", rect.height)
+    //.attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
+    .attr("viewBox","0 0 " + rect.width + " " + rect.height)
+    //.attr("preserveAspectRatio", "none")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -255,6 +257,7 @@ function graph(el, data, options = {}) {
     .attr("class", "Graph__axis")
     .call(yAxis)
     .append("text")
+    .attr("class", "Graph__text")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
     .text("MeV");
