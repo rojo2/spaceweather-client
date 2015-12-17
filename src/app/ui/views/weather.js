@@ -22,9 +22,20 @@ export function view(router) {
   API.getImageChannels({
     channeltype: router.query.filter
   }).then((res) => {
+
     const images = res.body;
-    utils.deactivate(utils.query(".Weather__EITFilters .Loader", container));
-    utils.setAttr(utils.query(".Weather__EITFilters img"), "src", images[0].image);
+
+    const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
+
+    utils.deactivate(utils.query(".Loader", eitFiltersContainer));
+
+    const image = utils.query("img", eitFiltersContainer);
+
+    const r = utils.rect(utils.query(".Sun__container", eitFiltersContainer));
+    utils.setAttr(image, "width", Math.min(r.width,r.height));
+    utils.setAttr(image, "height", Math.min(r.width,r.height));
+    utils.setAttr(image, "src", images[0].image);
+
   });
 
   switch(router.query.flux) {

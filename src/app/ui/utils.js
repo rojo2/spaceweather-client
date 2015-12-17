@@ -1,14 +1,18 @@
 import d3 from "d3";
 
+export function rect(el) {
+  return el.getBoundingClientRect();
+}
+
 export function timeline(el) {
   const progress = el,
         fill = query(".Timeline__fill", progress),
         mark = query(".Timeline__mark", progress);
 
   function updateFromEvent(e) {
-    const rect = progress.getBoundingClientRect();
+    const r = rect(progress);
 
-    const value = Math.max(0,Math.min(1,(e.clientX - rect.left) / rect.width));
+    const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
     mark.style.left = (value * 100) + "%";
     fill.style.transform = `scaleX(${value})`;
   }
@@ -177,7 +181,7 @@ function graph(el, data, options = {}) {
     d.date = parseDate(d.date);
   });
 
-  const rect = container.getBoundingClientRect();
+  const rect = rect(container);
 
   const margin = {
       top: 0,
@@ -313,7 +317,7 @@ export function sunspotsGraph(el, type1, type2, type3) {
 
   });
 
-  const rect = container.getBoundingClientRect();
+  const rect = rect(container);
 
   const margin = {
       top: 0,
