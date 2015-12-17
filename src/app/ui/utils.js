@@ -217,7 +217,7 @@ function graph(el, data, options = {}) {
   const area = d3.svg.area()
     .interpolate("basis")
     .x(function(d) { return x(d.date); })
-    .y0(function(d) { return y(1); })
+    .y0(function(d) { return y(options.yStart); })
     .y1(function(d) { return y(d.value); });
 
   const svg = d3.select(container)
@@ -279,7 +279,7 @@ export function xrayFluxGraph(el, data) {
 
 export function protonFluxGraph(el, data) {
   return graph(el, data, {
-    yStart: 1,
+    yStart: 0.01,
     yEnd: 120
   });
 }

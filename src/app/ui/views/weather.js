@@ -22,7 +22,6 @@ export function view(router) {
   API.getImageChannels({
     channeltype: router.query.filter
   }).then((res) => {
-    console.log(res.body);
     const images = res.body;
     utils.deactivate(utils.query(".Weather__EITFilters .Loader", container));
     utils.setAttr(utils.query(".Weather__EITFilters img"), "src", images[0].image);
