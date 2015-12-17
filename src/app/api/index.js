@@ -5,6 +5,9 @@ import {getSunspots,getSunspotTypes,getSunspotRegions} from "./sunspots";
 import {getAlerts,getAlertTypes} from "./alerts";
 import {getImageChannels,getImageChannelTypes} from "./channels";
 import {getSolarWind} from "./solarwind";
+import {getGeomagneticActivity} from "./geomagnetic";
+import {getRadioBlackout,getRadioBlackoutTypes} from "./radioblackout";
+import {getSolarRadiation,getSolarRadiationTypes} from "./solarradiation";
 
 export const API = {
 
@@ -49,7 +52,15 @@ export const API = {
   getImageChannels,
   getImageChannelTypes,
 
-  getSolarWind
+  getSolarWind,
+
+  getGeomagneticActivity,
+
+  getRadioBlackout,
+  getRadioBlackoutTypes,
+
+  getSolarRadiation,
+  getSolarRadiationTypes
 
 };
 

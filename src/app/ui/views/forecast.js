@@ -13,6 +13,14 @@ export function view(router) {
   utils.activate(utils.query("[href=\"/forecast\"]"));
   utils.activate(alertsLoader);
 
+  Promise.all([
+    API.getRadioBlackout(),
+    API.getSolarRadiation(),
+    API.getGeomagneticActivity()
+  ]).then((res) => {
+
+  });
+
   API.getAlerts().then((res) => {
 
     utils.clear(alerts);
