@@ -19,6 +19,47 @@ export function view(router) {
     API.getGeomagneticActivity()
   ]).then((res) => {
 
+    const days = utils.queryAll(".Forecast__day");
+
+    const radioBlackout = res[0].body;
+    radioBlackout.forEach((item) => {
+
+    });
+
+    const solarRadiation = res[1].body;
+    solarRadiation.forEach((item, index) => {
+      utils.text(utils.query(".Forecast__statsValue--solar", days[index]), (item.value + "%"));
+    });
+
+    let minGeomagnetic = Number.MAX_VALUE, maxGeomagnetic = Number.MIN_VALUE;
+
+    const geomagnetic = res[2].body,
+          geomagneticPerDay = {};
+
+    geomagnetic.forEach((item) => {
+
+      item.date = new Date(item.date);
+
+      const day = utils.dateYMD(item.date);
+      if (!day in geomagneticPerDay) {
+        geomagneticPerDay[day] = {
+          minGeomagnetic: Number.MAX_VALUE,
+          maxGeomagnetic: Number.MIN_VALUE
+        };
+      } else {
+        geomagneticPerDay[day].minGeomagnetic = Math.min(item.value, geomagneticPerDay[day].minGeomagnetic);
+        geomagneticPerDay[day].maxGeomagnetic = Math.max(item.value, geomagneticPerDay[day].maxGeomagnetic);
+      }
+
+    });
+
+    const keys = Object.keys(geomagneticPerDay);
+    keys.forEach((day, index) => {
+
+      utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (day.minGeomagnetic + " / " + day.maxGeomagnetic));
+
+    });
+
   });
 
   API.getAlerts().then((res) => {

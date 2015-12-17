@@ -131,6 +131,12 @@ export function clear(el) {
   return el;
 }
 
+export function dateYMD(date) {
+  return padLeft(date.getFullYear(), "0", 4)
+    + "-" + padLeft(date.getMonth(), "0", 2)
+    + "-" + padLeft(date.getDate(), "0", 2);
+}
+
 export function dateFormatted(date) {
   return padLeft(date.getFullYear(), "0", 4)
     + "-" + padLeft(date.getMonth(), "0", 2)
