@@ -4,7 +4,7 @@ export function rect(el) {
   return el.getBoundingClientRect();
 }
 
-export function timeline(el) {
+export function timeline(el, fn) {
   const progress = el,
         fill = query(".Timeline__fill", progress),
         mark = query(".Timeline__mark", progress);
@@ -15,6 +15,10 @@ export function timeline(el) {
     const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
     mark.style.left = (value * 100) + "%";
     fill.style.transform = `scaleX(${value})`;
+
+    if (typeof fn === "function") {
+      fn(value);
+    }
   }
 
   function handleClick(e) {
@@ -113,6 +117,35 @@ export function clear(el) {
   while (el.childNodes.length > 0) {
     el.removeChild(el.lastChild);
   }
+  return el;
+}
+
+export function dateFormatted(date) {
+  return padLeft(date.getFullYear(), "0", 4)
+    + "-" + padLeft(date.getMonth(), "0", 2)
+    + "-" + padLeft(date.getDate(), "0", 2)
+    + " " + padLeft(date.getHours(), "0", 2)
+    + ":" + padLeft(date.getMinutes(), "0", 2);
+}
+
+export function padLeft(str, chr, length) {
+  str = str.toString();
+  while (str.length < length) {
+    str = chr + str;
+  }
+  return str;
+}
+
+export function padRight(str, chr, length) {
+  str = str.toString();
+  while (str.length < length) {
+    str += chr;
+  }
+  return str;
+}
+
+export function text(el, text) {
+  el.textContent = text;
   return el;
 }
 

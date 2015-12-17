@@ -31,6 +31,22 @@ export function view(router) {
 
       const images = res.body;
 
+      let minDate = Number.MAX_VALUE, maxDate = Number.MIN_VALUE;
+      images.forEach((image) => {
+
+        image.date = new Date(image.date);
+
+        minDate = Math.min(image.date.getTime(), minDate);
+        maxDate = Math.max(image.date.getTime(), maxDate);
+
+      });
+
+      const dateStart = new Date(minDate),
+            dateEnd = new Date(maxDate);
+
+      utils.text(utils.query(".Timeline__dateStart", eitFiltersContainer), utils.dateFormatted(dateStart));
+      utils.text(utils.query(".Timeline__dateEnd", eitFiltersContainer), utils.dateFormatted(dateEnd));
+
       utils.deactivate(utils.query(".Loader", eitFiltersContainer));
 
       const image = utils.query("img", eitFiltersContainer);
