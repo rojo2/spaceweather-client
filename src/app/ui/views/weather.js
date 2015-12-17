@@ -11,7 +11,7 @@ function updateImage(el, value = 0) {
 
     const imageIndex = Math.floor(value * (images.length - 1));
 
-    const r = utils.rect(el.parentElement);
+    const r = utils.rect(el.parentElement.parentElement);
     utils.setAttr(el, "width", Math.min(r.width,r.height));
     utils.setAttr(el, "src", images[imageIndex].image);
 

@@ -18,6 +18,9 @@
 *:before
 *:after
     box-sizing border-box
+    user-select none
+    -webkit-user-select none
+    -moz-user-select none
 
 html
     width 100%
@@ -260,8 +263,13 @@ p:first-line
     left 0
     bottom 1rem
     width 100%
+    display flex
+    align-items center
+    justify-content center
+
     //height 100%
 .Sun__container
+    display inline-block
     margin auto
     position relative
     background-color black
@@ -291,7 +299,7 @@ p:first-line
     width 100%
     height 100%
     border-radius 50%
-    box-shadow inset 0 0 6rem 2rem black
+    box-shadow inset 0 0 3rem 1rem black
     z-index 10
 
 // ----------------------------------------------------------
@@ -453,6 +461,7 @@ p:first-line
 .Alert__extendedInfo
     max-height 0
     overflow hidden
+    margin-bottom 1rem
     transform translate3d(0,0,0)
     transition max-height .4s $easeInCubic
 
@@ -525,11 +534,32 @@ p:first-line
     align-items center
     margin-right 2rem
 
-.Graph__legendColor
+$Graph__legendColor
     width 1rem
     height .5rem
-    background-color $colorTitle
     margin-right .5rem
+
+.Graph__legendColor--particle10
+.Graph__legendColor--particle100
+.Graph__legendColor--monthly
+.Graph__legendColor--smoothedMonthly
+.Graph__legendColor--predictedMonthly
+    @extend $Graph__legendColor
+
+
+.Graph__legendColor--particle10
+    background-color $colorParticle10
+.Graph__legendColor--particle100
+    background-color $colorParticle100
+
+
+
+.Graph__legendColor--monthly
+    background-color alpha($colorMagnitude2, 0.3)
+.Graph__legendColor--smoothedMonthly
+    background-color $colorMagnitude2
+.Graph__legendColor--predictedMonthly
+    background-color $colorTitle
 
 .Graph__legendLabel
     font-size .875rem
@@ -600,13 +630,20 @@ p:first-line
     flex 1
     display flex
     align-items stretch
-    margin 0 -.5rem
+    margin 0 -1rem
 .Forecast__day
     flex 1
     display flex
     flex-direction column
     align-items stretch
     padding 1rem 1rem 0
+
+.Forecast__dayLabel
+    text-transform uppercase
+    font-size 1.25rem
+    flex 0 0 auto
+    text-align left
+    color $colorHighlight
 
 .Forecast__dayData
     flex 1 0 auto
@@ -650,14 +687,6 @@ $RadialDanger__fill
     stroke-width 1px
     stroke black
 
-.Forecast__dayLabel
-    text-transform uppercase
-    font-size 1.25rem
-    flex 0 0 auto
-    margin-bottom 1rem
-    text-align left
-    color $colorHighlight
-
 .Forecast__stats
     margin-bottom .5rem
     padding .5rem 1rem
@@ -674,7 +703,7 @@ $RadialDanger__fill
 
 .Forecast__statsValue
     flex 0 0 30%
-    font-size 1.5rem
+    font-size 1.25rem
     text-align right
 
 .Forecast__statsLabel--geomagnetic
