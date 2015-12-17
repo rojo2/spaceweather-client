@@ -77,10 +77,10 @@ block content
                             .Graph__content
                             .Graph__legends
                                 a.Graph__legend(href="#")
-                                    .Graph__legendColor
+                                    .Graph__legendColor--particle10
                                     .Graph__legendLabel P>10MeV
                                 a.Graph__legend(href="#")
-                                    .Graph__legendColor
+                                    .Graph__legendColor--particle100
                                     .Graph__legendLabel P>100MeV
                     .Panel__footer
             // Sunspots
@@ -108,6 +108,16 @@ block content
                         +loader("#solar-cycle")
                         .Graph
                             .Graph__content
+                            .Graph__legends
+                                a.Graph__legend(href="#")
+                                    .Graph__legendColor--monthly
+                                    .Graph__legendLabel Monthly Values
+                                a.Graph__legend(href="#")
+                                    .Graph__legendColor--smoothedMonthly
+                                    .Graph__legendLabel Smoothed Monthly Values
+                                a.Graph__legend(href="#")
+                                    .Graph__legendColor--predictedMonthly
+                                    .Graph__legendLabel Predicted Monthly Values
                     .Panel__footer
                 .SolarCycle__description
                     .Text__header Lorem ipsum dolor sit amet
