@@ -80,9 +80,6 @@ export function deactivate(el) {
 }
 
 export function activate(el) {
-  if (!el) {
-    debugger;
-  }
   el.classList.add("isActive");
   siblings(el, deactivate);
   return el;
@@ -123,6 +120,45 @@ export function add(el, child) {
 export function remove(el, child) {
   el.removeChild((typeof child === "function" ? child() : child));
   return el;
+}
+
+export function interpolateText(text, data = {}, filters = {}) {
+  return text.replace(/\{(.*?)\}/g, (fullMatch,name) => {
+    if (name in data) {
+      if (name in filters) {
+        const filter = filters[name];
+        return filter(data[name]);
+      }
+      return data[name];
+    }
+    return name;
+  });
+}
+
+export function interpolate(el, data = {}, filters = {}) {
+  for (let index = 0; index < el.childNodes.length; index++) {
+    const childNode = el.childNodes[index];
+    if (childNode.nodeType === document.TEXT_NODE) {
+      childNode.textContent = interpolateText(childNode.textContent, data, filters);
+    } else if (childNode.nodeType === document.ELEMENT_NODE) {
+      for (let index = 0; index < childNode.attributes.length; index++) {
+        const attribute = childNode.attributes[index];
+        attribute.value = interpolateText(attribute.value, data, filters);
+      }
+      interpolate(childNode, data, filters);
+    }
+  }
+  return el;
+}
+
+export function template(selector, data = {}, filters = {}) {
+  const element = query(selector);
+  if (!element) {
+    throw `Element ${selector} not found`;
+  }
+  const templated = document.importNode(element.content, true);
+  interpolate(templated, data, filters);
+  return templated;
 }
 
 function graph(el, data, options = {}) {
