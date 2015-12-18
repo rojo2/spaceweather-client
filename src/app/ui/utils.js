@@ -667,10 +667,10 @@ export function solarWindGraph(el, data) {
   const x = d3.time.scale()
     .range([0, width]);
 
-  const yd = d3.scale.log()
+  const yd = d3.scale.linear()
     .range([height, 0]);
 
-  const yt = d3.scale.log()
+  const yt = d3.scale.linear()
     .range([height, 0]);
 
   const xAxis = d3.svg.axis()
