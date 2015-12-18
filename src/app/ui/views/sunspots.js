@@ -8,8 +8,8 @@ export function view(router) {
   utils.activate(container);
   utils.activate(utils.query("[href=\"/sunspots\"]"));
 
-  const minDateFormatted = utils.daysFrom(-2),
-        maxDateFormatted = utils.daysFrom(-2);
+  const minDateFormatted = utils.daysFrom(-1),
+        maxDateFormatted = utils.daysFrom(-1);
 
   utils.activate(utils.query(".Loader", container));
   Promise.all([
