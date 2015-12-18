@@ -9,7 +9,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(-1);
+  const minDateFormatted = utils.daysFrom(0);
 
   const container = utils.query(".Forecast"),
         alertsLoader = utils.query(".Forecast__alerts .Loader", container),
@@ -25,17 +25,26 @@ export function view(router) {
   utils.activate(alertsLoader);
 
   Promise.all([
-    API.getRadioBlackout(),
-    API.getSolarRadiation(),
-    API.getGeomagneticActivity()
+    API.getRadioBlackout({
+      ordering: "-date",
+      date_min: minDateFormatted
+    }),
+    API.getSolarRadiation({
+      ordering: "-date",
+      date_min: minDateFormatted
+    }),
+    API.getGeomagneticActivity({
+      ordering: "-date",
+      date_min: minDateFormatted
+    })
   ]).then((res) => {
 
     const days = utils.queryAll(".Forecast__day");
 
     const radioBlackout = res[0].body;
-    /*radioBlackout.forEach((item) => {
-      utils.text(utils.query(".Forecast__statsValue--solar", days[index]), (item.value + "%"));
-    });*/
+    radioBlackout.forEach((item, index) => {
+      utils.text(utils.query(".Forecast__statsValue--blackout", days[index]), (item.value + "%"));
+    });
 
     const solarRadiation = res[1].body;
     solarRadiation.forEach((item, index) => {
@@ -54,20 +63,33 @@ export function view(router) {
 
       const day = utils.dateYMD(item.date);
       if (!day in geomagneticPerDay) {
+
         geomagneticPerDay[day] = {
           minGeomagnetic: Number.MAX_VALUE,
           maxGeomagnetic: Number.MIN_VALUE
         };
+
       } else {
+
         geomagneticPerDay[day].minGeomagnetic = Math.min(item.value, geomagneticPerDay[day].minGeomagnetic);
         geomagneticPerDay[day].maxGeomagnetic = Math.max(item.value, geomagneticPerDay[day].maxGeomagnetic);
+
       }
 
     });
 
     const keys = Object.keys(geomagneticPerDay);
     keys.forEach((day, index) => {
+
+      const dateLabel = new Date(day);
+
+      const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DEC"];
+      const monthShortName = months[dateLabel.getMonth()];
+
+      utils.text(utils.query(".Forecast__dayLabel", days[index]), monthShortName + " " + utils.padLeft(dateLabel.getDate(),"0",2));
+
       utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (day.minGeomagnetic + " / " + day.maxGeomagnetic));
+
     });
 
   });
