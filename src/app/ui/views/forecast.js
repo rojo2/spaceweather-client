@@ -13,7 +13,8 @@ export function view(router) {
 
   const container = utils.query(".Forecast"),
         alertsLoader = utils.query(".Forecast__alerts .Loader", container),
-        alerts = utils.query(".Alerts", container);
+        alerts = utils.query(".Alerts", container),
+        forecast = utils.query(".Forecast__rationale", container);
 
   utils.clear(alerts);
 
@@ -102,6 +103,7 @@ export function view(router) {
 
       utils.deactivate(alertsLoader);
 
+      utils.clear(forecast);
       utils.clear(alerts);
       res.body.forEach((alert) => {
         utils.add(alerts, utils.template("#alert", alert, {
@@ -121,13 +123,30 @@ export function view(router) {
 
   } else {
 
-    API.getForecast({
-      date_min: minDateFormatted
-    }).then((res) => {
+    API.getForecast().then((res) => {
 
       utils.deactivate(alertsLoader);
 
-      utils.clear(alerts);
+      utils.clear(forecast);
+
+      let content = "";
+
+      const rationale = res.body[0];
+
+      if (rationale.solarradiation) {
+        content += utils.wrap("Solar Radiation", "h3") + utils.wrap(rationale.solarradiation, "p")
+      }
+
+      if (rationale.geomagactivity) {
+        content += utils.wrap("Geomagnetic Activity", "h3") + utils.wrap(rationale.geomagactivity, "p")
+      }
+
+      if (rationale.radioblackout) {
+        content += utils.wrap("Radio Blackout", "h3") + utils.wrap(rationale.radioblackout, "p")
+      }
+
+      utils.html(forecast, content);
+
       console.log(res);
 
     });

@@ -4,6 +4,15 @@ export function rect(el) {
   return el.getBoundingClientRect();
 }
 
+export function wrap(text, tag) {
+  return "<" + tag + ">" + text + "</" + tag + ">";
+}
+
+export function html(el, v) {
+  el.innerHTML = v;
+  return el;
+}
+
 export function timeline(el, fn) {
   const progress = el,
         fill = query(".Timeline__fill", progress),
