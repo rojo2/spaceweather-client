@@ -13,3 +13,9 @@ export function getAlertTypes(data = {}) {
     format: "json"
   })), config.CREDENTIALS);
 }
+
+export function getForecast(data = {}) {
+  return request(url("forecastrationale", Object.assign(data, {
+    format: "json"
+  })), config.CREDENTIALS);
+}

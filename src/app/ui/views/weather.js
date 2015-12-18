@@ -29,7 +29,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(7);
+  const minDateFormatted = utils.daysFrom(-7);
 
   const container = utils.query(".Weather");
   const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
@@ -104,7 +104,6 @@ export function view(router) {
       default:
       case "solar-wind":
         API.getSolarWind({
-          ptype: 1,
           date_min: minDateFormatted
         }).then((res) => {
           utils.deactivate(fluxesLoader);
@@ -113,32 +112,55 @@ export function view(router) {
         break;
 
       case "particle":
-        API.getProtonFlux({
-          ptype: 1,
-          date_min: minDateFormatted
-        }).then((res) => {
+        Promise.all([
+          API.getProtonFlux({
+            ptype: 1,
+            date_min: minDateFormatted
+          }),
+
+          API.getProtonFlux({
+            ptype: 2,
+            date_min: minDateFormatted
+          })
+
+        ]).then((res) => {
+
           utils.deactivate(fluxesLoader);
-          utils.protonFluxGraph(container, res.body);
+          utils.protonFluxGraph(container, res[0].body);
+
         });
         break;
 
       case "electron":
-        API.getElectronFlux({
-          etype: 2,
-          date_min: minDateFormatted
-        }).then((res) => {
+        Promise.all([
+          API.getElectronFlux({
+            ptype: 2,
+            date_min: minDateFormatted
+          }),
+
+          API.getElectronFlux({
+            ptype: 1,
+            date_min: minDateFormatted
+          })
+        ]).then((res) => {
           utils.deactivate(fluxesLoader);
-          utils.electronFluxGraph(container, res.body);
+          utils.electronFluxGraph(container, res[0].body);
         });
         break;
 
       case "x-ray":
-        API.getXrayFlux({
-          xtype: 2,
-          date_min: minDateFormatted
-        }).then((res) => {
+        Promise.all([
+          API.getXrayFlux({
+            xtype: 2,
+            date_min: minDateFormatted
+          }),
+          API.getXrayFlux({
+            xtype: 1,
+            date_min: minDateFormatted
+          })
+        ]).then((res) => {
           utils.deactivate(fluxesLoader);
-          utils.xrayFluxGraph(container, res.body);
+          utils.xrayFluxGraph(container, res[0].body);
         });
         break;
     }

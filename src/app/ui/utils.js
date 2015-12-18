@@ -483,11 +483,12 @@ export function daysFrom(days) {
   const currentDate = new Date(),
       minDate = (function() {
         const date = new Date();
-        date.setTime(currentDate.getTime() - (86400 * days))
+        date.setTime(currentDate.getTime() + (86400 * days));
         return date;
       })(),
       minDateFormatted = dateYMD(minDate);
-  return minDateFormatted}
+  return minDateFormatted;
+}
 
 export function solarWindGraph(el, data) {
 
