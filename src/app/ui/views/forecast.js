@@ -3,6 +3,14 @@ import API from "../../api";
 
 export function view(router) {
 
+  if (!router.query.show) {
+    return router.redirect({
+      show: "forecast"
+    });
+  }
+
+  const minDateFormatted = utils.daysFrom(-1);
+
   const container = utils.query(".Forecast"),
         alertsLoader = utils.query(".Forecast__alerts .Loader", container),
         alerts = utils.query(".Alerts", container);
@@ -10,7 +18,10 @@ export function view(router) {
   utils.clear(alerts);
 
   utils.activate(container);
+
+  utils.activate(utils.query(`[data-param-name="show"][data-param-value="${router.query.show}"]`));
   utils.activate(utils.query("[href=\"/forecast\"]"));
+
   utils.activate(alertsLoader);
 
   Promise.all([
@@ -22,9 +33,9 @@ export function view(router) {
     const days = utils.queryAll(".Forecast__day");
 
     const radioBlackout = res[0].body;
-    radioBlackout.forEach((item) => {
+    /*radioBlackout.forEach((item) => {
       utils.text(utils.query(".Forecast__statsValue--solar", days[index]), (item.value + "%"));
-    });
+    });*/
 
     const solarRadiation = res[1].body;
     solarRadiation.forEach((item, index) => {
@@ -61,26 +72,45 @@ export function view(router) {
 
   });
 
-  API.getAlerts().then((res) => {
+  if (router.query.show === "alerts") {
 
-    utils.clear(alerts);
+    API.getAlerts({
+      ordering: "-date"
+    }).then((res) => {
 
-    utils.deactivate(alertsLoader);
+      utils.deactivate(alertsLoader);
 
-    res.body.forEach((alert) => {
-      utils.add(alerts, utils.template("#alert", alert, {
-        alerttype(value) {
-          switch (value) {
-            default: return "";
-            case 1: return "Alert--summary";
-            case 3: return "Alert--warning";
-            case 5: return "Alert--extendedWarning";
-            case 7: return "Alert--cancelWarning";
+      utils.clear(alerts);
+      res.body.forEach((alert) => {
+        utils.add(alerts, utils.template("#alert", alert, {
+          alerttype(value) {
+            switch (value) {
+              default: return "";
+              case 1: return "Alert--summary";
+              case 3: return "Alert--warning";
+              case 5: return "Alert--extendedWarning";
+              case 7: return "Alert--cancelWarning";
+            }
           }
-        }
-      }));
+        }));
+      });
+
     });
 
-  });
+  } else {
+
+    API.getForecast({
+      date_min: minDateFormatted
+    }).then((res) => {
+
+      utils.deactivate(alertsLoader);
+
+      utils.clear(alerts);
+      console.log(res);
+
+    });
+
+  }
+
 
 }

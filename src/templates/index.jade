@@ -244,8 +244,8 @@ block content
                     .Panel__header
                         .Panel__title Alerts
                         .Panel__menu
-                            a.Panel__menuItem.isActive(href="/forecast",data-param-name="alerts",data-param-value="forecast") Forecast
-                            a.Panel__menuItem(href="/forecast",data-param-name="alerts",data-param-value="alerts") Alerts
+                            a.Panel__menuItem.isActive(href="/forecast",data-param-name="show",data-param-value="forecast") Forecast
+                            a.Panel__menuItem(href="/forecast",data-param-name="show",data-param-value="alerts") Alerts
                     .Panel__content
                         +loader("#forecast-alerts")
                         .Alerts
