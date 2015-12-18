@@ -34,7 +34,6 @@ body
     overflow hidden
     margin 0
     padding 0
-    //font-size .875rem
     display flex
     align-items center
     justify-content center
@@ -50,6 +49,20 @@ input
 a
     color $colorLink
     text-decoration none
+    transition color .4s ease-in-out
+    &:hover
+        color $colorHighlight
+        transition color .2s ease-in-out
+
+h3
+    text-transform uppercase
+    color $colorTitle
+    font-weight 200
+
+h4
+    text-transform uppercase
+    color $colorHighlight
+    font-weight 200
 
 p:first-line
     margin-left 2rem
@@ -240,6 +253,30 @@ p:first-line
 .Panel__content
     @extend $Panel__content
 
+.Panel__content--text
+    @extend $Panel__content
+
+.ScrolledContent
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    padding-right .5rem
+    overflow-y auto
+    overflow-x hidden
+
+.Panel__content--text:before
+    @extend $Panel__decor
+    top -.125rem
+    right -2px
+
+
+.Panel__content--text:after
+    @extend $Panel__decor
+    bottom -.125rem
+    right -2px
+
 .Panel__footer
     @extend $Panel__footer
     position relative
@@ -410,6 +447,8 @@ p:first-line
     width 100%
     bottom 1rem
     overflow-y scroll
+    display flex
+    flex-direction column
 
 .Alert
     @extend $Alert
@@ -510,18 +549,8 @@ p:first-line
 .Text__header
     @extend $Text__header
 
-.Text__header:before
-    @extend $Panel__decor
-    top -.125rem
-    right 0
-
 .Text__body
     @extend $Text__body
-
-.Text__body:after
-    @extend $Panel__decor
-    bottom -.125rem
-    right 0
 
 // ----------------------------------------------------------
 // Graph

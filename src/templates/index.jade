@@ -50,7 +50,7 @@ block content
                         +loader("#sun")
                         .Sun
                             .Sun__container
-                                img.Sun__image(src="images/304_2015-12-16-02-00.gif")
+                                img.Sun__image(src="s")
                     .Panel__footer
                         .Timeline
                             .Timeline__progress
@@ -103,10 +103,13 @@ block content
                             h2 Hola
                     .Panel__footer
                 .Sunspots__description
-                    .Text__header Lorem ipsum dolor sit amet
-                    .Text__body
-                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    .Panel__content--text
+                        .ScrolledContent
+                            .Text__header Sunspots
+                            .Text__body
+                                p Sunspots are temporary phenomena on the photosphere of the Sun that appear visibly as dark spots compared to surrounding regions. They correspond to concentrations of magnetic field flux that inhibit convection and result in reduced surface temperature compared to the surrounding photosphere. Sunspots usually appear in pairs, with pair members of opposite magnetic polarity. The number of sunspots varies according to the approximately 11-year solar cycle.
+                                p Individual sunspots may endure anywhere from a few days to a few months, but eventually decay. Sunspots expand and contract as they move across the surface of the Sun with a size ranging from 16 kilometers to 160,000 kilometers in diameter. The larger variety are visible from Earth without the aid of a telescope. They may travel at relative speeds ("proper motions") of a few hundred meters per second when they first emerge.
+                                p Reflecting intense magnetic activity, sunspots accompany secondary phenomena such as coronal loops (prominences) and reconnection events. Most solar flares and coronal mass ejections originate in magnetically active regions around visible sunspot groupings. Similar phenomena indirectly observed on stars other than the sun are commonly called starspots and both light and dark spots have been measured.
             // Solar cycle
             section.SolarCycle
                 .SolarCycle__graph
@@ -128,10 +131,20 @@ block content
                                     .Graph__legendLabel Predicted Monthly Values
                     .Panel__footer
                 .SolarCycle__description
-                    .Text__header Lorem ipsum dolor sit amet
-                    .Text__body
-                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        p Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    .Panel__content--text
+                        .ScrolledContent
+                            .Text__header The Solar Cycle
+                            .Text__body
+                                p The 11-year sunspot or solar cycle is a rhythmic waxing and waning of the number of dark sunspots on the visible disk of the Sun. It comes from the "winding-up" of the solar magnetic field during which the magnetic field gradually decays and then finally undergoes a total magnetic reversal, which is when the magnetic poles flip. As the magnetic field becomes gradually more entwined towards solar maximum the surface fields of the Sun becomes more and more wrapped up. This increases the activity on the surface of the Sun, seen as sunspots (regions of highly complex and intense magnetic fields) and the more frequent occurrence of solar flares and coronal mass ejections.
+                                p The Sun is brighter at EUV and X-ray wavelengths during solar maximum then at solar minimum. This global brightening has Space Weather consequences. Impulsive events, such as coronal mass ejections, solar flares, or high speed streams in the solar wind, occur on timescales of minutes to hours, or even days. Delayed sources of space weather, such as geomagnetic storms, start after the solar signal that triggers the storm has passed the Earth and can last for days to weeks. Galactic cosmic rays are reduced by solar activity and have more rapid variations caused by CMEs. Interplanetary dust particles are a continuous source of easily-ionized meteoric material to the Earth. Impacts of asteroids and comets are infrequent, catastrophic events.
+                                h3 Recent cycles
+                                h4 Cycle 24
+                                p The current solar cycle began on January 4, 2008, with minimal activity until early 2010. It is on track to have the lowest recorded sunspot activity since accurate records began in 1750. The cycle featured a "double-peaked" solar maximum. The first peak was reached 99 in 2011 and the second in early 2014 at 101.
+                                h4 Cycle 23
+                                p This cycle lasted 11.6 years, beginning in May 1996 and ending in January 2008. The maximum smoothed sunspot number (monthly number of sunspots averaged over a twelve-month period) observed during the solar cycle was 120.8 (March 2000), and the minimum was 1.7. A total of 805 days had no sunspots during this cycle.
+                                p
+                                    span= "Sources: "
+                                    a(href="http://sdo.gsfc.nasa.gov/mission/spaceweather.php and https://www.wikiwand.com/en/Solar_cycle") http://sdo.gsfc.nasa.gov/mission/spaceweather.php and https://www.wikiwand.com/en/Solar_cycle
             // Forecast Section
             section.Forecast
                 .Forecast__graphs
@@ -230,6 +243,9 @@ block content
                 .Forecast__alerts
                     .Panel__header
                         .Panel__title Alerts
+                        .Panel__menu
+                            a.Panel__menuItem.isActive(href="/forecast",data-param-name="alerts",data-param-value="forecast") Forecast
+                            a.Panel__menuItem(href="/forecast",data-param-name="alerts",data-param-value="alerts") Alerts
                     .Panel__content
                         +loader("#forecast-alerts")
                         .Alerts
