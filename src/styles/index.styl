@@ -132,7 +132,7 @@ p:first-line
 
 .Logo
     font-weight 200
-    font-size 1.25rem
+    font-size 1rem
     display flex
     align-items center
     height 2rem
@@ -364,9 +364,10 @@ p:first-line
     position absolute
     content ''
     top 0
-    height .5rem
-    width 1px
-    background-color $colorBase
+    height 2px
+    width 2px
+    background-color $colorHighlight
+    z-index 100
 .Timeline__progress:before
     left 0
 .Timeline__progress:after
@@ -440,6 +441,7 @@ p:first-line
 .Forecast__alerts
     @extend $Panel--40
 
+.Forecast__rationale
 .Alerts
     position absolute
     top 1rem
@@ -512,6 +514,7 @@ p:first-line
     max-height 0
     overflow hidden
     margin-bottom 1rem
+    white-space pre
     transform translate3d(0,0,0)
     transition max-height .4s $easeInCubic
 
