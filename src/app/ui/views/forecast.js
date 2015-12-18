@@ -155,7 +155,7 @@ export function view(router) {
   if (router.query.show === "alerts") {
 
     API.getAlerts({
-      ordering: "-date"
+      ordering: "-issuetime"
     }).then((res) => {
 
       utils.deactivate(alertsLoader);
