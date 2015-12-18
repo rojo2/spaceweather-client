@@ -133,13 +133,13 @@ export function clear(el) {
 
 export function dateYMD(date) {
   return padLeft(date.getFullYear(), "0", 4)
-    + "-" + padLeft(date.getMonth(), "0", 2)
+    + "-" + padLeft((date.getMonth() + 1), "0", 2)
     + "-" + padLeft(date.getDate(), "0", 2);
 }
 
 export function dateFormatted(date) {
   return padLeft(date.getFullYear(), "0", 4)
-    + "-" + padLeft(date.getMonth(), "0", 2)
+    + "-" + padLeft((date.getMonth() + 1), "0", 2)
     + "-" + padLeft(date.getDate(), "0", 2)
     + " " + padLeft(date.getHours(), "0", 2)
     + ":" + padLeft(date.getMinutes(), "0", 2);
@@ -483,7 +483,7 @@ export function daysFrom(days) {
   const currentDate = new Date(),
       minDate = (function() {
         const date = new Date();
-        date.setTime(currentDate.getTime() + (86400 * days));
+        date.setDate(date.getDate() + days);
         return date;
       })(),
       minDateFormatted = dateYMD(minDate);

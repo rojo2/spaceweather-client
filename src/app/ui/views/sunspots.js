@@ -8,8 +8,8 @@ export function view(router) {
   utils.activate(container);
   utils.activate(utils.query("[href=\"/sunspots\"]"));
 
-  const minDateFormatted = utils.daysFrom(-1),
-        maxDateFormatted = utils.daysFrom(-1);
+  const minDateFormatted = utils.daysFrom(-2),
+        maxDateFormatted = utils.daysFrom(-2);
 
   utils.activate(utils.query(".Loader", container));
   Promise.all([
@@ -22,7 +22,7 @@ export function view(router) {
 
     API.getSunspotRegions({
       date_min: minDateFormatted,
-      data_max: maxDateFormatted
+      date_max: maxDateFormatted
     })
 
   ]).then((res) => {
