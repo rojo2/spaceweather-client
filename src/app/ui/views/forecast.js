@@ -27,15 +27,15 @@ export function view(router) {
 
   Promise.all([
     API.getRadioBlackout({
-      ordering: "-date",
+      ordering: "+date",
       date_min: minDateFormatted
     }),
     API.getSolarRadiation({
-      ordering: "-date",
+      ordering: "+date",
       date_min: minDateFormatted
     }),
     API.getGeomagneticActivity({
-      ordering: "-date",
+      ordering: "+date",
       date_min: minDateFormatted
     })
   ]).then((res) => {
@@ -63,7 +63,7 @@ export function view(router) {
       item.date = new Date(item.date);
 
       const day = utils.dateYMD(item.date);
-      if (!day in geomagneticPerDay) {
+      if (!(day in geomagneticPerDay)) {
 
         geomagneticPerDay[day] = {
           minGeomagnetic: Number.MAX_VALUE,
@@ -82,6 +82,8 @@ export function view(router) {
     const keys = Object.keys(geomagneticPerDay);
     keys.forEach((day, index) => {
 
+      const geomagnetic = geomagneticPerDay[day];
+
       const dateLabel = new Date(day);
 
       const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DEC"];
@@ -89,7 +91,7 @@ export function view(router) {
 
       utils.text(utils.query(".Forecast__dayLabel", days[index]), monthShortName + " " + utils.padLeft(dateLabel.getDate(),"0",2));
 
-      utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (day.minGeomagnetic + " / " + day.maxGeomagnetic));
+      utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (geomagnetic.minGeomagnetic + " / " + geomagnetic.maxGeomagnetic));
 
     });
 
@@ -134,20 +136,18 @@ export function view(router) {
       const rationale = res.body[0];
 
       if (rationale.solarradiation) {
-        content += utils.wrap("Solar Radiation", "h3") + utils.wrap(rationale.solarradiation, "p")
+        content += utils.wrap("Solar Radiation", "h3") + utils.wrap(rationale.solarradiation, "p");
       }
 
       if (rationale.geomagactivity) {
-        content += utils.wrap("Geomagnetic Activity", "h3") + utils.wrap(rationale.geomagactivity, "p")
+        content += utils.wrap("Geomagnetic Activity", "h3") + utils.wrap(rationale.geomagactivity, "p");
       }
 
       if (rationale.radioblackout) {
-        content += utils.wrap("Radio Blackout", "h3") + utils.wrap(rationale.radioblackout, "p")
+        content += utils.wrap("Radio Blackout", "h3") + utils.wrap(rationale.radioblackout, "p");
       }
 
       utils.html(forecast, content);
-
-      console.log(res);
 
     });
 
