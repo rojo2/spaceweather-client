@@ -29,7 +29,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(-7);
+  const minDateFormatted = utils.daysFrom(-30);
 
   const container = utils.query(".Weather");
   const eitFiltersContainer = utils.query(".Weather__EITFilters", container);
@@ -106,61 +106,73 @@ export function view(router) {
         API.getSolarWind({
           date_min: minDateFormatted
         }).then((res) => {
+
           utils.deactivate(fluxesLoader);
           utils.solarWindGraph(container, res.body);
+
         });
         break;
 
       case "particle":
         Promise.all([
+
           API.getProtonFlux({
             ptype: 1,
             date_min: minDateFormatted
           }),
 
           API.getProtonFlux({
-            ptype: 2,
+            ptype: 3,
             date_min: minDateFormatted
           })
 
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.protonFluxGraph(container, res[0].body);
+          utils.protonFluxGraph(container, [res[0].body, res[1].body]);
 
         });
         break;
 
       case "electron":
         Promise.all([
+
           API.getElectronFlux({
-            ptype: 2,
+            etype: 1,
             date_min: minDateFormatted
           }),
 
           API.getElectronFlux({
-            ptype: 1,
+            etype: 2,
             date_min: minDateFormatted
           })
+
         ]).then((res) => {
+
           utils.deactivate(fluxesLoader);
-          utils.electronFluxGraph(container, res[0].body);
+          utils.electronFluxGraph(container, [res[0].body, res[1].body]);
+
         });
         break;
 
       case "x-ray":
         Promise.all([
-          API.getXrayFlux({
-            xtype: 2,
-            date_min: minDateFormatted
-          }),
+
           API.getXrayFlux({
             xtype: 1,
             date_min: minDateFormatted
+          }),
+
+          API.getXrayFlux({
+            xtype: 2,
+            date_min: minDateFormatted
           })
+
         ]).then((res) => {
+
           utils.deactivate(fluxesLoader);
-          utils.xrayFluxGraph(container, res[0].body);
+          utils.xrayFluxGraph(container, [res[0].body, res[1].body]);
+
         });
         break;
     }
