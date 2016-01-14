@@ -103,12 +103,28 @@ export function view(router) {
     switch(router.query.flux) {
       default:
       case "solar-wind":
-        API.getSolarWind({
-          date_min: minDateFormatted
-        }).then((res) => {
+        Promise.all([
+
+          API.getSolarWind({
+            date_min: minDateFormatted
+          })
+
+        ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.solarWindGraph(container, res.body);
+          utils.solarWindGraph(container, res[0].body);
+
+          const graphLegends = utils.query(".Graph__legends");
+          utils.clear(graphLegends);
+          utils.addAll(graphLegends, [{"name": "temperature"}, {"name": "density"}].map((legend) => {
+            return utils.tag("a", {
+              "href": "#",
+              "class": "Graph__legend"
+            }, [
+              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
+            ]);
+          }));
 
         });
         break;
@@ -124,12 +140,26 @@ export function view(router) {
           API.getProtonFlux({
             ptype: 3,
             date_min: minDateFormatted
-          })
+          }),
+
+          API.getProtonFluxTypes()
 
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
           utils.protonFluxGraph(container, [res[0].body, res[1].body]);
+
+          const graphLegends = utils.query(".Graph__legends");
+          utils.clear(graphLegends);
+          utils.addAll(graphLegends, res[2].body.map((legend) => {
+            return utils.tag("a", {
+              "href": "#",
+              "class": "Graph__legend"
+            }, [
+              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
+            ]);
+          }));
 
         });
         break;
@@ -145,12 +175,26 @@ export function view(router) {
           API.getElectronFlux({
             etype: 2,
             date_min: minDateFormatted
-          })
+          }),
+
+          API.getElectronFluxTypes()
 
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
           utils.electronFluxGraph(container, [res[0].body, res[1].body]);
+
+          const graphLegends = utils.query(".Graph__legends");
+          utils.clear(graphLegends);
+          utils.addAll(graphLegends, res[2].body.map((legend) => {
+            return utils.tag("a", {
+              "href": "#",
+              "class": "Graph__legend"
+            }, [
+              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
+            ]);
+          }));
 
         });
         break;
@@ -166,12 +210,26 @@ export function view(router) {
           API.getXrayFlux({
             xtype: 2,
             date_min: minDateFormatted
-          })
+          }),
+
+          API.getXrayFluxTypes()
 
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
           utils.xrayFluxGraph(container, [res[0].body, res[1].body]);
+
+          const graphLegends = utils.query(".Graph__legends");
+          utils.clear(graphLegends);
+          utils.addAll(graphLegends, res[2].body.map((legend) => {
+            return utils.tag("a", {
+              "href": "#",
+              "class": "Graph__legend"
+            }, [
+              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
+            ]);
+          }));
 
         });
         break;

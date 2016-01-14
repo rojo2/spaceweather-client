@@ -133,6 +133,39 @@ export function getActive(list) {
   });
 }
 
+export function attributes(el, attribs) {
+  const names = Object.keys(attribs);
+  for (let index = 0; index < names.length; index++) {
+    const name = names[index],
+          value = attribs[name];
+    setAttr(el, name, value);
+  }
+  return el;
+}
+
+export function addAll(el, content) {
+  for (let index = 0; index < content.length; index++) {
+    const child = content[index];
+    add(el, child);
+  }
+  return el;
+}
+
+export function tag(name, attribs = {}, content = null) {
+  const el = document.createElement(name);
+  attributes(el, attribs);
+  if (content) {
+    if (Array.isArray(content)) {
+      addAll(el, content);
+    } else if (typeof content === "string" || content instanceof String ||
+               typeof content === "number" || content instanceof Number ||
+               typeof content === "boolean" || content instanceof Boolean || content instanceof Date) {
+      add(el, document.createTextNode(content.toString()));
+    }
+  }
+  return el;
+}
+
 export function clear(el) {
   while (el.childNodes.length > 0) {
     el.removeChild(el.lastChild);
