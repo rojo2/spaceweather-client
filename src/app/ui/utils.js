@@ -603,13 +603,15 @@ export function electronFluxGraph(el, data, options = {}) {
 }
 
 export function daysFrom(days) {
-  const currentDate = new Date(),
+  const currentDate = new Date("2015-12-18 00:00:00"), //new Date(),
       minDate = (function() {
-        const date = new Date();
+        const date = currentDate;
         date.setDate(date.getDate() + days);
         return date;
       })(),
       minDateFormatted = dateYMD(minDate);
+
+      console.log(currentDate);
   return minDateFormatted;
 }
 
