@@ -1,4 +1,5 @@
 import d3 from "d3";
+import {config} from "./config";
 
 export function rect(el) {
   return el.getBoundingClientRect();
@@ -636,7 +637,7 @@ export function electronFluxGraph(el, data, options = {}) {
 }
 
 export function daysFrom(days) {
-  const currentDate = new Date("2015-12-18 00:00:00"), //new Date(),
+  const currentDate = config.USE_FIXED_DATE ? new Date("2015-12-18 00:00:00") : new Date(),
       minDate = (function() {
         const date = currentDate;
         date.setDate(date.getDate() + days);
