@@ -853,10 +853,22 @@ export function sunspots(el, images, data) {
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     .append("g");
 
-  svg.append("image")
-    .attr("width", r.width)
-    .attr("height", r.height)
-    .attr("xlink:href", images[0].image);
+  if (!images[0] || !images[0].image) {
+
+    console.error("Image not available");
+    svg.append("image")
+      .attr("width", r.width)
+      .attr("height", r.height)
+      .attr("xlink:href", "images/image-not-available.jpg");
+
+  } else {
+
+    svg.append("image")
+      .attr("width", r.width)
+      .attr("height", r.height)
+      .attr("xlink:href", images[0].image);
+
+  }
 
   svg.append("circle")
     .attr("class", "Graph__sun")

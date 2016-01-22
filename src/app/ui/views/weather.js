@@ -14,7 +14,13 @@ function updateImage(el, value = 0) {
 
     const r = utils.rect(el.parentElement.parentElement);
     utils.setAttr(el, "width", Math.min(r.width,r.height));
-    utils.setAttr(el, "src", images[imageIndex].image);
+
+    if (!images[imageIndex]) {
+      console.error("There is no images");
+      utils.setAttr(el, "src", "images/image-not-available.jpg");
+    } else {
+      utils.setAttr(el, "src", images[imageIndex].image);
+    }
 
   }
 

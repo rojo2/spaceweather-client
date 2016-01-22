@@ -33,7 +33,6 @@ export function view(router) {
     res[0].body.forEach((image) => {
       if (new Date(image.date).getHours() === 17) {
         images.push(image);
-        console.log(image);
       }
     });
 
