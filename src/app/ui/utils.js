@@ -60,12 +60,21 @@ export function timeline(el, fn) {
     }
   }
 
+  function dispose() {
+    mark.removeEventListener("mousedown", handleDown);
+    progress.removeEventListener("click", handleClick);
+  }
+
   mark.addEventListener("mousedown", handleDown);
   progress.addEventListener("click", handleClick);
 
   updateValue(0);
 
-  return el;
+  return {
+    el,
+    updateValue,
+    dispose
+  };
 }
 
 export function query(selector, el = document) {

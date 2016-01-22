@@ -89,6 +89,8 @@ export function view(router) {
           utils.text(utils.query(".Timeline__dateCurrent", eitFiltersContainer), utils.dateFormatted(utils.interpolateDate(dateStart, dateEnd, value, dateCurrent)));
 
         });
+      } else {
+        timeline.updateValue(0);
       }
 
       updateImage(imageContainer);
