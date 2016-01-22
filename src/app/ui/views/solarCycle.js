@@ -1,4 +1,5 @@
 import * as utils from "../utils";
+import graphs from "../graphs";
 import API from "../../api";
 
 export function view(router) {
@@ -25,7 +26,7 @@ export function view(router) {
 
   ]).then((res) => {
     utils.deactivate(utils.query(".SolarCycle .Loader", container));
-    utils.solarCycleGraph(container, res[0].body,res[1].body,res[2].body);
+    graphs.solarCycleGraph(container, res[0].body,res[1].body,res[2].body);
   });
 
 }

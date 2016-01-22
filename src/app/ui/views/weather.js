@@ -1,4 +1,5 @@
 import * as utils from "../utils";
+import graphs from "../graphs";
 import API from "../../api";
 
 let lastQuery,
@@ -123,7 +124,7 @@ export function view(router) {
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.solarWindGraph(container, res[0].body);
+          graphs.solarWindGraph(container, res[0].body);
 
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
@@ -158,7 +159,7 @@ export function view(router) {
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.protonFluxGraph(container, [res[0].body, res[1].body]);
+          graphs.protonFluxGraph(container, [res[0].body, res[1].body]);
 
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
@@ -193,7 +194,7 @@ export function view(router) {
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.electronFluxGraph(container, [res[0].body, res[1].body]);
+          graphs.electronFluxGraph(container, [res[0].body, res[1].body]);
 
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
@@ -228,7 +229,7 @@ export function view(router) {
         ]).then((res) => {
 
           utils.deactivate(fluxesLoader);
-          utils.xrayFluxGraph(container, [res[0].body, res[1].body]);
+          graphs.xrayFluxGraph(container, [res[0].body, res[1].body]);
 
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);

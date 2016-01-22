@@ -1,4 +1,5 @@
 import * as utils from "../utils";
+import graphs from "../graphs";
 import API from "../../api";
 
 export function view(router) {
@@ -37,7 +38,7 @@ export function view(router) {
     });
 
     utils.deactivate(utils.query(".Loader", container));
-    utils.sunspots(container, images, res[1].body);
+    graphs.sunspots(container, images, res[1].body);
 
   });
 
