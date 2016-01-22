@@ -40,15 +40,6 @@ export function view(router) {
   utils.activate(utils.query(`[data-param-name="filter"][data-param-value="${router.query.filter}"]`));
   utils.activate(utils.query(`[data-param-name="flux"][data-param-value="${router.query.flux}"]`));
 
-  if (!timeline) {
-    timeline = utils.timeline(utils.query(".Timeline", container), (value) => {
-      if (images) {
-        updateImage(imageContainer, value);
-      }
-      console.log("value", value);
-    });
-  }
-
   if (!lastQuery || (lastQuery.filter !== router.query.filter)) {
 
     utils.activate(utils.query(".Loader", eitFiltersContainer));
@@ -81,12 +72,24 @@ export function view(router) {
       });
 
       const dateStart = new Date(minDate),
-            dateEnd = new Date(maxDate);
+            dateEnd = new Date(maxDate),
+            dateCurrent = new Date();
 
       utils.text(utils.query(".Timeline__dateStart", eitFiltersContainer), utils.dateFormatted(dateStart));
       utils.text(utils.query(".Timeline__dateEnd", eitFiltersContainer), utils.dateFormatted(dateEnd));
 
       utils.deactivate(utils.query(".Loader", eitFiltersContainer));
+
+      if (!timeline) {
+        timeline = utils.timeline(utils.query(".Timeline", container), (value) => {
+
+          if (images) {
+            updateImage(imageContainer, value);
+          }
+          utils.text(utils.query(".Timeline__dateCurrent", eitFiltersContainer), utils.dateFormatted(utils.interpolateDate(dateStart, dateEnd, value, dateCurrent)));
+
+        });
+      }
 
       updateImage(imageContainer);
 

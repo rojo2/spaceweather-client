@@ -19,16 +19,21 @@ export function timeline(el, fn) {
         fill = query(".Timeline__fill", progress),
         mark = query(".Timeline__mark", progress);
 
-  function updateFromEvent(e) {
-    const r = rect(progress);
-
-    const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
+  function updateValue(value) {
     mark.style.left = (value * 100) + "%";
     fill.style.transform = `scaleX(${value})`;
 
     if (typeof fn === "function") {
       fn(value);
     }
+  }
+
+  function updateFromEvent(e) {
+    const r = rect(progress);
+
+    const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
+    updateValue(value);
+
   }
 
   function handleClick(e) {
@@ -57,6 +62,8 @@ export function timeline(el, fn) {
 
   mark.addEventListener("mousedown", handleDown);
   progress.addEventListener("click", handleClick);
+
+  updateValue(0);
 
   return el;
 }
@@ -217,6 +224,12 @@ export function add(el, child) {
 export function remove(el, child) {
   el.removeChild((typeof child === "function" ? child() : child));
   return el;
+}
+
+export function interpolateDate(a,b,p,c = new Date()) {
+  const newTime = ((b.getTime() - a.getTime()) * p) + a.getTime();
+  c.setTime(newTime);
+  return c;
 }
 
 export function interpolateText(text, data = {}, filters = {}) {
@@ -645,7 +658,6 @@ export function daysFrom(days) {
       })(),
       minDateFormatted = dateYMD(minDate);
 
-      console.log(currentDate);
   return minDateFormatted;
 }
 
