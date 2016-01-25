@@ -23,9 +23,9 @@ export function sunspots(el, images, data) {
   const MARGIN = 10;
 
   const container = utils.query(".Graph__content", el);
-  clear(container);
+  utils.clear(container);
 
-  const r = rect(container),
+  const r = utils.rect(container),
         hw = r.width * 0.5,
         hh = r.height * 0.5,
         radius = Math.min(hw,hh) - MARGIN;
