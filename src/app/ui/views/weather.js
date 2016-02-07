@@ -36,7 +36,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(-30);
+  const minDateFormatted = utils.daysFrom(-7);
 
   const container = utils.query(".Weather");
   const eitFiltersContainer = utils.query(".Weather__EITFilters", container);

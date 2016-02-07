@@ -281,12 +281,12 @@ export function template(selector, data = {}, filters = {}) {
 }
 
 export function daysFrom(days) {
-  const currentDate = config.USE_FIXED_DATE ? new Date("2015-12-18 00:00:00") : new Date(),
-      minDate = (function() {
+  const currentDate = config.USE_FIXED_DATE ? new Date("2015-12-18 00:00:00") : new Date();
+  const minDate = (function() {
         const date = currentDate;
         date.setDate(date.getDate() + days);
         return date;
-      })(),
+      }()),
       minDateFormatted = dateYMD(minDate);
 
   return minDateFormatted;
