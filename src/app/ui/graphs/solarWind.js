@@ -39,7 +39,7 @@ export function solarWindGraph(el, data) {
 
   const margin = {
       top: 0,
-      right: 0,
+      right: 64,
       bottom: 36,
       left: 64
     },
@@ -72,14 +72,14 @@ export function solarWindGraph(el, data) {
   const yAxisRight = d3.svg.axis()
     .scale(yt)
     .orient("right")
-    .tickSize(width)
+    .tickSize(-width)
     .tickPadding(16);
 
   const svg = d3.select(container)
     .append("svg")
     .attr("class", "Graph__image")
-    .attr("width", r.width)
-    .attr("height", r.height)
+    .attr("width", "100%")
+    .attr("height", "100%")
     //.attr("viewBox","0 0 " + Math.max(sWidth,sHeight) + " " + Math.min(sWidth,sHeight))
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     //.attr("preserveAspectRatio", "none")
@@ -122,6 +122,7 @@ export function solarWindGraph(el, data) {
 
   svg.append("g")
     .attr("class", "Graph__axis")
+    .attr("transform", "translate(" + 0 + ",0)")
     .call(yAxisLeft)
     .append("text")
     .attr("class", "Graph__text")
@@ -136,7 +137,7 @@ export function solarWindGraph(el, data) {
     .append("text")
     .attr("class", "Graph__text")
     .attr("transform", "rotate(90)")
-    .style("text-anchor", "end")
+    .style("text-anchor", "start")
     .text("Temperature");
 
 
