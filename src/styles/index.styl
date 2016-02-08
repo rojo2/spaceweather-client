@@ -66,7 +66,7 @@ h4
     font-weight 200
 
 p
-    margin .5rem 0
+    margin 2rem 0
 
 ::-webkit-scrollbar
     width 1px
@@ -137,7 +137,10 @@ p
     display flex
     align-items center
     height 2rem
-    color $colorBase
+.Logo__icon
+    fill $colorTitle
+.Logo__text
+    fill $colorLink
 
 .Nav
     flex 1
@@ -178,26 +181,28 @@ p
 .Button--sound
     @extend $ControlButton
     .Icon--sound
+        fill $colorBase
+    .Sound
+        transform-origin 50% 50%
+    .Button__label
         margin-right .5rem
-        fill $colorDim
-
 
 .Button--sound.isOn
     @extend $ControlButton--active
     .Icon--sound
         fill $colorHighlight
-    .Sound1
-        transform-origin 50% 50%
+    .Sound--1
         animation AnimSound 1s ease-in-out infinite
-    .Sound2
-        transform-origin 50% 50%
+    .Sound--2
         animation AnimSound .9s ease-in-out infinite
-    .Sound3
-        transform-origin 50% 50%
+    .Sound--3
         animation AnimSound .7s ease-in-out infinite
-    .Sound4
-        transform-origin 50% 50%
+    .Sound--4
         animation AnimSound .2s ease-in-out infinite
+
+.Button--sound.isOff .Icon--sound .Sound
+    transform scaleY(0.1)
+
 
 @keyframes AnimSound
     0%
@@ -515,7 +520,7 @@ p
     max-height 0
     overflow hidden
     margin-bottom 1rem
-    white-space pre
+    white-space pre-wrap
     transform translate3d(0,0,0)
     transition max-height .4s $easeInCubic
 

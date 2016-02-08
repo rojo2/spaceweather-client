@@ -32,8 +32,10 @@ export function initSounds() {
     const button = document.querySelector(".Button--sound");
     if (muted) {
       button.className = "Button--sound isOff";
+      button.querySelector(".Button__label").textContent = "Audio off";
     } else {
       button.className = "Button--sound isOn";
+      button.querySelector(".Button__label").textContent = "Audio on";
     }
   }
 

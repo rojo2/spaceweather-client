@@ -14,7 +14,8 @@ block content
     canvas.Background
     .Page
         .Page__top
-            .Logo AURORA
+            .Logo
+               include ../assets/images/logo.svg
             .Nav
                 a.Nav__item.isActive(href="/weather")
                     .Nav__itemLabel Weather
@@ -298,16 +299,16 @@ block content
         .Page__bottom
             .Controls
                 a.Button--sound.isOn(href="")
-                    svg.Icon--sound(viewBox="0 0 22 16", x="0", y="0", width="22", height="16")
-                        rect.Sound1(x="0", y="0", width="1", height="16")
-                        rect.Sound2(x="3", y="0", width="1", height="16")
-                        rect.Sound3(x="6", y="0", width="1", height="16")
-                        rect.Sound1(x="9", y="0", width="1", height="16")
-                        rect.Sound4(x="12", y="0", width="1", height="16")
-                        rect.Sound2(x="15", y="0", width="1", height="16")
-                        rect.Sound1(x="18", y="0", width="1", height="16")
-                        rect.Sound3(x="21", y="0", width="1", height="16")
                     .Button__label Audio On
+                    svg.Icon--sound(viewBox="0 0 22 16", x="0", y="0", width="22", height="16")
+                        rect.Sound.Sound--1(x="0", y="0", width="1", height="16")
+                        rect.Sound.Sound--2(x="3", y="0", width="1", height="16")
+                        rect.Sound.Sound--3(x="6", y="0", width="1", height="16")
+                        rect.Sound.Sound--1(x="9", y="0", width="1", height="16")
+                        rect.Sound.Sound--4(x="12", y="0", width="1", height="16")
+                        rect.Sound.Sound--2(x="15", y="0", width="1", height="16")
+                        rect.Sound.Sound--1(x="18", y="0", width="1", height="16")
+                        rect.Sound.Sound--3(x="21", y="0", width="1", height="16")
     +loader("main")
     template#alert
         .Alert(class="{alerttype}")
