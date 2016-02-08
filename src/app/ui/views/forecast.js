@@ -42,7 +42,6 @@ export function view(router) {
 
     const days = utils.queryAll(".Forecast__day");
 
-
     let minRadioBlackout = Number.MAX_VALUE,
         maxRadioBlackout = Number.MIN_VALUE;
 

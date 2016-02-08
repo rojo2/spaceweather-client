@@ -33,8 +33,8 @@ export function sunspots(el, images, data) {
   const svg = d3.select(container)
     .append("svg")
     .attr("class", "Graph__image")
-    .attr("width", r.width)
-    .attr("height", r.height)
+    .attr("width", "100%")
+    .attr("height", "100%")
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     .append("g");
 
