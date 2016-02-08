@@ -71,6 +71,11 @@ $ControlButton
 $ControlButton--active
     color $colorHighlight
 
+$Icon
+    stroke-width 1
+    stroke $colorDim
+    fill transparent
+
 // ----------------------------------------------------------
 // Text formats
 
@@ -131,6 +136,7 @@ $Panel__header
     border-bottom 1px solid $colorDim
     background-color alpha($colorDim, 0.06)
     border-top 1px solid $colorDim
+    animation AnimPanelHeader .3s $easeInCubic
 $Panel__decor
     position absolute
     content ''

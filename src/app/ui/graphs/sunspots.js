@@ -41,10 +41,25 @@ export function sunspots(el, images, data) {
   if (!images[0] || !images[0].image) {
 
     console.error("Image not available");
-    svg.append("image")
-      .attr("width", r.width)
-      .attr("height", r.height)
-      .attr("xlink:href", "images/image-not-available.jpg");
+    svg.append("circle")
+      .attr("class", "Image--notFound")
+      .attr("cx", hw)
+      .attr("cy", hh)
+      .attr("r", radius);
+
+    svg.append("line")
+      .attr("class", "Image--notFound")
+      .attr("x1", 0)
+      .attr("y1", 0)
+      .attr("x2", r.width)
+      .attr("y2", r.height);
+
+    svg.append("line")
+      .attr("class", "Image--notFound")
+      .attr("x1", 0)
+      .attr("y1", r.height)
+      .attr("x2", r.width)
+      .attr("y2", 0);
 
   } else {
 
