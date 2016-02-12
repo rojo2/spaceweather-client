@@ -4,24 +4,34 @@
 section.isActive
     @extend $Section--active
     .Panel__title
-        animation animTitle .2s $easeInCubic .3s
+        animation animTitle .8s $easeInCubic
         opacity 1
     .Panel__header
-        animation animPanelHeader .2s $easeInCubic .2s
+        animation animPanelHeader .8s $easeInCubic
+        @extend $Panel__header--active
     .Panel__content
-        animation animBodyIn .2s $easeInCubic .4s
+        animation animBodyIn .8s $easeInCubic
     .Panel__footer
-        animation animPanelFooter .2s $easeInCubic .3s
-    .Panel__content--text
-        animation animTextIn .2s $easeInCubic .4s
-
+        animation animPanelFooter .8s $easeInCubic
+    .Weather__EITFilters
+    .Sunspots__image
+    .SolarCycle__graph
+    .Forecast__graphs
+        transform-style preserve-3d
+        animation anim3DPanelLeft .4s $easeInCubic
+    .Weather__fluxes
+    .Sunspots__description
+    .SolarCycle__description
+    .Forecast__alerts
+        transform-style preserve-3d
+        animation anim3DPanelRight .4s $easeInCubic
 // ----------------------------------------------------------
 // Animations
 
 @keyframes animTitle
     0%
         opacity 0
-    50%
+    66%
         opacity 0
     100%
         opacity 1
@@ -31,19 +41,19 @@ section.isActive
         border-bottom 1px solid transparent
         background-color transparent
         border-top 1px solid transparent
-    30%
+    25%
         border-bottom 1px solid $colorBase
         background-color alpha($colorDim, 0.1)
         border-top 1px solid $colorBase
-    100%
+    75%
         border-bottom 1px solid $colorDim
         background-color alpha($colorDim, 0.06)
         border-top 1px solid $colorDim
 
 @keyframes animPanelFooter
-    0%
+    50%
         border-bottom 1px solid transparent
-    30%
+    75%
         border-bottom 1px solid $colorBase
     100%
         border-bottom 1px solid $colorDim
@@ -51,18 +61,46 @@ section.isActive
 @keyframes animBodyIn
     0%
         opacity 0
-    40%
+    60%
         opacity 0
-    100%
+    80%
         opacity 1
 
-@keyframes animFooterIn
+@keyframes anim3DPanelLeft
     0%
         opacity 0
-    20%
-        opacity 0
+        transform matrix3D(
+                        1, 0, 0, 0.0002,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        -400, 0, 600, 1
+                        )
     100%
         opacity 1
+        transform matrix3D(
+                        1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        0, 0, 0, 1
+                        )
+
+@keyframes anim3DPanelRight
+    0%
+        opacity 0
+        transform matrix3D(
+                        1, 0, 0, -0.0002,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        400, 0, 600, 1
+                        )
+    100%
+        transform matrix3D(
+                        1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 0, 1, 0,
+                        0, 0, 0, 1
+                        )
+
 
 @keyframes animTextIn
     0%
