@@ -1,11 +1,24 @@
-$AnimTitle
-    animation AnimTitle .2s $easeInCubic .1s
+// ----------------------------------------------------------
+// Intro animtion to sections
 
-$AnimPanelHeader
-    animation AnimPanelHeader .3s $easeInCubic
+section.isActive
+    @extend $Section--active
+    .Panel__title
+        animation animTitle .2s $easeInCubic .3s
+        opacity 1
+    .Panel__header
+        animation animPanelHeader .2s $easeInCubic .2s
+    .Panel__content
+        animation animBodyIn .2s $easeInCubic .4s
+    .Panel__footer
+        animation animPanelFooter .2s $easeInCubic .3s
+    .Panel__content--text
+        animation animTextIn .2s $easeInCubic .4s
 
+// ----------------------------------------------------------
+// Animations
 
-@keyframes AnimTitle
+@keyframes animTitle
     0%
         opacity 0
     50%
@@ -13,7 +26,7 @@ $AnimPanelHeader
     100%
         opacity 1
 
-@keyframes AnimPanelHeader
+@keyframes animPanelHeader
     0%
         border-bottom 1px solid transparent
         background-color transparent
@@ -27,8 +40,15 @@ $AnimPanelHeader
         background-color alpha($colorDim, 0.06)
         border-top 1px solid $colorDim
 
+@keyframes animPanelFooter
+    0%
+        border-bottom 1px solid transparent
+    30%
+        border-bottom 1px solid $colorBase
+    100%
+        border-bottom 1px solid $colorDim
 
-@keyframes AnimBodyIn
+@keyframes animBodyIn
     0%
         opacity 0
     40%
@@ -36,7 +56,7 @@ $AnimPanelHeader
     100%
         opacity 1
 
-@keyframes AnimFooterIn
+@keyframes animFooterIn
     0%
         opacity 0
     20%
@@ -44,7 +64,7 @@ $AnimPanelHeader
     100%
         opacity 1
 
-@keyframes AnimTextIn
+@keyframes animTextIn
     0%
         opacity 0
     60%
