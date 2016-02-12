@@ -191,7 +191,7 @@ export function view(router) {
 
       let content = "";
 
-      const rationale = res.body[0];
+      const rationale = res.body.pop();
 
       if (rationale.solarradiation) {
         content += utils.wrap("Solar Radiation Storms", "h3") + utils.wrap(rationale.solarradiation, "p");
