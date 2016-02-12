@@ -113,6 +113,12 @@ export function view(router) {
     utils.activate(fluxesLoader);
 
     switch(router.query.flux) {
+
+      /**
+       *
+       * SOLAR WIND SUBSECTION
+       *
+       */
       default:
       case "solar-wind":
         Promise.all([
@@ -129,11 +135,13 @@ export function view(router) {
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
           utils.addAll(graphLegends, [{"name": "temperature"}, {"name": "density"}].map((legend) => {
+            const name = (legend.name === "density" ? "solarWind1" : "solarWind2");
+            const colorClass = `Graph__legendColor--${name}`;
             return utils.tag("a", {
               "href": "#",
               "class": "Graph__legend"
             }, [
-              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": colorClass }),
               utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
             ]);
           }));
@@ -141,6 +149,11 @@ export function view(router) {
         });
         break;
 
+      /**
+       *
+       * PARTICLE FLUX SUBSECTION
+       *
+       */
       case "particle":
         Promise.all([
 
@@ -164,11 +177,13 @@ export function view(router) {
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
           utils.addAll(graphLegends, res[2].body.map((legend) => {
+            const name = (legend.id === 1 ? "particle10" : "particle100");
+            const colorClass = `Graph__legendColor--${name}`;
             return utils.tag("a", {
               "href": "#",
               "class": "Graph__legend"
             }, [
-              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": colorClass }),
               utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
             ]);
           }));
@@ -176,16 +191,21 @@ export function view(router) {
         });
         break;
 
+      /**
+       *
+       * ELECTRON FLUX SUBSECTION
+       *
+       */
       case "electron":
         Promise.all([
 
           API.getElectronFlux({
-            etype: 1,
+            etype: 2,
             date_min: minDateFormatted
           }),
 
           API.getElectronFlux({
-            etype: 2,
+            etype: 1,
             date_min: minDateFormatted
           }),
 
@@ -199,11 +219,13 @@ export function view(router) {
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
           utils.addAll(graphLegends, res[2].body.map((legend) => {
+            const name = (legend.id === 1 ? "particle10" : "particle100");
+            const colorClass = `Graph__legendColor--${name}`;
             return utils.tag("a", {
               "href": "#",
               "class": "Graph__legend"
             }, [
-              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": colorClass }),
               utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
             ]);
           }));
@@ -211,6 +233,11 @@ export function view(router) {
         });
         break;
 
+      /**
+       *
+       * X-RAY FLUX SUBSECTION
+       *
+       */
       case "x-ray":
         Promise.all([
 
@@ -234,11 +261,14 @@ export function view(router) {
           const graphLegends = utils.query(".Graph__legends");
           utils.clear(graphLegends);
           utils.addAll(graphLegends, res[2].body.map((legend) => {
+            const name = (legend.id === 1 ? "particle10" : "particle100");
+            const colorClass = `Graph__legendColor--${name}`;
+
             return utils.tag("a", {
               "href": "#",
               "class": "Graph__legend"
             }, [
-              utils.tag("div", { "class": "Graph__legendColor--particle10" }),
+              utils.tag("div", { "class": colorClass }),
               utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
             ]);
           }));
