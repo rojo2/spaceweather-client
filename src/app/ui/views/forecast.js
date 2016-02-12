@@ -26,18 +26,22 @@ export function view(router) {
   utils.activate(alertsLoader);
 
   Promise.all([
+
     API.getRadioBlackout({
       ordering: "+date",
       date_min: minDateFormatted
     }),
+
     API.getSolarRadiation({
       ordering: "+date",
       date_min: minDateFormatted
     }),
+
     API.getGeomagneticActivity({
       ordering: "+date",
       date_min: minDateFormatted
     })
+
   ]).then((res) => {
 
     const days = utils.queryAll(".Forecast__day");
@@ -190,7 +194,7 @@ export function view(router) {
       const rationale = res.body[0];
 
       if (rationale.solarradiation) {
-        content += utils.wrap("Solar Radiation", "h3") + utils.wrap(rationale.solarradiation, "p");
+        content += utils.wrap("Solar Radiation Storms", "h3") + utils.wrap(rationale.solarradiation, "p");
       }
 
       if (rationale.geomagactivity) {
@@ -198,7 +202,7 @@ export function view(router) {
       }
 
       if (rationale.radioblackout) {
-        content += utils.wrap("Radio Blackout", "h3") + utils.wrap(rationale.radioblackout, "p");
+        content += utils.wrap("Radio Blackout (>=R3)", "h3") + utils.wrap(rationale.radioblackout, "p");
       }
 
       utils.html(forecast, content);
