@@ -78,6 +78,9 @@ p
 ::-webkit-scrollbar-thumb
     background-color $colorDim
 
+.Image--notFound
+    @extend $Icon
+
 // ----------------------------------------------------------
 // Page background
 
@@ -786,8 +789,8 @@ $RadialDanger__fill
 // Transitions
 
 section.isActive
-    .Panel__header
-        animation AnimHeaderIn .2s $easeInCubic
+    .Panel__title
+        @extend $AnimTitle
     .Panel__content
         animation AnimBodyIn .6s $easeInCubic
     .Panel__footer

@@ -1,8 +1,31 @@
-@keyframes AnimHeaderIn
+$AnimTitle
+    animation AnimTitle .2s $easeInCubic .1s
+
+$AnimPanelHeader
+    animation AnimPanelHeader .3s $easeInCubic
+
+
+@keyframes AnimTitle
     0%
+        opacity 0
+    50%
         opacity 0
     100%
         opacity 1
+
+@keyframes AnimPanelHeader
+    0%
+        border-bottom 1px solid transparent
+        background-color transparent
+        border-top 1px solid transparent
+    30%
+        border-bottom 1px solid $colorBase
+        background-color alpha($colorDim, 0.1)
+        border-top 1px solid $colorBase
+    100%
+        border-bottom 1px solid $colorDim
+        background-color alpha($colorDim, 0.06)
+        border-top 1px solid $colorDim
 
 
 @keyframes AnimBodyIn

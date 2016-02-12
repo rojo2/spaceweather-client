@@ -17,8 +17,8 @@ function updateImage(el, value = 0) {
     utils.setAttr(el, "width", Math.min(r.width,r.height));
 
     if (!images[imageIndex]) {
-      console.error("There is no images");
-      utils.setAttr(el, "src", "images/image-not-available.jpg");
+      console.error("There aren't images");
+      utils.setAttr(el, "src", "images/image-not-available.svg");
     } else {
       utils.setAttr(el, "src", images[imageIndex].image);
     }
