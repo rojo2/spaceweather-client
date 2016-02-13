@@ -1,17 +1,21 @@
 mixin loader(id)
     .Loader(id=id)
-        svg.Loader__spinner(viewBox="0 0 32 128", width="32", height="128")
-            rect.Loader01(x="0", y="0", width="1", height="128")
-            rect.Loader02(x="6", y="0", width="1", height="128")
-            rect.Loader03(x="12", y="0", width="1", height="128")
-            rect.Loader04(x="18", y="0", width="1", height="128")
-            rect.Loader05(x="24", y="0", width="1", height="128")
-            rect.Loader06(x="30", y="0", width="1", height="128")
+        svg.Loader__spinner(viewBox="0 0 55 64", width="55", height="64")
+            rect.Loader01(x="0", y="0", width="1", height="64")
+            rect.Loader02(x="6", y="0", width="1", height="64")
+            rect.Loader03(x="12", y="0", width="1", height="64")
+            rect.Loader04(x="18", y="0", width="1", height="64")
+            rect.Loader05(x="24", y="0", width="1", height="64")
+            rect.Loader06(x="30", y="0", width="1", height="64")
+            rect.Loader07(x="36", y="0", width="1", height="64")
+            rect.Loader08(x="42", y="0", width="1", height="64")
+            rect.Loader09(x="48", y="0", width="1", height="64")
+            rect.Loader10(x="54", y="0", width="1", height="64")
 
 extends base
 
 block content
-    canvas.Background
+    //canvas.Background
     .Page
         .Page__top
             .Logo
@@ -158,9 +162,9 @@ block content
                                 .Forecast__dayData
                                     svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
                                         g
-                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
-                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
-                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50")
+                                            circle.RadialDanger__solar(cx="50", cy="50")
+                                            circle.RadialDanger__blackout(cx="50", cy="50")
                                         g
                                             line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
                                             line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")
@@ -189,9 +193,9 @@ block content
                                 .Forecast__dayData
                                     svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
                                         g
-                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
-                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
-                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50")
+                                            circle.RadialDanger__solar(cx="50", cy="50")
+                                            circle.RadialDanger__blackout(cx="50", cy="50")
                                         g
                                             line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
                                             line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")
@@ -220,9 +224,9 @@ block content
                                 .Forecast__dayData
                                     svg.RadialDanger(width="100%", height="100%", viewBox="0 0 102 102")
                                         g
-                                            circle.RadialDanger__geomagnetic(cx="50", cy="50", r="12")
-                                            circle.RadialDanger__solar(cx="50", cy="50", r="18")
-                                            circle.RadialDanger__blackout(cx="50", cy="50", r="19")
+                                            circle.RadialDanger__geomagnetic(cx="50", cy="50")
+                                            circle.RadialDanger__solar(cx="50", cy="50")
+                                            circle.RadialDanger__blackout(cx="50", cy="50")
                                         g
                                             line.RadialDanger__divider(x1="50", y1="50", x2="50", y2="0")
                                             line.RadialDanger__divider(x1="50", y1="50", x2="100", y2="0")

@@ -651,13 +651,16 @@ $Graph__legendColor
 .Loader04
 .Loader05
 .Loader06
+.Loader07
+.Loader08
+.Loader09
+.Loader10
     transform-origin 50% 50%
     transform scaleY(0)
 
 .Loader.isActive
     opacity 1
     .Loader01
-
         animation animLoader 1s ease-in-out infinite alternate
     .Loader02
         animation animLoader 1s ease-in-out infinite alternate .1s
@@ -669,6 +672,14 @@ $Graph__legendColor
         animation animLoader 1s ease-in-out infinite alternate .4s
     .Loader06
         animation animLoader 1s ease-in-out infinite alternate .5s
+    .Loader07
+        animation animLoader 1s ease-in-out infinite alternate .6s
+    .Loader08
+        animation animLoader 1s ease-in-out infinite alternate .7s
+    .Loader09
+        animation animLoader 1s ease-in-out infinite alternate .8s
+    .Loader10
+        animation animLoader 1s ease-in-out infinite alternate .9s
 
 .Loader:not(.isActive)
     opacity 0
@@ -710,7 +721,7 @@ $Graph__legendColor
     color $colorHighlight
 
 .Forecast__dayData
-    flex 1 0 auto
+    flex 0 0 auto
     display flex
     flex-direction column
     align-items stretch
