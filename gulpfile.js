@@ -53,6 +53,7 @@ gulp.task("styles:lint", () => {
 
   gulp.src(config.srcs.styles)
     .pipe(plugins.stylint({ config: ".stylintrc" }))
+    .pipe(plugins.autoprefixer())
     .pipe(plugins.stylint.reporter());
 
 });
