@@ -195,19 +195,19 @@ p
     .Icon--sound
         fill $colorHighlight
     .Sound--1
-        animation AnimSound 1s ease-in-out infinite
+        animation animSound 1s ease-in-out infinite
     .Sound--2
-        animation AnimSound .9s ease-in-out infinite
+        animation animSound .9s ease-in-out infinite
     .Sound--3
-        animation AnimSound .7s ease-in-out infinite
+        animation animSound .7s ease-in-out infinite
     .Sound--4
-        animation AnimSound .2s ease-in-out infinite
+        animation animSound .2s ease-in-out infinite
 
 .Button--sound.isOff .Icon--sound .Sound
     transform scaleY(0.1)
 
 
-@keyframes AnimSound
+@keyframes animSound
     0%
         transform scaleY(0.1)
         fill $colorBase
@@ -541,12 +541,6 @@ p
 .Forecast
     @extend $Section
 
-.Weather.isActive
-.Sunspots.isActive
-.SolarCycle.isActive
-.Forecast.isActive
-    @extend $Section--active
-
 .Sunspots__image
 .SolarCycle__graph
     @extend $Panel--60
@@ -595,6 +589,11 @@ $Graph__legendColor
 
 .Graph__legendColor--particle10
 .Graph__legendColor--particle100
+.Graph__legendColor--particles1
+.Graph__legendColor--particles2
+.Graph__legendColor--particles3
+.Graph__legendColor--solarWind1
+.Graph__legendColor--solarWind2
 .Graph__legendColor--monthly
 .Graph__legendColor--smoothedMonthly
 .Graph__legendColor--predictedMonthly
@@ -606,6 +605,17 @@ $Graph__legendColor
 .Graph__legendColor--particle100
     background-color $colorParticle100
 
+.Graph__legendColor--particles1
+    background-color $colorParticles1
+.Graph__legendColor--particles2
+    background-color $colorParticles2
+.Graph__legendColor--particles3
+    background-color $colorParticles3
+
+.Graph__legendColor--solarWind1
+    background-color $colorTitle
+.Graph__legendColor--solarWind2
+    background-color $colorMagnitude2
 
 
 .Graph__legendColor--monthly
@@ -648,24 +658,24 @@ $Graph__legendColor
     opacity 1
     .Loader01
 
-        animation AnimLoader 1s ease-in-out infinite alternate
+        animation animLoader 1s ease-in-out infinite alternate
     .Loader02
-        animation AnimLoader 1s ease-in-out infinite alternate .1s
+        animation animLoader 1s ease-in-out infinite alternate .1s
     .Loader03
-        animation AnimLoader 1s ease-in-out infinite alternate .2s
+        animation animLoader 1s ease-in-out infinite alternate .2s
     .Loader04
-        animation AnimLoader 1s ease-in-out infinite alternate .3s
+        animation animLoader 1s ease-in-out infinite alternate .3s
     .Loader05
-        animation AnimLoader 1s ease-in-out infinite alternate .4s
+        animation animLoader 1s ease-in-out infinite alternate .4s
     .Loader06
-        animation AnimLoader 1s ease-in-out infinite alternate .5s
+        animation animLoader 1s ease-in-out infinite alternate .5s
 
 .Loader:not(.isActive)
     opacity 0
     pointer-events none
 
 
-@keyframes AnimLoader
+@keyframes animLoader
     0%
         fill $colorBase
         transform scaleY(0.1)
@@ -784,16 +794,3 @@ $RadialDanger__fill
 .Forecast__statsLabel--blackout
 .Forecast__statsValue--blackout
     color $colorBlackout
-
-// ----------------------------------------------------------
-// Transitions
-
-section.isActive
-    .Panel__title
-        @extend $AnimTitle
-    .Panel__content
-        animation AnimBodyIn .6s $easeInCubic
-    .Panel__footer
-        animation AnimFooterIn .4s $easeInCubic
-    .Panel__content--text
-        animation AnimTextIn .8s $easeInCubic
