@@ -25,11 +25,7 @@ export function request(url, options = {}) {
       }
     }
 
-    if (options.data) {
-      xhr.send(options.data);
-    } else {
-      xhr.send();
-    }
+    xhr.send((options.data ? options.data : null));
 
     xhr.onerror = function() {
       xhr.onerror = null;

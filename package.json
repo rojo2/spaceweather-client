@@ -24,6 +24,7 @@
     "gulp-stylint": "^3.0.0",
     "gulp-stylus": "^2.1.0",
     "gulp-ttf2woff2": "^2.0.0",
+    "http-proxy": "^1.13.1",
     "jasmine": "^2.4.1",
     "jasmine-core": "^2.4.1",
     "karma-browserify": "^4.4.2",
