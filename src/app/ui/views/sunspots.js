@@ -9,10 +9,15 @@ export function view(router) {
   utils.activate(container);
   utils.activate(utils.query("[href=\"/sunspots\"]"));
 
-  const minDateFormatted = utils.daysFrom(-1),
+  const minDateFormatted = "2015-12-16",
+        maxDateFormatted = "2015-12-16",
+        minDateFormattedImage = "2015-12-16",
+        maxDateFormattedImage = "2015-12-16";
+
+  /*const minDateFormatted = utils.daysFrom(-1),
         maxDateFormatted = utils.daysFrom(-1),
         minDateFormattedImage = utils.daysFrom(-2),
-        maxDateFormattedImage = utils.daysFrom(0);
+        maxDateFormattedImage = utils.daysFrom(0);*/
 
   utils.activate(utils.query(".Loader", container));
   Promise.all([

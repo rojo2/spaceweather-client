@@ -19,6 +19,22 @@ export function timeline(el, fn) {
         fill = query(".Timeline__fill", progress),
         mark = query(".Timeline__mark", progress);
 
+  let isAuto = true, autoValue = 0, autoRestoreId = null;
+  function autoOff(restoreTime = 5000) {
+    isAuto = false;
+
+    if (autoRestoreId) {
+      clearTimeout(autoRestoreId);
+    }
+
+    autoRestoreId = setTimeout(() => {
+      if (isAuto === false) {
+        isAuto = true;
+        window.requestAnimationFrame(animate);
+      }
+    }, restoreTime);
+  }
+
   function updateValue(value) {
     mark.style.left = (value * 100) + "%";
     fill.style.transform = `scaleX(${value})`;
@@ -28,16 +44,18 @@ export function timeline(el, fn) {
     }
   }
 
+
   function updateFromEvent(e) {
     const r = rect(progress);
 
     const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
+    autoValue = value;
     updateValue(value);
-
   }
 
   function handleClick(e) {
     if (e.button === 0) {
+      autoOff();
       updateFromEvent(e);
     }
   }
@@ -48,6 +66,7 @@ export function timeline(el, fn) {
 
   function handleDown(e) {
     if (e.button === 0) {
+      autoOff();
       document.addEventListener("mousemove", handleMove);
       document.addEventListener("mouseup", handleUp);
     }
@@ -69,6 +88,19 @@ export function timeline(el, fn) {
   progress.addEventListener("click", handleClick);
 
   updateValue(0);
+
+  function animate() {
+    autoValue += 0.001;
+    if (autoValue > 1.0) {
+      autoValue = 0;
+    }
+
+    updateValue(autoValue);
+    if (isAuto) {
+      window.requestAnimationFrame(animate);
+    }
+  }
+  window.requestAnimationFrame(animate);
 
   return {
     el,

@@ -81,10 +81,10 @@ export function sunspots(el, images, data) {
     const position = parseSunspot(sunspot.location);
 
     svg.append("circle")
-      .attr("class", "Graph__sunspot")
-      .attr("cx", hw + (position.x * radius))
-      .attr("cy", hh + (position.y * radius))
-      .attr("r", 10);
+       .attr("class", "Graph__sunspot")
+       .attr("cx", hw + (position.x * radius))
+       .attr("cy", hh + (position.y * radius))
+       .attr("r", 10);
 
   });
 
