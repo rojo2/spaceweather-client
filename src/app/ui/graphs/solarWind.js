@@ -84,7 +84,14 @@ export function solarWindGraph(el, data) {
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     //.attr("preserveAspectRatio", "none")
     .append("g")
+    .attr("data-width", r.width - (margin.right + margin.left))
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  svg
+    .append("line")
+    .attr("class", "Graph__timeline")
+    .attr("y1",0)
+    .attr("y2",r.height - margin.top - margin.bottom);
 
   x.domain([minDate, maxDate]);
 

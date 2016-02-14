@@ -61,6 +61,7 @@ export function timeline(el, fn) {
   }
 
   function handleMove(e) {
+    autoOff();
     updateFromEvent(e);
   }
 
@@ -74,6 +75,7 @@ export function timeline(el, fn) {
 
   function handleUp(e) {
     if (e.button === 0) {
+      autoOff();
       document.removeEventListener("mousemove", handleMove);
       document.removeEventListener("mouseup", handleUp);
     }

@@ -73,7 +73,14 @@ function fluxGraph(el, data, options = {}) {
     .attr("viewBox","0 0 " + r.width + " " + r.height)
     //.attr("preserveAspectRatio", "none")
     .append("g")
+    .attr("data-width", r.width - (margin.right + margin.left))
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  svg
+    .append("line")
+    .attr("class", "Graph__timeline")
+    .attr("y1",0)
+    .attr("y2",r.height - margin.top - margin.bottom);
 
   x.domain(d3.extent(data[0], function(d) { return d.date; }));
   if (Number.isFinite(options.yStart) && Number.isFinite(options.yEnd)) {

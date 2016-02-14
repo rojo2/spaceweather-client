@@ -9,6 +9,14 @@ let lastQuery,
 
 function updateImage(el, value = 0) {
 
+  const timeline = utils.query(".Graph__timeline");
+  if (timeline) {
+
+    const parentWidth = parseFloat(timeline.parentElement.getAttribute("data-width"));
+    timeline.style.transform = `translateX(${value * parentWidth}px)`;
+
+  }
+
   if (images) {
 
     const imageIndex = Math.floor(value * (images.length - 1));
