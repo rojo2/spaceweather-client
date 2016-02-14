@@ -87,12 +87,6 @@ export function solarWindGraph(el, data) {
     .attr("data-width", r.width - (margin.right + margin.left))
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  svg
-    .append("line")
-    .attr("class", "Graph__timeline")
-    .attr("y1",0)
-    .attr("y2",r.height - margin.top - margin.bottom);
-
   x.domain([minDate, maxDate]);
 
   yd.domain([minDensity, maxDensity]);
@@ -147,6 +141,11 @@ export function solarWindGraph(el, data) {
     .style("text-anchor", "start")
     .text("Temperature");
 
+  svg
+    .append("line")
+    .attr("class", "Graph__timeline")
+    .attr("y1",0)
+    .attr("y2",r.height - margin.top - margin.bottom);
 
   return el;
 }

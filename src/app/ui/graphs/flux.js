@@ -76,12 +76,6 @@ function fluxGraph(el, data, options = {}) {
     .attr("data-width", r.width - (margin.right + margin.left))
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  svg
-    .append("line")
-    .attr("class", "Graph__timeline")
-    .attr("y1",0)
-    .attr("y2",r.height - margin.top - margin.bottom);
-
   x.domain(d3.extent(data[0], function(d) { return d.date; }));
   if (Number.isFinite(options.yStart) && Number.isFinite(options.yEnd)) {
     y.domain([options.yStart,options.yEnd]);
@@ -118,6 +112,12 @@ function fluxGraph(el, data, options = {}) {
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
     .text("MeV");
+
+  svg
+    .append("line")
+    .attr("class", "Graph__timeline")
+    .attr("y1",0)
+    .attr("y2",r.height - margin.top - margin.bottom);
 
   return el;
 }
