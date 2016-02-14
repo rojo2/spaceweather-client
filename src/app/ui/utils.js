@@ -19,7 +19,10 @@ export function timeline(el, fn) {
         fill = query(".Timeline__fill", progress),
         mark = query(".Timeline__mark", progress);
 
-  let isAuto = true, autoValue = 0, autoRestoreId = null;
+  let isAuto = true,
+      autoValue = 0,
+      autoRestoreId = null;
+
   function autoOff(restoreTime = 5000) {
     isAuto = false;
 
