@@ -129,7 +129,7 @@ export function solarWindGraph(el, data) {
     .attr("class", "Graph__text")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
-    .text("Density");
+    .text("Density (P/cm³)");
 
   svg.append("g")
     .attr("class", "Graph__axis")
@@ -139,7 +139,7 @@ export function solarWindGraph(el, data) {
     .attr("class", "Graph__text")
     .attr("transform", "rotate(90)")
     .style("text-anchor", "start")
-    .text("Temperature");
+    .text("Temperature (K)");
 
   svg
     .append("line")

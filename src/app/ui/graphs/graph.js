@@ -5,7 +5,8 @@ function graph(el, data, options = {}) {
 
   options = Object.assign({
     yStart: Infinity,
-    yEnd: Infinity
+    yEnd: Infinity,
+    unit: "MeV"
   }, options);
 
   const container = utils.query(".Graph__content", el);
@@ -104,7 +105,7 @@ function graph(el, data, options = {}) {
     .attr("class", "Graph__text")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
-    .text("MeV");
+    .text(options.unit);
 
   return el;
 }

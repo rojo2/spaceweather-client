@@ -5,7 +5,8 @@ function fluxGraph(el, data, options = {}) {
 
   options = Object.assign({
     yStart: Infinity,
-    yEnd: Infinity
+    yEnd: Infinity,
+    unit: "MeV"
   }, options);
 
   const container = utils.query(".Graph__content", el);
@@ -111,7 +112,7 @@ function fluxGraph(el, data, options = {}) {
     .attr("class", "Graph__text")
     .attr("transform", "rotate(-90)")
     .style("text-anchor", "end")
-    .text("MeV");
+    .text(options.unit);
 
   svg
     .append("line")
@@ -125,20 +126,23 @@ function fluxGraph(el, data, options = {}) {
 export function xrayFluxGraph(el, data, options = {}) {
   return fluxGraph(el, data, Object.assign({
     yStart: 0.000000001,
-    yEnd: 0.00006
+    yEnd: 0.00006,
+    unit: "Watts/m²"
   }, options));
 }
 
 export function protonFluxGraph(el, data, options = {}) {
   return fluxGraph(el, data, Object.assign({
     yStart: 0.01,
-    yEnd: 120
+    yEnd: 120,
+    unit: "Protons/cm²-s-sr"
   }, options));
 }
 
 export function electronFluxGraph(el, data, options = {}) {
   return fluxGraph(el, data, Object.assign({
     yStart: 0.1,
-    yEnd: 1200000
+    yEnd: 1200000,
+    unit: "Electrons/cm²-s-sr"
   }, options));
 }
