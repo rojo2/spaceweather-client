@@ -9,17 +9,13 @@ let lastQuery,
     timeline;
 
 function updateImage(el, value = 0) {
-
   const timeline = utils.query(".Graph__timeline");
   if (timeline) {
-
     const parentWidth = parseFloat(timeline.parentElement.getAttribute("data-width"));
     timeline.style.transform = `translateX(${value * parentWidth}px)`;
-
   }
 
   if (images) {
-
     const imageIndex = Math.floor(value * (images.length - 1));
 
     const r = utils.rect(el.parentElement.parentElement);
@@ -31,10 +27,18 @@ function updateImage(el, value = 0) {
     } else {
       utils.setAttr(el, "src", images[imageIndex].image);
     }
-
   }
-
 }
+
+/**
+ *
+ * Density: Particles/cm3 (also P/cm3)
+ * Temperature: K
+ * Particle flux: Protons/cm2-s-sr
+ * Electron flux: Electrons/cm2-s-sr
+ * Xary flux: watts/m2
+ *
+ */
 
 export function view(router) {
 
@@ -73,6 +77,7 @@ export function view(router) {
 
       let minDate = Number.MAX_VALUE,
           maxDate = Number.MIN_VALUE;
+
       images.forEach((image, index) => {
 
         image.date = new Date(image.date);
@@ -99,15 +104,11 @@ export function view(router) {
 
       if (!timeline) {
         timeline = utils.timeline(utils.query(".Timeline", container), (value) => {
-
           if (images) {
             updateImage(imageContainer, value);
           }
           utils.text(utils.query(".Timeline__dateCurrent", eitFiltersContainer), utils.dateFormatted(utils.interpolateDate(dateStart, dateEnd, value, dateCurrent)));
-
         });
-      } else {
-        timeline.updateValue(0);
       }
 
       updateImage(imageContainer);

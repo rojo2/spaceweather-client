@@ -39,6 +39,8 @@ export function timeline(el, fn) {
   }
 
   function updateValue(value) {
+    autoValue = value;
+
     mark.style.left = (value * 100) + "%";
     fill.style.transform = `scaleX(${value})`;
 
@@ -52,7 +54,6 @@ export function timeline(el, fn) {
     const r = rect(progress);
 
     const value = Math.max(0,Math.min(1,(e.clientX - r.left) / r.width));
-    autoValue = value;
     updateValue(value);
   }
 
