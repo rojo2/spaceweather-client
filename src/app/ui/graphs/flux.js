@@ -139,6 +139,6 @@ export function protonFluxGraph(el, data, options = {}) {
 export function electronFluxGraph(el, data, options = {}) {
   return fluxGraph(el, data, Object.assign({
     yStart: 0.1,
-    yEnd: 120000
+    yEnd: 1200000
   }, options));
 }
