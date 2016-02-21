@@ -2,10 +2,11 @@ import * as utils from "../utils";
 import graphs from "../graphs";
 import API from "../../api";
 
-let lastQuery,
-    timeline,
-    images,
+var images,
     cachedImages = {};
+
+let lastQuery,
+    timeline;
 
 function updateImage(el, value = 0) {
 
@@ -70,7 +71,8 @@ export function view(router) {
         cachedImages[router.query.filter] = [];
       }
 
-      let minDate = Number.MAX_VALUE, maxDate = Number.MIN_VALUE;
+      let minDate = Number.MAX_VALUE,
+          maxDate = Number.MIN_VALUE;
       images.forEach((image, index) => {
 
         image.date = new Date(image.date);
