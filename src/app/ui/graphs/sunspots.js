@@ -9,8 +9,8 @@ function parseSunspot(data) {
   const NS = (data.substr(0,1) === "N" ? false : true);
   const WE = (data.substr(3,1) === "W" ? true : false);
 
-  const alpha = parseInt(data.substr(1,2),10) / 90 * Math.PI * 0.5,
-        beta = parseInt(data.substr(4,2),10) / 90 * Math.PI * 0.5;
+  const alpha = (parseInt(data.substr(1,2),10) / 90) * Math.PI * 0.5,
+        beta = (parseInt(data.substr(4,2),10) / 90) * Math.PI * 0.5;
 
   const x = sunspotCoord(beta, WE),
         y = sunspotCoord(alpha, NS);
@@ -26,8 +26,8 @@ export function sunspots(el, images, data) {
   utils.clear(container);
 
   const r = utils.rect(container),
-        hw = r.width * 0.5,
-        hh = r.height * 0.5,
+        hw = r.width * 0.48,
+        hh = r.height * 0.45,
         radius = Math.min(hw,hh) - MARGIN;
 
   const svg = d3.select(container)
