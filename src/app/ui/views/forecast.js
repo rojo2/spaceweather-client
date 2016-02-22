@@ -9,7 +9,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(0);
+  const minDateFormatted = utils.daysFrom(-1);
 
   const container = utils.query(".Forecast"),
         alertsLoader = utils.query(".Forecast__alerts .Loader", container),
@@ -58,12 +58,10 @@ export function view(router) {
 
       const day = utils.dateYMD(item.date);
       if (typeof radioBlackoutPerDay[day] === "undefined") {
-
         radioBlackoutPerDay[day] = {
           min: Number.MAX_VALUE,
           max: Number.MIN_VALUE
         };
-
       }
 
       radioBlackoutPerDay[day].min = Math.min(item.value, radioBlackoutPerDay[day].min);
@@ -85,12 +83,10 @@ export function view(router) {
 
       const day = utils.dateYMD(item.date);
       if (typeof solarRadiationPerDay[day] === "undefined") {
-
         solarRadiationPerDay[day] = {
           min: Number.MAX_VALUE,
           max: Number.MIN_VALUE
         };
-
       }
 
       solarRadiationPerDay[day].min = Math.min(item.value, solarRadiationPerDay[day].min);
@@ -112,12 +108,10 @@ export function view(router) {
 
       const day = utils.dateYMD(item.date);
       if (typeof geomagneticPerDay[day] === "undefined") {
-
         geomagneticPerDay[day] = {
           min: Number.MAX_VALUE,
           max: Number.MIN_VALUE
         };
-
       }
 
       geomagneticPerDay[day].min = Math.min(item.value, geomagneticPerDay[day].min);
@@ -126,8 +120,9 @@ export function view(router) {
     });
 
     const keys = Object.keys(geomagneticPerDay);
-    keys.forEach((day, index) => {
-
+    keys.sort((a,b) => {
+      return a.localeCompare(b);
+    }).forEach((day, index) => {
       const geomagnetic = geomagneticPerDay[day],
             solarRadiation = solarRadiationPerDay[day],
             radioBlackout = radioBlackoutPerDay[day];
@@ -135,11 +130,18 @@ export function view(router) {
       const dateLabel = new Date(day);
 
       const months = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AGO","SEP","OCT","NOV","DEC"];
-      const monthShortName = months[dateLabel.getMonth()];
+      const currentMonth = dateLabel.getMonth();
+      const monthShortName = months[currentMonth];
 
-      utils.text(utils.query(".Forecast__dayLabel", days[index]), monthShortName + " " + utils.padLeft(dateLabel.getDate(),"0",2));
+      utils.text(
+        utils.query(".Forecast__dayLabel", days[index]),
+        monthShortName + " " + utils.padLeft(dateLabel.getDate(),"0",2)
+      );
 
-      utils.text(utils.query(".Forecast__statsValue--geomagnetic", days[index]), (geomagnetic.min + " / " + geomagnetic.max));
+      utils.text(
+        utils.query(".Forecast__statsValue--geomagnetic", days[index]),
+        (geomagnetic.min + " / " + geomagnetic.max)
+      );
 
       const geomagneticRadius = (10 + Math.round((geomagnetic.max / 100) * 50));
       const solarRadius = (10 + Math.round((solarRadiation.max / 100) * 50));
@@ -148,9 +150,7 @@ export function view(router) {
       utils.setAttr(utils.query(".RadialDanger__geomagnetic", days[index]), "r", `${geomagneticRadius}px`);
       utils.setAttr(utils.query(".RadialDanger__solar", days[index]), "r", `${solarRadius}px`);
       utils.setAttr(utils.query(".RadialDanger__blackout", days[index]), "r", `${blackoutRadius}px`);
-
     });
-
   });
 
   if (router.query.show === "alerts") {
