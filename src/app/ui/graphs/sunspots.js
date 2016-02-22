@@ -77,15 +77,77 @@ export function sunspots(el, images, data) {
     .attr("r", radius);
 
   data.forEach((sunspot) => {
+    console.log(sunspot);
 
     const position = parseSunspot(sunspot.location);
 
-    svg.append("circle")
-       .attr("class", "Graph__sunspot")
-       .attr("cx", hw + (position.x * radius))
-       .attr("cy", hh + (position.y * radius))
-       .attr("r", 10);
+    const sunspotPanel = svg.append("g")
+          .attr("class", "Graph__sunspotInfo")
+          .attr("transform", "translate(" + (hw + (position.x * radius)) + " " + (hh + (position.y * radius)) + ")");
 
+    const trigger = sunspotPanel.append("circle")
+          .attr("class", "Graph__sunspot")
+          .attr("cx", 0)
+          .attr("cy", 0)
+          .attr("r", 10);
+
+    const tooltip = sunspotPanel.append("text")
+          .attr("class", "Graph__sunspotText");
+
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoLabel")
+         .attr("x", 0)
+         .attr("y", 0)
+         .text("Spot class: ");
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoValue")
+         .attr("x", 132)
+         .attr("y", 0)
+         .text(sunspot.spotclass);
+
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoLabel")
+         .attr("x", 0)
+         .attr("y", 20)
+         .text("Magnetic class: ");
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoValue")
+         .attr("x", 132)
+         .attr("y", 20)
+         .text(sunspot.magneticclass);
+
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoLabel")
+         .attr("x", 0)
+         .attr("y", 40)
+         .text("Location: ");
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoValue")
+         .attr("x", 132)
+         .attr("y", 40)
+         .text(sunspot.location);
+
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoLabel")
+         .attr("x", 0)
+         .attr("y", 60)
+         .text("Size: ");
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoValue")
+         .attr("x", 132)
+         .attr("y", 60)
+         .text(sunspot.size);
+
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoLabel")
+         .attr("x", 0)
+         .attr("y", 80)
+         .text("No. of sunspots: ");
+    tooltip.append("tspan")
+         .attr("class", "Graph__sunspotInfoValue")
+         .attr("x", 132)
+         .attr("y", 80)
+         .text(sunspot.numberofsunspots);
   });
 
 }
