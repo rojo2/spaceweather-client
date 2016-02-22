@@ -9,7 +9,7 @@ export function view(router) {
     });
   }
 
-  const minDateFormatted = utils.daysFrom(-1);
+  const minDateFormatted = utils.daysFrom(0);
 
   const container = utils.query(".Forecast"),
         alertsLoader = utils.query(".Forecast__alerts .Loader", container),
