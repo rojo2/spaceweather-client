@@ -7,13 +7,13 @@
 
 @font-face
     font-family 'FiraSans'
-    src url('fonts/FiraSans-Light.woff2') format('woff2')
+    src url('fonts/FiraSans-Light.woff') format('woff')
     font-weight 200
 
 @font-face
     font-family 'FiraSans'
-    src url('fonts/FiraSans-Medium.woff2') format('woff2')
-    font-weight 500
+    src url('fonts/FiraSans-Medium.woff') format('woff')
+    font-weight 400
 
 *
 *:before
@@ -90,6 +90,23 @@ p
     right 0
     bottom 0
     left 0
+
+.Bokeh
+    position fixed
+    width 100%
+    height 100%
+    top 0
+    left 0
+    opacity .10
+
+.Bokeh__particle--red
+    fill hsla(8, 60%, 60%, .75)
+
+.Bokeh__particle--magenta
+    fill hsla(64, 40%, 60%, .5)
+
+.Bokeh__particle--yellow
+    fill hsla(24, 60%, 60%, .7)
 
 // ----------------------------------------------------------
 // Page layout

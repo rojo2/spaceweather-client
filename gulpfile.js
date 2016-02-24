@@ -53,7 +53,6 @@ gulp.task("styles:lint", () => {
 
   gulp.src(config.srcs.styles)
     .pipe(plugins.stylint({ config: ".stylintrc" }))
-    .pipe(plugins.autoprefixer())
     .pipe(plugins.stylint.reporter());
 
 });
@@ -69,7 +68,7 @@ gulp.task("scripts:lint", () => {
 gulp.task("fonts", () => {
 
   gulp.src(config.srcs.fonts)
-    .pipe(plugins.ttf2woff2())
+    .pipe(plugins.ttf2woff())
     .pipe(gulp.dest(config.build.fonts));
 
 });
@@ -93,6 +92,13 @@ gulp.task("styles", () => {
   const stream = gulp.src(config.index.style)
     .pipe(plugins.stylus({
       debug: config.debug
+    }))
+    .pipe(plugins.pleeease({
+      browsers: [
+        "ie 10",
+        "firefox 36",
+        "chrome 36"
+      ]
     }))
     .pipe(gulp.dest(config.build.path));
 
