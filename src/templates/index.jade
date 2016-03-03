@@ -15,7 +15,23 @@ mixin loader(id)
 extends base
 
 block content
+<<<<<<< Updated upstream
     //canvas.Background
+=======
+    .Background
+        svg.Bokeh(width="100%", height="100%", viewBox="0 0 100% 100%")
+            defs
+                filter(id="blur", x="-50%", y="-50%", width="200%", height="200%")
+                    feGaussianBlur(stdDeviation="100")
+                filter(id="blur--2", x="-50%", y="-50%", width="200%", height="200%")
+                    feGaussianBlur(stdDeviation="50")
+            circle.Bokeh__particle--red(cx="-4%", cy="0%", r="22%", filter="url(#blur)")
+            circle.Bokeh__particle--yellow(cx="75%", cy="110%", r="20%", filter="url(#blur)")
+            circle.Bokeh__particle--red(cx="95%", cy="40%", r="9%", filter="url(#blur)")
+            circle.Bokeh__particle--magenta(cx="110%", cy="100%", r="30%", filter="url(#blur)")
+            circle.Bokeh__particle--yellow(cx="64%", cy="55%", r="6%", filter="url(#blur--2)")
+            circle.Bokeh__particle--magenta(cx="20%", cy="-3%", r="12%", filter="url(#blur--2)")
+>>>>>>> Stashed changes
     .Page
         .Page__top
             .Logo
@@ -98,15 +114,6 @@ block content
                         .Graph
                             .Graph__content
                     .Panel__footer
-
-                // .Sunspots__data
-                    .Panel__header
-                        .Panel__title Data
-                    .Panel__content
-                        //+loader("#sunspots")
-                        .Sunspots__dataTable
-                            h2 Hola
-                    .Panel__footer
                 .Sunspots__description
                     .Panel__content--text
                         .ScrolledContent
@@ -147,9 +154,7 @@ block content
                                 p The current solar cycle began on January 4, 2008, with minimal activity until early 2010. It is on track to have the lowest recorded sunspot activity since accurate records began in 1750. The cycle featured a "double-peaked" solar maximum. The first peak was reached 99 in 2011 and the second in early 2014 at 101.
                                 h4 Cycle 23
                                 p This cycle lasted 11.6 years, beginning in May 1996 and ending in January 2008. The maximum smoothed sunspot number (monthly number of sunspots averaged over a twelve-month period) observed during the solar cycle was 120.8 (March 2000), and the minimum was 1.7. A total of 805 days had no sunspots during this cycle.
-                                p
-                                    span= "Sources: "
-                                    a(href="http://sdo.gsfc.nasa.gov/mission/spaceweather.php and https://www.wikiwand.com/en/Solar_cycle") http://sdo.gsfc.nasa.gov/mission/spaceweather.php and https://www.wikiwand.com/en/Solar_cycle
+                                p Sources: <a href="http://sdo.gsfc.nasa.gov/mission/spaceweather.php" target="_blank">http://sdo.gsfc.nasa.gov/mission/spaceweather.php</a> and <a href="https://www.wikiwand.com/en/Solar_cycle" target="_blank">https://www.wikiwand.com/en/Solar_cycle</a>
             // Forecast Section
             section.Forecast
                 .Forecast__graphs
@@ -301,6 +306,22 @@ block content
                                     .Alert__payload Extension to Serial Number: 2736\r\nValid From: 2015 Dec 09 2005 UTC\r\nNow Valid Until: 2015 Dec 12 0400 UTC\r\nWarning Condition: Persistence\r\nwww.swpc.noaa.gov/noaa-scales-explanation\r\nPotential Impacts: Area of impact primarily poleward of 65 degrees Geomagnetic Latitude.\r\nInduced Currents - Weak power grid fluctuations can occur.\r\nAurora - Aurora may be visible at high latitudes such as Canada and Alaska.
                     .Panel__footer
         .Page__bottom
+            .AboutIcarus
+                input.AboutIcarus__input(type="checkbox", id="about-trigger")
+                label.AboutIcarus__button(for="about-trigger")
+                    .AboutIcarus__buttonText About Icarus Project
+                    .AboutIcarus__buttonClose
+                        svg.AboutIcarus__closeIcon(width="32", height="32", viewBox="0 0 30 30")
+                            line(x1="2", y1="2", x2="30", y2="30")
+                            line(x1="2", y1="30", x2="30", y2="2")
+                .AboutIcarus__content
+                    .AboutIcarus__infoPanel
+                        h3 About Icarus Project
+                        p The Icarus Project is a fun endeavour looking to make near live space weather information available to the general public as well as the scientific community. It consists of an ever growing API and a gorgeous web client.
+                        p <a href="https://twitter.com/azazeln28" target="_blank">Aitor Moreno-Melcón</a>, <a href="https://twitter.com/mekanoide" target="_blank">Omar Moreno-Melcón</a> and <a href="https://twitter.com/diacritica" target="_blank">Pablo Ruiz-Múzquiz</a> are its creators, with <a href="https://twitter.com/ghilbrae" target="_blank">Angela Rivera-Campos</a> acting as our scientific advisor.
+                        p If you would like to know more about Icarus Project or its public API, please contact us at <a href="mailto:info@icarus.live" target="_blank">info@icarus.live</a>
+                        p Also, please find all the source code available at github: backend and frontend.
+                        p We would like to thank <a href="http://kaleidos.com" target="_blank">Kaleidos</a> and their <a href="http://piweek.com" target="_blank">PIWEEK</a> that greatly contributed to make this a reality.
             .Controls
                 a.Button--sound.isOn(href="")
                     .Button__label Audio On

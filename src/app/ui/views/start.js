@@ -6,7 +6,7 @@ import {initSounds} from "../sounds";
 export function view(router) {
 
   // start navigation.
-  utils.queryAll("a").map((current) => {
+  utils.queryAll(".Panel__menuItem, .Nav__item").map((current) => {
     current.addEventListener("click", (e) => {
 
       e.preventDefault();

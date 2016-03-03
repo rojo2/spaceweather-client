@@ -46,6 +46,7 @@ export function initSounds() {
 
   const button = document.querySelector(".Button--sound");
   button.addEventListener("click", (e) => {
+    e.preventDefault();
 
     muted = !muted;
 

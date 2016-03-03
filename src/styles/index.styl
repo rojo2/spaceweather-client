@@ -64,9 +64,11 @@ h4
     text-transform uppercase
     color $colorHighlight
     font-weight 200
+    margin .5rem 0
 
 p
-    margin 2rem 0
+    margin 0 0 2rem
+    line-height 1.4
 
 ::-webkit-scrollbar
     width 1px
@@ -85,11 +87,29 @@ p
 // Page background
 
 .Background
-    position absolute
+    position fixed
+    width 100%
+    height 100%
     top 0
-    right 0
-    bottom 0
     left 0
+    background linear-gradient(to right, hsl(0, 0%, 0%) 60%, hsl(24, 80%, 10%) 100%)
+
+.Bokeh
+    position fixed
+    width 100%
+    height 100%
+    top 0
+    left 0
+    opacity .2
+
+.Bokeh__particle--red
+    fill hsla(8, 60%, 60%, .5)
+
+.Bokeh__particle--magenta
+    fill hsla(184, 40%, 60%, .25)
+
+.Bokeh__particle--yellow
+    fill hsla(64, 60%, 60%, .7)
 
 // ----------------------------------------------------------
 // Page layout
@@ -105,19 +125,20 @@ p
     position relative
 
 .Page__top
-    flex 0 0 4rem
+    flex 0 0 3.5rem
     display flex
     align-items flex-end
 
 .Page__bottom
-    flex 0 0 2rem
+    flex 0 0 3rem
     display flex
-    align-items center
+    align-items flex-start
+    padding 0 2rem
 
 .Page__top
     position relative
     margin 2rem 2rem 0
-    padding-bottom .5rem
+    padding-bottom 0rem
     &:before
     &:after
         @extend $Panel__decor--long
@@ -135,8 +156,6 @@ p
 // Nav
 
 .Logo
-    font-weight 200
-    font-size 1rem
     display flex
     align-items center
     height 2rem
@@ -152,7 +171,7 @@ p
 
 .Nav__item
     position relative
-    font-size 1.25rem
+    font-size 1rem
     display flex
     height 2rem
     align-items center
@@ -176,8 +195,9 @@ p
 // Controls
 
 .Controls
-    position fixed
+    flex 1
     display flex
+    justify-content flex-end
     bottom 2rem
     right 2rem
 
@@ -505,9 +525,7 @@ p
     transition background-color .2s $easeInCubic
 
 .Alert__input
-    width 0
-    height 0
-    display none
+    @extend $CheckboxHack__input
 
 .Alert__metadata
     @extend $Metadata
@@ -628,6 +646,11 @@ $Graph__legendColor
 .Graph__legendLabel
     font-size .875rem
 
+.Sunspots__image image
+    border-radius 50%
+    overflow hidden
+
+
 // ----------------------------------------------------------
 // Loader
 
@@ -715,7 +738,7 @@ $Graph__legendColor
 
 .Forecast__dayLabel
     text-transform uppercase
-    font-size 1.25rem
+    font-size 1rem
     flex 0 0 auto
     text-align left
     color $colorHighlight
@@ -805,3 +828,99 @@ $RadialDanger__fill
 .Forecast__statsLabel--blackout
 .Forecast__statsValue--blackout
     color $colorBlackout
+
+// ----------------------------------------------------------
+// About Icarus
+
+.AboutIcarus
+    flex 1
+
+.AboutIcarus__input
+    @extend $CheckboxHack__input
+
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button
+    position absolute
+    cursor pointer
+    bottom 1.75rem
+    left 2rem
+    transition all .2s ease-in-out .2s
+    &:hover
+        color $colorHighlight
+
+.AboutIcarus__input:checked ~ .AboutIcarus__button
+    position fixed
+    cursor pointer
+    transition all .1s ease-in-out
+    font-size 3rem
+    text-transform uppercase
+    top 8rem
+    right 8rem
+    z-index 1000
+
+.AboutIcarus__closeIcon
+    stroke $colorLink
+    stroke-width 2
+
+.AboutIcarus__buttonText
+    font-size .875rem
+    color $colorLink
+    text-transform uppercase
+
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button .AboutIcarus__buttonText
+    opacity 1
+    transition all .1s ease-in-out .2s
+
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__button .AboutIcarus__buttonClose
+    display none
+
+.AboutIcarus__input:checked ~ .AboutIcarus__button .AboutIcarus__buttonClose
+    opacity 1
+
+.AboutIcarus__input:checked ~ .AboutIcarus__button .AboutIcarus__buttonText
+    display none
+
+.AboutIcarus__content
+    position fixed
+    top 0
+    right 0
+    bottom 0
+    left 0
+    background-color rgba(0, 0, 0, .92)
+    display flex
+    align-items center
+    justify-content center
+    z-index 90
+
+.AboutIcarus__infoPanel
+    width 42rem
+    max-width 50vw
+    padding 3.5rem
+
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__content
+    opacity 0
+    pointer-events none
+    transition all .2s ease-in-out
+
+.AboutIcarus__input:checked ~ .AboutIcarus__content
+    opacity 1
+    transition all .2s ease-in-out
+
+.AboutIcarus__input:not(:checked) ~ .AboutIcarus__content .AboutIcarus__infoPanel
+    transform matrix3D(
+                1.2, 0, 0, .0004,
+                0, 1.2, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+                )
+    transition all .2s ease-in-out
+
+.AboutIcarus__input:checked ~ .AboutIcarus__content .AboutIcarus__infoPanel
+    pointer-events all
+    transform matrix3D(
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+                )
+    transition all .2s ease-in-out
+
