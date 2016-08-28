@@ -96,7 +96,7 @@ export function timeline(el, fn) {
   updateValue(0);
 
   function animate() {
-    autoValue += 0.001;
+    autoValue += 0.005;
     if (autoValue > 1.0) {
       autoValue = 0;
     }

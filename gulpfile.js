@@ -69,7 +69,7 @@ gulp.task("scripts:lint", () => {
 gulp.task("fonts", () => {
 
   gulp.src(config.srcs.fonts)
-    .pipe(plugins.ttf2woff2())
+    .pipe(plugins.ttf2woff())
     .pipe(gulp.dest(config.build.fonts));
 
 });
