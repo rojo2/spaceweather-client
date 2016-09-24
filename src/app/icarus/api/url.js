@@ -1,4 +1,4 @@
-import {config} from "./config";
+import {config} from "icarus/api/config";
 import queryString from "query-string";
 
 function concat(u) {

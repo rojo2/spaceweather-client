@@ -1,13 +1,13 @@
 export function request(url, options = {}) {
-  options = Object.assign({
-    method: "GET",
-    user: null,
-    pass: null,
-    responseType: "json",
-    withCredentials: false
-  }, options);
-
   return new Promise((resolve, reject) => {
+    options = Object.assign({
+      method: "GET",
+      user: null,
+      pass: null,
+      responseType: "json",
+      withCredentials: false
+    }, options);
+
     const xhr = new XMLHttpRequest();
     xhr.open(options.method, url, true, options.user, options.pass);
     xhr.responseType = options.responseType;

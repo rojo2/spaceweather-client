@@ -1,6 +1,6 @@
-import {config} from "./config";
-import {url} from "./url";
-import {request} from "../http/request";
+import {config} from "icarus/api/config";
+import {url} from "icarus/api/url";
+import {request} from "icarus/http/request";
 
 export function getProtonFlux(data = {}) {
   return request(url("protonflux", Object.assign(data, {

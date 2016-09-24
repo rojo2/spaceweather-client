@@ -1,13 +1,13 @@
-import {getProtonFlux,getProtonFluxTypes} from "./protonflux";
-import {getElectronFlux,getElectronFluxTypes} from "./electronflux";
-import {getXrayFlux,getXrayFluxTypes} from "./xrayflux";
-import {getSunspots,getSunspotTypes,getSunspotRegions} from "./sunspots";
-import {getAlerts,getAlertTypes,getForecast} from "./alerts";
-import {getImageChannels,getImageChannelTypes} from "./channels";
-import {getSolarWind} from "./solarwind";
-import {getGeomagneticActivity} from "./geomagnetic";
-import {getRadioBlackout,getRadioBlackoutTypes} from "./radioblackout";
-import {getSolarRadiation,getSolarRadiationTypes} from "./solarradiation";
+import {getProtonFlux,getProtonFluxTypes} from "icarus/api/protonflux";
+import {getElectronFlux,getElectronFluxTypes} from "icarus/api/electronflux";
+import {getXrayFlux,getXrayFluxTypes} from "icarus/api/xrayflux";
+import {getSunspots,getSunspotTypes,getSunspotRegions} from "icarus/api/sunspots";
+import {getAlerts,getAlertTypes,getForecast} from "icarus/api/alerts";
+import {getImageChannels,getImageChannelTypes} from "icarus/api/channels";
+import {getSolarWind} from "icarus/api/solarwind";
+import {getGeomagneticActivity} from "icarus/api/geomagnetic";
+import {getRadioBlackout,getRadioBlackoutTypes} from "icarus/api/radioblackout";
+import {getSolarRadiation,getSolarRadiationTypes} from "icarus/api/solarradiation";
 
 export const API = {
 

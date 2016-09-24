@@ -1,15 +1,13 @@
-"use strict";
-
-const gulp = require("gulp"),
-  path = require("path"),
-  plugins = require("gulp-load-plugins")(),
-  browserify = require("browserify"),
-  babelify = require("babelify"),
-  source = require("vinyl-source-stream"),
-  proxy = require("proxy-middleware"),
-  url = require("url"),
-  fs = require("fs"),
-  bs = require("browser-sync").create();
+const gulp = require("gulp");
+const path = require("path");
+const plugins = require("gulp-load-plugins")();
+const browserify = require("browserify");
+const babelify = require("babelify");
+const source = require("vinyl-source-stream");
+const chaf = require("connect-history-api-fallback");
+const url = require("url");
+const fs = require("fs");
+const bs = require("browser-sync");
 
 const config = {
   debug: true,
@@ -23,13 +21,13 @@ const config = {
     images: "./dist/images/"
   },
   index: {
-    script: "./src/app/index.js",
-    template: "./src/templates/index.jade",
+    script: "./src/app/icarus/index.js",
+    template: "./src/templates/index.pug",
     style: "./src/styles/index.styl"
   },
   srcs: {
-    scripts: "./src/app/**/*.js",
-    templates: "./src/templates/**/*.jade",
+    scripts: "./src/app/icarus/**/*.js",
+    templates: "./src/templates/**/*.pug",
     styles: "./src/styles/**/*.styl",
     fonts: "./src/assets/fonts/**/*.ttf",
     sounds: "./src/assets/sounds/**/*.mp3",
@@ -39,13 +37,9 @@ const config = {
 
 gulp.task("templates", () => {
 
-  const stream = gulp.src(config.index.template)
-    .pipe(plugins.jade())
+  return gulp.src(config.index.template)
+    .pipe(plugins.pug())
     .pipe(gulp.dest(config.build.path));
-
-  if (config.run.browserSync && bs.active) {
-    stream.pipe(bs.stream());
-  }
 
 });
 
@@ -90,29 +84,34 @@ gulp.task("images", () => {
 
 gulp.task("styles", () => {
 
-  const stream = gulp.src(config.index.style)
+  return gulp.src(config.index.style)
     .pipe(plugins.stylus({
       debug: config.debug
     }))
     .pipe(gulp.dest(config.build.path));
 
-  if (config.run.browserSync && bs.active) {
-    stream.pipe(bs.stream());
-  }
-
 });
 
 gulp.task("scripts", () => {
 
-  const stream = browserify()
-    .add(config.index.script, { debug: config.debug })
-    .transform(babelify)
+  return browserify({ paths: ["src/app"], debug: config.debug })
+    .add(config.index.script)
+    .transform(babelify, { presets: ["es2015","react"] })
     .bundle()
     .pipe(source(path.basename(config.index.script)))
     .pipe(gulp.dest(config.build.path));
 
-  if (config.run.browserSync && bs.active) {
-    stream.pipe(bs.stream());
+});
+
+gulp.task("bs", ["watch"], () => {
+
+  if (config.run.browserSync) {
+    bs.init({
+      server: {
+        baseDir: config.build.path,
+        middleware: [chaf()]
+      }
+    });
   }
 
 });
@@ -121,34 +120,12 @@ gulp.task("watch", ["build"], () => {
 
   gulp.watch(config.srcs.fonts, ["fonts"]);
   gulp.watch(config.srcs.images, ["images"]);
-  gulp.watch(config.srcs.templates, ["templates"]);
-  gulp.watch(config.srcs.styles, ["styles"]);
-  gulp.watch(config.srcs.scripts, ["scripts"]);
-
-  if (config.run.browserSync) {
-
-    let proxyOptions = url.parse('http://localhost:3000/');
-    proxyOptions.route = '/';
-
-    bs.init({
-      server: {
-        baseDir: config.build.path,
-        middleware(req, res, next) {
-          let fileName = url.parse(req.url);
-          fileName = fileName.href.split(fileName.search).join("");
-
-          const fileExists = fs.existsSync(path.join(config.build.path, fileName));
-          if (!fileExists && fileName.indexOf("browser-sync-client") < 0) {
-            req.url = "/index.html";
-          }
-          return next();
-        }
-      }
-    });
-  }
+  gulp.watch(config.srcs.templates, ["templates", bs.reload]);
+  gulp.watch(config.srcs.styles, ["styles", bs.reload]);
+  gulp.watch(config.srcs.scripts, ["scripts", bs.reload]);
 
 });
 
 gulp.task("build", ["templates", "styles", "scripts", "fonts", "images", "sounds"]);
 
-gulp.task("default", ["watch"]);
+gulp.task("default", ["bs"]);
