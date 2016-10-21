@@ -829,6 +829,45 @@ $RadialDanger__fill
 .Forecast__statsValue--blackout
     color $colorBlackout
 
+$GraphDanger__graph
+    border 1px solid
+    width 2rem
+    margin 0 .5rem
+    position relative
+
+$GraphDanger__fill
+    position absolute
+    bottom 3px
+    left 3px
+    right 3px
+    top 3px
+    transform-origin 0% 100%
+    transform scaleY(.3)
+
+.GraphDanger
+    height 30vh
+    display flex
+    padding 1rem 0 2rem
+    justify-content center
+    align-items stretch
+
+.GraphDanger__geomagnetic
+.GraphDanger__solar
+.GraphDanger__blackout
+    @extend $GraphDanger__graph
+
+.GraphDanger__geomagneticFill
+.GraphDanger__solarFill
+.GraphDanger__blackoutFill
+    @extend $GraphDanger__fill
+
+.GraphDanger__geomagneticFill
+    background-color $colorGeomagnetic
+.GraphDanger__solarFill
+    background-color $colorSolar
+.GraphDanger__blackoutFill
+    background-color $colorBlackout
+
 // ----------------------------------------------------------
 // About Icarus
 
@@ -923,4 +962,3 @@ $RadialDanger__fill
                 0, 0, 0, 1
                 )
     transition all .2s ease-in-out
-
