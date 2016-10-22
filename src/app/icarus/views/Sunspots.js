@@ -1,5 +1,7 @@
 import React from "react";
 import Loader from "icarus/views/Loader";
+import API from "icarus/api";
+import utils from "icarus/utils";
 
 function sunspotCoord(value, positive = false) {
   return Math.sin(Math.PI * (positive ? 0.5 : -0.5)) * Math.sin(value);
@@ -22,14 +24,25 @@ export class Sunspots extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = "Sunspots";
+    this.state = {
+      isLoading: true,
+      sunspots: [],
+      images: [],
+      image: null,
+      radius: 0,
+      width: 0,
+      height: 0,
+      halfWidth: 0,
+      halfHeight: 0
+    };
   }
 
-  componentWillMount() {
+  loadSunspots() {
     const minDateFormatted = utils.daysFrom(-1);
     const maxDateFormatted = utils.daysFrom(-1);
     const minDateFormattedImage = utils.daysFrom(-2);
     const maxDateFormattedImage = utils.daysFrom(0);
-    Promise.all([
+    return Promise.all([
       API.getImageChannels({
         channeltype: 5,
         date_min: minDateFormattedImage,
@@ -40,15 +53,95 @@ export class Sunspots extends React.Component {
         date_max: maxDateFormatted
       })
     ]).then((res) => {
-      let images = [];
-      res[0].body.forEach((image) => {
+      const images = res[0].body.map((image) => {
         if (new Date(image.date).getHours() === 17) {
-          images.push(image);
+          return image;
         }
       });
-      //utils.deactivate(utils.query(".Loader", container));
-      //graphs.sunspots(container, images, res[1].body);
+      const sunspots = res[1].body;
+      this.setState({ sunspots, images });
     });
+  }
+
+  componentWillMount() {
+    this.loadSunspots().then(() => {
+      this.setState({ isLoading: false });
+    });
+  }
+
+  componentDidMount() {
+    const container = this.refs.container;
+    const {width,height} = container.getBoundingClientRect();
+    const halfWidth = width * 0.5;
+    const halfHeight = height * 0.5;
+    const radius = Math.min(halfWidth,halfHeight) - 10;
+    this.setState({
+      radius,
+      width,
+      height,
+      halfWidth,
+      halfHeight
+    });
+  }
+
+  renderImageNotFound() {
+    const {width,height,halfWidth,halfHeight} = this.state;
+    return [
+      <circle className="Image--notFound" cx={halfWidth} cy={halfHeight} key="Image--notFound--circle" />,
+      <line className="Image--notFound" x1="0" y1="0" x2={width} y2={height} key="Image--notFound--x1" />,
+      <line className="Image--notFound" x1="0" y1={height} x2={width} y2="0" key="Image--notFound--x2" />
+    ];
+  }
+
+  renderImage() {
+    const [image] = this.state.images;
+    const {width,height} = this.state;
+    return (
+      <image width={width} height={height} xlinkHref={image} />
+    );
+  }
+
+  renderSunspot(sunspot) {
+    const {halfWidth,halfHeight,radius} = this.state;
+    const position = parseSunspot(sunspot.location);
+    const x = halfWidth + (position.x * radius);
+    const y = halfHeight + (position.y * radius);
+    const transform = `translate(${x},${y})`;
+    return (
+      <g className="Graph__sunspotInfo" transform={transform} key={sunspot.location}>
+        <circle className="Graph__sunspot" cx="0" cy="0" r="10" />
+        <text className="Graph__sunspotText">
+          <tspan className="Graph__sunspotInfoLabel" x="0" y="0">Spot class: </tspan>
+          <tspan className="Graph__sunspotInfoValue" x="132" y="0">{sunspot.spotclass}</tspan>
+          <tspan className="Graph__sunspotInfoLabel" x="0" y="20">Magnetic class: </tspan>
+          <tspan className="Graph__sunspotInfoValue" x="132" y="20">{sunspot.magneticclass}</tspan>
+          <tspan className="Graph__sunspotInfoLabel" x="0" y="40">Location: </tspan>
+          <tspan className="Graph__sunspotInfoValue" x="132" y="40">{sunspot.location}</tspan>
+          <tspan className="Graph__sunspotInfoLabel" x="0" y="60">Size: </tspan>
+          <tspan className="Graph__sunspotInfoValue" x="132" y="60">{sunspot.size}</tspan>
+          <tspan className="Graph__sunspotInfoLabel" x="0" y="80">No. of sunspots: </tspan>
+          <tspan className="Graph__sunspotInfoValue" x="132" y="80">{sunspot.numberofsunspots}</tspan>
+        </text>
+      </g>
+    );
+  }
+
+  renderSunspots(sunspots = this.state.sunspots) {
+    return sunspots.map((sunspot) => this.renderSunspot(sunspot));
+  }
+
+  renderGraph() {
+    const {width,height,radius,halfWidth,halfHeight} = this.state;
+    const viewBox = `0 0 ${width} ${height}`;
+    return (
+      <svg className="Graph__image" width="100%" height="100%" viewBox={viewBox}>
+        <g>
+          {this.renderImageNotFound()}
+          <circle className="Graph__sun" cx={halfWidth} cy={halfHeight} r={radius} />
+          {this.renderSunspots()}
+        </g>
+      </svg>
+    );
   }
 
   render() {
@@ -59,10 +152,10 @@ export class Sunspots extends React.Component {
             <div className="Panel__title">Sunspots</div>
           </div>
           <div className="Panel__content">
-            <Loader />
+            <Loader isLoading={this.state.isLoading} />
             <div className="Graph">
-              <div className="Graph__content">
-
+              <div className="Graph__content" ref="container">
+                {this.renderGraph()}
               </div>
             </div>
           </div>

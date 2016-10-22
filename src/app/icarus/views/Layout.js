@@ -75,7 +75,7 @@ export class Layout extends React.Component {
                   <p>The Icarus Project is a fun endeavour looking to make near live space weather information available to the general public as well as the scientific community. It consists of an ever growing API and a gorgeous web client.</p>
                   <p><a href="https://twitter.com/azazeln28" target="_blank">Aitor Moreno-Melcón</a>, <a href="https://twitter.com/mekanoide" target="_blank">Omar Moreno-Melcón</a> and <a href="https://twitter.com/diacritica" target="_blank">Pablo Ruiz-Múzquiz</a> are its creators, with <a href="https://twitter.com/ghilbrae" target="_blank">Angela Rivera-Campos</a> acting as our scientific advisor.</p>
                   <p>If you would like to know more about Icarus Project or its public API, please contact us at <a href="mailto:info@icarus.live" target="_blank">info@icarus.live</a></p>
-                  <p>Also, please find all the source code available at github: backend and frontend.</p>
+                  <p>Also, please find all the source code available at github: <a href="https://github.com/diacritica/spaceweather">backend</a> and <a href="https://github.com/rojo2/spaceweather-client">frontend</a>.</p>
                   <p>We would like to thank <a href="http://kaleidos.com" target="_blank">Kaleidos</a> and their <a href="http://piweek.com" target="_blank">PIWEEK</a> that greatly contributed to make this a reality.</p>
                 </div>
               </div>

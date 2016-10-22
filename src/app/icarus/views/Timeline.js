@@ -1,16 +1,5 @@
 import React from "react";
-
-function pad(value, length = 2, chr = "0") {
-  let str = String(value);
-  while (str.length < length) {
-    str = chr + str;
-  }
-  return str;
-}
-
-function format(date) {
-  return `${pad(date.getFullYear(), 4)}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
-}
+import utils from "icarus/utils";
 
 export class Timeline extends React.Component {
   constructor(props) {
@@ -22,9 +11,7 @@ export class Timeline extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleTimeout = this.handleTimeout.bind(this);
     this.timeoutID = null;
-    this.state = {
-      value: 0
-    };
+    this.state = { value: 0 };
   }
 
   updateValue(value) {
@@ -43,7 +30,7 @@ export class Timeline extends React.Component {
   }
 
   handleMouseDown(e) {
-    if (e.button === 0) {
+    if (e.button === 0 && this.props.isRunning) {
       this.cancelTimeout();
 
       document.addEventListener("mouseup", this.handleMouseUp);
@@ -89,8 +76,19 @@ export class Timeline extends React.Component {
     this.timeoutID = setTimeout(this.handleTimeout, timeout);
   }
 
-  componentDidMount() {
-    this.requestTimeout();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isRunning !== this.props.isRunning && nextProps.isRunning === true) {
+      this.requestTimeout();
+    } else if (nextProps.isRunning !== this.props.isRunning && nextProps.isRunning === false) {
+      this.cancelTimeout();
+      this.setState({
+        value: 0
+      });
+    }
+  }
+
+  componentWillUnmount() {
+    this.cancelTimeout();
   }
 
   render() {
@@ -98,9 +96,9 @@ export class Timeline extends React.Component {
     const end = this.props.endDate.getTime();
     const current = (this.state.value * (end - start)) + start;
 
-    const startDate = format(this.props.startDate);
-    const currentDate = format(new Date(current));
-    const endDate = format(this.props.endDate);
+    const startDate = utils.formatDate(this.props.startDate);
+    const currentDate = utils.formatDate(new Date(current));
+    const endDate = utils.formatDate(this.props.endDate);
 
     return (
       <div className="Timeline">
@@ -124,6 +122,7 @@ export class Timeline extends React.Component {
 }
 
 Timeline.propTypes = {
+  isRunning: React.PropTypes.bool,
   onChange: React.PropTypes.func,
   startDate: React.PropTypes.instanceOf(Date).isRequired,
   endDate: React.PropTypes.instanceOf(Date).isRequired

@@ -30,7 +30,7 @@ export class Loader extends React.Component {
 }
 
 Loader.propTypes = {
-  isLoading: React.PropTypes.boolean
+  isLoading: React.PropTypes.bool
 };
 
 export default Loader;

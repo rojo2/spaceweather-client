@@ -12,7 +12,6 @@ import {getSolarRadiation,getSolarRadiationTypes} from "icarus/api/solarradiatio
 export const API = {
 
   getAll() {
-
     return Promise.all([
       // load types.
       getProtonFluxTypes(),
@@ -30,7 +29,6 @@ export const API = {
       getSunspots(),
       getSunspotRegions()
     ]);
-
   },
 
   getProtonFlux,

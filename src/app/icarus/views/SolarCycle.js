@@ -1,11 +1,123 @@
 import React from "react";
 import Loader from "icarus/views/Loader";
+import API from "icarus/api";
+import utils from "icarus/utils";
 
 export class SolarCycle extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = "SolarCycle";
+    this.state = {
+      isLoading: true,
+      width: 0,
+      height: 0,
+      sWidth: 0,
+      sHeight: 0,
+      mWidth: 0,
+      mHeight: 0,
+      margin: {
+        top: 0,
+        right: 0,
+        bottom: 24,
+        left: 0
+      },
+      smoothed: [],
+      observed: [],
+      predicted: []
+    };
   }
+
+  loadSolarCycle() {
+    Promise.all([
+      API.getSunspots({ sunspottype: 1 }),
+      API.getSunspots({ sunspottype: 2 }),
+      API.getSunspots({ sunspottype: 3 })
+    ]).then((res) => {
+      this.setState({
+        isLoading: false,
+        smoothed: res[0].body,
+        predicted: res[1].body,
+        observed: res[2].body
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadSolarCycle();
+    const {container} = this.refs;
+    const {width,height} = container.getBoundingClientRect();
+    const {left:marginLeft,top:marginTop,bottom:marginBottom,right:marginRight} = this.state.margin;
+    this.setState({
+      width,
+      height,
+      mWidth: width - (marginLeft + marginRight),
+      mHeight: height - (marginTop + marginBottom),
+      sWidth: width + marginLeft,
+      sHeight: height + marginTop
+    });
+  }
+
+  renderGraph() {
+    const {left:marginLeft,top:marginTop,bottom:marginBottom,right:marginRight} = this.state.margin;
+    const {width,height,mWidth,mHeight,sWidth,sHeight,smoothed,predicted,observed} = this.state;
+
+    const viewBox = `0 0 ${width} ${height}`;
+    const transform = `translate(${marginLeft},${marginTop})`;
+    const xTransform = `translate(0,${mHeight})`;
+    const yStyle = { "textAnchor": "end" };
+
+    utils.time(smoothed,"date","time");
+    utils.time(predicted,"date","time");
+    utils.time(observed,"date","time");
+
+    const maxX = utils.maxOf([smoothed,predicted,observed],"time");
+    const minX = utils.minOf([smoothed,predicted,observed],"time");
+
+    const maxY = utils.maxOf([smoothed,predicted,observed],"value");
+    const minY = utils.minOf([smoothed,predicted,observed],"value");
+
+    const xTicks = utils.ticks(new Date(minX).getFullYear(),new Date(maxX).getFullYear()).map((value,index,list) => {
+      const x = utils.interpolate(index / list.length,0,mWidth);
+      const y = 24;
+      const transform = `translate(${x},${y})`;
+      return (
+        <g className="tick" transform={transform} key={value}>
+          <text x="0" y="0" style={{textAnchor:"center"}}>{value}</text>
+        </g>
+      );
+    });
+
+    const yTicks = utils.ticks(minY,maxY).map((value,index,list) => {
+      const x = -16;
+      const y = utils.interpolate(index / list.length,mHeight,0);
+      const transform = `translate(${x},${y})`;
+      return (
+        <g className="tick" transform={transform} key={value}>
+          <text x="0" y="0" style={{textAnchor:"end"}}>{value}</text>
+        </g>
+      );
+    });
+
+    return (
+      <svg className="Graph__image" width="100%" height="100%" viewBox={viewBox}>
+        <g transform={transform}>
+          <path className="Graph__line Graph__smoothed" d={utils.path(utils.points(smoothed,"time","value",minX,maxX,minY,maxY),mWidth,mHeight)} />
+          <path className="Graph__line Graph__predicted" d={utils.path(utils.points(predicted,"time","value",minX,maxX,minY,maxY),mWidth,mHeight)} />
+          <path className="Graph__line Graph__observed" d={utils.path(utils.points(observed,"time","value",minX,maxX,minY,maxY),mWidth,mHeight)} />
+          <g className="Graph__axis" transform={xTransform}>
+            {xTicks}
+          </g>
+          <g className="Graph__axis">
+            {yTicks}
+            <text className="Graph__text" transform="rotate(-90)" style={yStyle}>
+              MeV
+            </text>
+          </g>
+        </g>
+      </svg>
+    );
+  }
+
   render() {
     return (
       <section className="SolarCycle isActive">
@@ -14,9 +126,11 @@ export class SolarCycle extends React.Component {
             <div className="Panel__title">Solar Cycle</div>
           </div>
           <div className="Panel__content">
-            <Loader />
+            <Loader isLoading={this.state.isLoading} />
             <div className="Graph">
-              <div className="Graph__content"></div>
+              <div className="Graph__content" ref="container">
+                {this.renderGraph()}
+              </div>
               <div className="Graph__legends">
                 <a href="#" className="Graph__legend">
                   <div className="Graph__legendColor--monthly"></div>
@@ -33,7 +147,9 @@ export class SolarCycle extends React.Component {
               </div>
             </div>
           </div>
-          <div className="Panel__footer"></div>
+          <div className="Panel__footer">
+
+          </div>
         </div>
         <div className="SolarCycle__description">
           <div className="Panel__content--text">

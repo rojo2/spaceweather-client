@@ -1,5 +1,5 @@
 import React from "react";
-import {Link} from "react-router";
+import {Link, browserHistory} from "react-router";
 import Loader from "icarus/views/Loader";
 import classNames from "classnames";
 import API from "icarus/api";
@@ -17,10 +17,23 @@ export class Forecast extends React.Component {
   }
 
   componentWillMount() {
+    if (!this.props.location.query.filter
+    || !this.props.location.query.flux) {
+      browserHistory.replace({
+        pathname: "/forecast",
+        query: {
+          show: "forecast"
+        }
+      });
+    }
+
     API.getAlerts({
-      ordering: "-issuetime"
+      ordering: "-issuetime",
+      limit: 50
     }).then((res) => {
-      this.setState({ alerts: res.body });
+      this.setState({
+        alerts: res.body
+      });
     }).catch((err) => {
       console.error(err);
     });
@@ -32,6 +45,8 @@ export class Forecast extends React.Component {
         geomagActivity: rationale.geomagactivity,
         radioBlackout: rationale.radioBlackout
       });
+    }).catch((err) => {
+      console.error(err);
     });
   }
 
