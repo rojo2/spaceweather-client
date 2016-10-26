@@ -68,6 +68,10 @@ function interpolate(value,min,max) {
   return min + (value * (max - min));
 }
 
+function interpolateLog(value,min,max) {
+  return interpolate(Math.log10(value), Math.log10(min), Math.log10(max));
+}
+
 function range(value,min,max) {
   return (value - min) / (max - min);
 }
@@ -144,8 +148,19 @@ function dots(points,width,height) {
   return points.map((point) => {
     const x = point.x * width;
     const y = height - (point.y * height);
-    return (<rect className="Graph__dot" x={x} y={y} width="2" height="2"></rect>);
+    if (x === 0 && y === 0) {
+      return null;
+    }
+    return (<rect className="Graph__dot" x={x} y={y} width="2" height="2" key={`${x}_${y}`}></rect>);
   });
+}
+
+function areaPath(points,width,height) {
+  return points.reduce((acc,point,index) =>  {
+    const cmd = (index === 0 ? "M" : "L");
+    const pos = `${cmd}${point.x * width} ${height - (point.y * height)}`;
+    return acc + (index > 0 ? "," : "") + pos;
+  }, "") + `L${width} ${height} L0 ${height}`;
 }
 
 function path(points,width,height) {
@@ -156,20 +171,23 @@ function path(points,width,height) {
   }, "");
 }
 
+function nearest(value, roundTo = 0.1) {
+  return Math.round(value / roundTo) * roundTo;
+}
+
+function ticksLog(min,max) {
+  const range = (max - min);
+  const step = range / 10;
+  const ticks = [];
+  for (let i = min; i < max; i += step) {
+    ticks.push(Math.log10(i) / Math.log10(max));
+  }
+  return ticks;
+}
+
 function ticks(min,max) {
   const range = (max - min);
-
-  let step;
-  if (range < 10) {
-    step = 2;
-  } else if (range < 40) {
-    step = 5;
-  } else if (range < 400) {
-    step = 20;
-  } else if (range < 1000) {
-    step = 100;
-  }
-
+  const step = range / 10;
   const ticks = [];
   for (let i = min; i < max; i += step) {
     ticks.push(i);
@@ -204,6 +222,7 @@ function canvasLine(points,canvas,style = { color: "#fff", width: 1 }) {
 export default {
   parseDate,
   interpolate,
+  interpolateLog,
   range,
   time,
   max,
@@ -213,8 +232,10 @@ export default {
   log,
   points,
   pointsLog,
+  areaPath,
   path,
   dots,
+  ticksLog,
   ticks,
   daysFrom,
   formatDate,

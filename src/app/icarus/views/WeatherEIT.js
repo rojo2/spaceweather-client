@@ -27,6 +27,7 @@ export class WeatherEIT extends React.Component {
     this.setState({
       index: Math.round(value * (this.state.images.length - 1))
     });
+    this.props.onChange(value);
   }
 
   loadImages(filter) {

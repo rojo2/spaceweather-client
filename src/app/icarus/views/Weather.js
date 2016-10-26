@@ -19,11 +19,24 @@ export class Weather extends React.Component {
       protonFlux: [],
       electronFlux: [],
       xrayFlux: [],
+      value: 0,
       width: 0,
       height: 0,
       isLoading: true
     };
+    this.handleTimelineChange = this.handleTimelineChange.bind(this);
+    this.handleResize = this.handleResize.bind(this);
     this.handleFluxComplete = this.handleFluxComplete.bind(this);
+  }
+
+  handleTimelineChange(value) {
+    this.setState({
+      value: value
+    });
+  }
+
+  handleResize() {
+    this.updateContainerSize();
   }
 
   handleFluxComplete() {
@@ -39,11 +52,9 @@ export class Weather extends React.Component {
         date_min: minDateFormatted
       })
     ]).then((res) => {
-
       this.setState({
         solarWind: res.map((res) => res.body)
       });
-
       /*const graphLegends = utils.query(".Graph__legends");
       utils.clear(graphLegends);
       utils.addAll(graphLegends, [{"name": "temperature"}, {"name": "density"}].map((legend) => {
@@ -57,7 +68,6 @@ export class Weather extends React.Component {
           utils.tag("div", { "class": "Graph__legendLabel" }, legend.name)
         ]);
       }));*/
-
     });
   }
 
@@ -99,19 +109,15 @@ export class Weather extends React.Component {
   loadElectronFlux() {
     const minDateFormatted = utils.daysFrom(-7);
     return Promise.all([
-
       API.getElectronFlux({
         etype: 2,
         date_min: minDateFormatted
       }),
-
       API.getElectronFlux({
         etype: 1,
         date_min: minDateFormatted
       }),
-
       API.getElectronFluxTypes()
-
     ]).then((res) => {
 
       this.setState({
@@ -138,19 +144,15 @@ export class Weather extends React.Component {
   loadXrayFlux() {
     const minDateFormatted = utils.daysFrom(-7);
     return Promise.all([
-
       API.getXrayFlux({
         xtype: 1,
         date_min: minDateFormatted
       }),
-
       API.getXrayFlux({
         xtype: 2,
         date_min: minDateFormatted
       }),
-
       API.getXrayFluxTypes()
-
     ]).then((res) => {
 
       this.setState({
@@ -204,6 +206,12 @@ export class Weather extends React.Component {
     }
 
     this.loadFlux(this.props.location.query.flux);
+
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -213,6 +221,10 @@ export class Weather extends React.Component {
   }
 
   componentDidUpdate() {
+    this.updateContainerSize();
+  }
+
+  updateContainerSize() {
     const {container} = this.refs;
     const {width,height} = container.getBoundingClientRect();
     if (this.state.width !== width && this.state.height !== height) {
@@ -223,18 +235,47 @@ export class Weather extends React.Component {
     }
   }
 
+  getFluxData(flux) {
+    switch(flux) {
+    default:
+    case "solar-wind": return this.state.solarWind;
+    case "particle": return this.state.protonFlux;
+    case "electron": return this.state.electronFlux;
+    case "x-ray": return this.state.xrayFlux;
+    }
+  }
+
+  renderGraphLegend(flux) {
+    const [,,data] = this.getFluxData(flux);
+    console.log(data);
+    let particle10 = (data && 0 in data && data[0].name) || "P";
+    let particle100 = (data && 1 in data && data[1].name) || "P";
+    return (
+      <div className="Graph__legends">
+        <a href="#" className="Graph__legend">
+          <div className="Graph__legendColor--particle10"></div>
+          <div className="Graph__legendLabel">{particle10}</div>
+        </a>
+        <a href="#" className="Graph__legend">
+          <div className="Graph__legendColor--particle100"></div>
+          <div className="Graph__legendLabel">{particle100}</div>
+        </a>
+      </div>
+    );
+  }
+
   renderGraph(flux) {
     const {width,height} = this.state;
     switch(flux) {
     default:
     case "solar-wind":
-      return <SolarWind width={width} height={height} data={this.state.solarWind} />;
+      return <SolarWind width={width} height={height} data={this.state.solarWind} value={this.state.value} />;
     case "particle":
-      return <ProtonFlux width={width} height={height} data={this.state.protonFlux} />;
+      return <ProtonFlux width={width} height={height} data={this.state.protonFlux} value={this.state.value} />;
     case "electron":
-      return <ElectronFlux width={width} height={height} data={this.state.electronFlux} />;
+      return <ElectronFlux width={width} height={height} data={this.state.electronFlux} value={this.state.value} />;
     case "x-ray":
-      return <XrayFlux width={width} height={height} data={this.state.xrayFlux} />;
+      return <XrayFlux width={width} height={height} data={this.state.xrayFlux} value={this.state.value} />;
     }
   }
 
@@ -269,11 +310,13 @@ export class Weather extends React.Component {
               </Link>
             </div>
           </div>
-          <WeatherEIT filter={filter} />
+          <WeatherEIT filter={filter} onChange={this.handleTimelineChange} />
         </div>
         <div className="Weather__fluxes">
           <div className="Panel__header">
-            <div className="Panel__title">Fluxes</div>
+            <div className="Panel__title">
+              Fluxes
+            </div>
             <div className="Panel__menu">
               <Link to={{ pathname: "/weather", query: { "filter": filter, "flux": "solar-wind" }}} activeClassName="isActive" className="Panel__menuItem">Solar Wind</Link>
               <Link to={{ pathname: "/weather", query: { "filter": filter, "flux": "particle" }}} activeClassName="isActive" className="Panel__menuItem">Particle Flux</Link>
@@ -287,16 +330,7 @@ export class Weather extends React.Component {
               <div className="Graph__content" ref="container">
                 {this.renderGraph(flux)}
               </div>
-              <div className="Graph__legends">
-                <a href="#" className="Graph__legend">
-                  <div className="Graph__legendColor--particle10"></div>
-                  <div className="Graph__legendLabel">P>10MeV</div>
-                </a>
-                <a href="#" className="Graph__legend">
-                  <div className="Graph__legendColor--particle100"></div>
-                  <div className="Graph__legendLabel">P>100MeV</div>
-                </a>
-              </div>
+              {this.renderGraphLegend(flux)}
             </div>
           </div>
           <div className="Panel__footer"></div>
