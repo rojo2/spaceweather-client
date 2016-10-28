@@ -3,17 +3,42 @@ import {Link, browserHistory} from "react-router";
 import Loader from "icarus/views/Loader";
 import classNames from "classnames";
 import API from "icarus/api";
+import utils from "icarus/utils";
 
 export class Forecast extends React.Component {
   constructor(props) {
     super(props);
     this.displayName = "Forecast";
     this.state = {
-      alerts: []
+      alerts: [],
+      geomagActivityItems: null,
+      solarRadiationItems: null,
+      radioBlackoutItems: null,
+      geomagActivity: null,
+      solarRadiation: null,
+      radioBlackout: null
     };
 
     this.renderAlerts = this.renderAlerts.bind(this);
     this.renderForecast = this.renderForecast.bind(this);
+  }
+
+  getMonthAbbr(index) {
+    const abbrs = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ];
+    return abbrs[index];
   }
 
   componentWillMount() {
@@ -26,17 +51,49 @@ export class Forecast extends React.Component {
         }
       });
     }
+  }
 
+  componentDidMount() {
     API.getAlerts({
       ordering: "-issuetime",
       limit: 50
     }).then((res) => {
-      this.setState({
-        alerts: res.body
-      });
-    }).catch((err) => {
-      console.error(err);
-    });
+      this.setState({ alerts: res.body });
+    }).catch((err) => console.error(err));
+
+    API.getGeomagneticActivity({
+      date_min: utils.daysFrom(-3),
+      ordering: "-date"
+    }).then((res) => {
+      return utils.radio(res.body);
+    }).then((items) => {
+      this.setState({ geomagActivityItems: items });
+    }).catch((err) => console.error(err));
+
+    API.getSolarRadiation({
+      date_min: utils.daysFrom(-3),
+      ordering: "-date",
+      solarradiationtype: 2
+    }).then((res) => {
+      utils.ts(res.body, "date");
+      this.setState({ solarRadiation2Items: res.body });
+    }).catch((err) => console.error(err));
+
+    API.getSolarRadiation({
+      date_min: utils.daysFrom(-3),
+      ordering: "-date"
+    }).then((res) => {
+      utils.ts(res.body, "date");
+      this.setState({ solarRadiationItems: res.body });
+    }).catch((err) => console.error(err));
+
+    API.getRadioBlackout({
+      date_min: utils.daysFrom(-3),
+      ordering: "-date"
+    }).then((res) => {
+      utils.ts(res.body, "date");
+      this.setState({ radioBlackoutItems: res.body });
+    }).catch((err) => console.error(err));
 
     API.getForecast().then((res) => {
       const rationale = res.body.pop();
@@ -45,9 +102,7 @@ export class Forecast extends React.Component {
         geomagActivity: rationale.geomagactivity,
         radioBlackout: rationale.radioBlackout
       });
-    }).catch((err) => {
-      console.error(err);
-    });
+    }).catch((err) => console.error(err));
   }
 
   renderAlert(alert) {
@@ -141,141 +196,126 @@ export class Forecast extends React.Component {
   }
 
   render() {
+    console.log(this.state);
+    if (!this.state.radioBlackoutItems
+     || !this.state.solarRadiationItems
+     || !this.state.geomagActivityItems) {
+      return null;
+    }
+
+    const [firstRadioBlackout,secondRadioBlackout,thirdRadioBlackout] = this.state.radioBlackoutItems;
+    const [firstSolarRadiation,secondSolarRadiation,thirdSolarRadiation] = this.state.solarRadiationItems;
+    const [firstGeomagActivity,secondGeomagActivity,thirdGeomagActivity] = this.state.geomagActivityItems;
+
+    const firstTransformGeomagActivity = { transform: `scaleY(${firstGeomagActivity.value * 0.01})` };
+    const firstTransformSolarRadiation = { transform: `scaleY(${firstSolarRadiation.value * 0.01})` };
+    const firstTransformBlackout = { transform: `scaleY(${firstRadioBlackout.value * 0.01})` };
+
+    const secondTransformGeomagActivity = { transform: `scaleY(${secondGeomagActivity.value * 0.01})` };
+    const secondTransformSolarRadiation = { transform: `scaleY(${secondSolarRadiation.value * 0.01})` };
+    const secondTransformBlackout = { transform: `scaleY(${secondRadioBlackout.value * 0.01})` };
+
+    const thirdTransformGeomagActivity = { transform: `scaleY(${thirdGeomagActivity.value * 0.01})` };
+    const thirdTransformSolarRadiation = { transform: `scaleY(${thirdSolarRadiation.value * 0.01})` };
+    const thirdTransformBlackout = { transform: `scaleY(${thirdRadioBlackout.value * 0.01})` };
 
     return (
       <section className="Forecast isActive">
-        <div className="Forecast__graphs">
+      <div className="Forecast__graphs">
           <div className="Panel__header">
-            <div className="Panel__title">3-day Forecast</div>
+              <div className="Panel__title">3-day Forecast</div>
           </div>
           <div className="Panel__content">
-            <div className="Forecast__days">
-              <div className="Forecast__day">
-                <div className="Forecast__dayLabel">Dec 26</div>
-                <div className="Forecast__dayData">
-                  <svg width="100%" height="100%" viewBox="0 0 102 102" className="RadialDanger">
-                    <g>
-                      <circle cx="50" cy="50" className="RadialDanger__geomagnetic"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__solar"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__blackout"></circle>
-                    </g>
-                    <g>
-                      <line x1="50" y1="50" x2="50" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="50" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="0" className="RadialDanger__divider"></line>
-                    </g>
-                    <g>
-                      <circle cx="50" cy="50" r="10" className="RadialDanger__base--initial"></circle>
-                      <circle cx="50" cy="50" r="50" className="RadialDanger__base"></circle>
-                    </g>
-                  </svg>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
-                    <div className="Forecast__statsValue--geomagnetic">8 / 2</div>
+              <div className="Forecast__days">
+                  <div className="Forecast__day">
+                      <div className="Forecast__dayLabel">{this.getMonthAbbr(firstRadioBlackout.ts.getMonth())} {firstRadioBlackout.ts.getDate()}</div>
+                      <div className="Forecast__dayData">
+                          <div className="GraphDanger">
+                              <div className="GraphDanger__geomagnetic">
+                                  <div className="GraphDanger__geomagneticFill" style={firstTransformGeomagActivity}></div>
+                              </div>
+                              <div className="GraphDanger__solar">
+                                  <div className="GraphDanger__solarFill" style={firstTransformSolarRadiation}></div>
+                              </div>
+                              <div className="GraphDanger__blackout">
+                                  <div className="GraphDanger__blackoutFill" style={firstTransformBlackout}></div>
+                              </div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
+                              <div className="Forecast__statsValue--geomagnetic">2 / {firstRadioBlackout.value}</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
+                              <div className="Forecast__statsValue--solar">{firstSolarRadiation.value}%</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
+                              <div className="Forecast__statsValue--blackout">{firstRadioBlackout.value}%</div>
+                          </div>
+                      </div>
                   </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
-                    <div className="Forecast__statsValue--solar">
-                      <div className="Forecast__statsSubValue">R1-R2 5%</div>
-                      <div className="Forecast__statsSubValue">R3 15%</div>
-                    </div>
+                  <div className="Forecast__day">
+                      <div className="Forecast__dayLabel">{this.getMonthAbbr(secondRadioBlackout.ts.getMonth())} {secondRadioBlackout.ts.getDate()}</div>
+                      <div className="Forecast__dayData">
+                          <div className="GraphDanger">
+                            <div className="GraphDanger__geomagnetic">
+                                <div className="GraphDanger__geomagneticFill" style={secondTransformGeomagActivity}></div>
+                            </div>
+                            <div className="GraphDanger__solar">
+                                <div className="GraphDanger__solarFill" style={secondTransformSolarRadiation}></div>
+                            </div>
+                            <div className="GraphDanger__blackout">
+                                <div className="GraphDanger__blackoutFill" style={secondTransformBlackout}></div>
+                            </div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
+                              <div className="Forecast__statsValue--geomagnetic">2 / {secondGeomagActivity.value}</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
+                              <div className="Forecast__statsValue--solar">{secondSolarRadiation.value}%</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
+                              <div className="Forecast__statsValue--blackout">{secondRadioBlackout.value}%</div>
+                          </div>
+                      </div>
                   </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
-                    <div className="Forecast__statsValue--blackout">10%</div>
+                  <div className="Forecast__day">
+                      <div className="Forecast__dayLabel">{this.getMonthAbbr(thirdRadioBlackout.ts.getMonth())} {thirdRadioBlackout.ts.getDate()}</div>
+                      <div className="Forecast__dayData">
+                          <div className="GraphDanger">
+                            <div className="GraphDanger__geomagnetic">
+                                <div className="GraphDanger__geomagneticFill" style={thirdTransformGeomagActivity}></div>
+                            </div>
+                            <div className="GraphDanger__solar">
+                                <div className="GraphDanger__solarFill" style={thirdTransformSolarRadiation}></div>
+                            </div>
+                            <div className="GraphDanger__blackout">
+                                <div className="GraphDanger__blackoutFill" style={thirdTransformBlackout}></div>
+                            </div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
+                              <div className="Forecast__statsValue--geomagnetic">2 / {thirdGeomagActivity.value}</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
+                              <div className="Forecast__statsValue--solar">{thirdSolarRadiation.value}%</div>
+                          </div>
+                          <div className="Forecast__stats">
+                              <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
+                              <div className="Forecast__statsValue--blackout">{thirdRadioBlackout.value}%</div>
+                          </div>
+                      </div>
                   </div>
-                </div>
               </div>
-              <div className="Forecast__day">
-                <div className="Forecast__dayLabel">Dec 27</div>
-                <div className="Forecast__dayData">
-                  <svg width="100%" height="100%" viewBox="0 0 102 102" className="RadialDanger">
-                    <g>
-                      <circle cx="50" cy="50" className="RadialDanger__geomagnetic"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__solar"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__blackout"></circle>
-                    </g>
-                    <g>
-                      <line x1="50" y1="50" x2="50" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="50" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="0" className="RadialDanger__divider"></line>
-                    </g>
-                    <g>
-                      <circle cx="50" cy="50" r="10" className="RadialDanger__base--initial"></circle>
-                      <circle cx="50" cy="50" r="50" className="RadialDanger__base"></circle>
-                    </g>
-                  </svg>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
-                    <div className="Forecast__statsValue--geomagnetic">2 / 2</div>
-                  </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
-                    <div className="Forecast__statsValue--solar">
-                      <div className="Forecast__statsSubValue">R1-R2 5%</div>
-                      <div className="Forecast__statsSubValue">R3 15%</div>
-                    </div>
-                  </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
-                    <div className="Forecast__statsValue--blackout">10%</div>
-                  </div>
-                </div>
-              </div>
-              <div className="Forecast__day">
-                <div className="Forecast__dayLabel">Dec 28</div>
-                <div className="Forecast__dayData">
-                  <svg width="100%" height="100%" viewBox="0 0 102 102" className="RadialDanger">
-                    <g>
-                      <circle cx="50" cy="50" className="RadialDanger__geomagnetic"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__solar"></circle>
-                      <circle cx="50" cy="50" className="RadialDanger__blackout"></circle>
-                    </g>
-                    <g>
-                      <line x1="50" y1="50" x2="50" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="0" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="100" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="50" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="100" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="50" className="RadialDanger__divider"></line>
-                      <line x1="50" y1="50" x2="0" y2="0" className="RadialDanger__divider"></line>
-                    </g>
-                    <g>
-                      <circle cx="50" cy="50" r="10" className="RadialDanger__base--initial"></circle>
-                      <circle cx="50" cy="50" r="50" className="RadialDanger__base"></circle>
-                    </g>
-                  </svg>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
-                    <div className="Forecast__statsValue--geomagnetic">4 / 2</div>
-                  </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>
-                    <div className="Forecast__statsValue--solar">
-                      <div className="Forecast__statsSubValue">R1-R2 5%</div>
-                      <div className="Forecast__statsSubValue">R3 15%</div>
-                    </div>
-                  </div>
-                  <div className="Forecast__stats">
-                    <div className="Forecast__statsLabel--blackout">Radio Blackout Activity</div>
-                    <div className="Forecast__statsValue--blackout">10%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-          <div className="Panel__footer"></div>
+          <div className="Panel__footer">
+
+          </div>
         </div>
         <div className="Forecast__alerts">
           <div className="Panel__header">
@@ -286,7 +326,9 @@ export class Forecast extends React.Component {
             </div>
           </div>
           {this.renderRightPanel()}
-          <div className="Panel__footer"></div>
+          <div className="Panel__footer">
+
+          </div>
         </div>
       </section>
     );

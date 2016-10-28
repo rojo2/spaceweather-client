@@ -76,13 +76,15 @@ export class SolarCycle extends React.Component {
     const maxY = utils.maxOf([smoothed,predicted,observed],"value");
     const minY = utils.minOf([smoothed,predicted,observed],"value");
 
-    const xTicks = utils.ticks(new Date(minX).getFullYear(),new Date(maxX).getFullYear()).map((value,index,list) => {
+    const minTime = new Date(minX).getFullYear();
+    const maxTime = new Date(maxX).getFullYear();
+    const xTicks = utils.ticks(minTime,maxTime).map((value,index,list) => {
       const x = utils.interpolate(index / list.length,0,mWidth);
       const y = 24;
       const transform = `translate(${x},${y})`;
       return (
         <g className="tick" transform={transform} key={value}>
-          <text x="0" y="0" style={{textAnchor:"center"}}>{value}</text>
+          <text x="0" y="0" style={{textAnchor:"center"}}>{value.toFixed(0)}</text>
         </g>
       );
     });
@@ -93,7 +95,7 @@ export class SolarCycle extends React.Component {
       const transform = `translate(${x},${y})`;
       return (
         <g className="tick" transform={transform} key={value}>
-          <text x="0" y="0" style={{textAnchor:"end"}}>{value}</text>
+          <text x="0" y="0" style={{textAnchor:"end"}}>{value.toExponential(1)}</text>
         </g>
       );
     });

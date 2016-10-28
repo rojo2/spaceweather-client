@@ -53,28 +53,22 @@ export class Sunspots extends React.Component {
         date_max: maxDateFormatted
       })
     ]).then((res) => {
-      const images = res[0].body.map((image) => {
-        if (new Date(image.date).getHours() === 17) {
-          return image;
-        }
-      });
+      const images = res[0].body;
       const sunspots = res[1].body;
       this.setState({ sunspots, images });
     });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadSunspots().then(() => {
       this.setState({ isLoading: false });
     });
-  }
 
-  componentDidMount() {
     const container = this.refs.container;
     const {width,height} = container.getBoundingClientRect();
     const halfWidth = width * 0.5;
     const halfHeight = height * 0.5;
-    const radius = Math.min(halfWidth,halfHeight) - 10;
+    const radius = Math.min(halfWidth,halfHeight) - 55;
     this.setState({
       radius,
       width,
@@ -97,8 +91,15 @@ export class Sunspots extends React.Component {
     const [image] = this.state.images;
     const {width,height} = this.state;
     return (
-      <image width={width} height={height} xlinkHref={image} />
+      <image width={width} height={height} xlinkHref={image.image} />
     );
+  }
+
+  renderSunspotsImage() {
+    if (this.state.images && this.state.images.length > 0) {
+      return this.renderImage();
+    }
+    return this.renderImageNotFound();
   }
 
   renderSunspot(sunspot) {
@@ -136,7 +137,7 @@ export class Sunspots extends React.Component {
     return (
       <svg className="Graph__image" width="100%" height="100%" viewBox={viewBox}>
         <g>
-          {this.renderImageNotFound()}
+          {this.renderSunspotsImage()}
           <circle className="Graph__sun" cx={halfWidth} cy={halfHeight} r={radius} />
           {this.renderSunspots()}
         </g>

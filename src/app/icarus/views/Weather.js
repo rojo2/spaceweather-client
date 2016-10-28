@@ -3,7 +3,7 @@ import {Link, browserHistory} from "react-router";
 import API from "icarus/api";
 import utils from "icarus/utils";
 import Loader from "icarus/views/Loader";
-import WeatherEIT from "icarus/views/WeatherEIT";
+import EIT from "icarus/views/EIT";
 import SolarWind from "icarus/views/graphs/SolarWind";
 import ProtonFlux from "icarus/views/graphs/ProtonFlux";
 import ElectronFlux from "icarus/views/graphs/ElectronFlux";
@@ -30,9 +30,7 @@ export class Weather extends React.Component {
   }
 
   handleTimelineChange(value) {
-    this.setState({
-      value: value
-    });
+    this.setState({ value });
   }
 
   handleResize() {
@@ -205,9 +203,11 @@ export class Weather extends React.Component {
       });
     }
 
-    this.loadFlux(this.props.location.query.flux);
-
     window.addEventListener("resize", this.handleResize);
+  }
+
+  componentDidMount() {
+    this.loadFlux(this.props.location.query.flux);
   }
 
   componentWillUnmount() {
@@ -227,11 +227,9 @@ export class Weather extends React.Component {
   updateContainerSize() {
     const {container} = this.refs;
     const {width,height} = container.getBoundingClientRect();
-    if (this.state.width !== width && this.state.height !== height) {
-      this.setState({
-        width,
-        height
-      });
+    if (this.state.width !== width
+     && this.state.height !== height) {
+      this.setState({ width, height });
     }
   }
 
@@ -247,17 +245,18 @@ export class Weather extends React.Component {
 
   renderGraphLegend(flux) {
     const [,,data] = this.getFluxData(flux);
-    console.log(data);
-    let particle10 = (data && 0 in data && data[0].name) || "P";
-    let particle100 = (data && 1 in data && data[1].name) || "P";
+    const particle10 = (data && 0 in data && data[0].name) || "temperature";
+    const particle100 = (data && 1 in data && data[1].name) || "density";
+    const classes10 = (particle10 === "temperature" ? "Graph__legendColor--solarWind2" : "Graph__legendColor--particle10");
+    const classes100 = (particle10 === "temperature" ? "Graph__legendColor--solarWind1" : "Graph__legendColor--particle100");
     return (
       <div className="Graph__legends">
         <a href="#" className="Graph__legend">
-          <div className="Graph__legendColor--particle10"></div>
+          <div className={classes10}></div>
           <div className="Graph__legendLabel">{particle10}</div>
         </a>
         <a href="#" className="Graph__legend">
-          <div className="Graph__legendColor--particle100"></div>
+          <div className={classes100}></div>
           <div className="Graph__legendLabel">{particle100}</div>
         </a>
       </div>
@@ -310,7 +309,7 @@ export class Weather extends React.Component {
               </Link>
             </div>
           </div>
-          <WeatherEIT filter={filter} onChange={this.handleTimelineChange} />
+          <EIT filter={filter} onChange={this.handleTimelineChange} />
         </div>
         <div className="Weather__fluxes">
           <div className="Panel__header">

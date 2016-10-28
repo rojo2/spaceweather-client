@@ -76,6 +76,13 @@ function range(value,min,max) {
   return (value - min) / (max - min);
 }
 
+function ts(list,x = "date",y = "ts") {
+  return list.map((item) => {
+    item[y] = new Date(item[x]);
+    return item;
+  });
+}
+
 function time(list,x = "date",y = "time") {
   return list.map((item) => {
     item[y] = parseDate(item[x]).getTime();
@@ -189,7 +196,7 @@ function ticks(min,max) {
   const range = (max - min);
   const step = range / 10;
   const ticks = [];
-  for (let i = min; i < max; i += step) {
+  for (let i = min; i <= max; i += step) {
     ticks.push(i);
   }
   return ticks;
@@ -219,12 +226,30 @@ function canvasLine(points,canvas,style = { color: "#fff", width: 1 }) {
   context.stroke();
 }
 
+function radio(list) {
+  ts(list, "date");
+  const items = [];
+  let lastItem = null;
+  for (let item of list) {
+    if (items.length === 0) {
+      items.push(item);
+    } else {
+      if (item.ts.getDate() !== lastItem.ts.getDate()) {
+        items.push(item);
+      }
+    }
+    lastItem = item;
+  }
+  return items;
+}
+
 export default {
   parseDate,
   interpolate,
   interpolateLog,
   range,
   time,
+  ts,
   max,
   min,
   maxOf,
@@ -237,6 +262,7 @@ export default {
   dots,
   ticksLog,
   ticks,
+  radio,
   daysFrom,
   formatDate,
   formatDateTime,

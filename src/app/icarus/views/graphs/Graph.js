@@ -24,6 +24,12 @@ export class Graph extends React.Component {
     return this.props.height - (this.state.margin.top + this.state.margin.bottom);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.data !== this.props.data
+        || nextProps.isLoading !== this.props.isLoading
+        || nextProps.value !== this.props.value;
+  }
+
   render() {
     console.warn("You should implement this");
     return null;
