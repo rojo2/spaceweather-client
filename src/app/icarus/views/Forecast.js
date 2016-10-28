@@ -72,15 +72,6 @@ export class Forecast extends React.Component {
 
     API.getSolarRadiation({
       date_min: utils.daysFrom(-3),
-      ordering: "-date",
-      solarradiationtype: 2
-    }).then((res) => {
-      utils.ts(res.body, "date");
-      this.setState({ solarRadiation2Items: res.body });
-    }).catch((err) => console.error(err));
-
-    API.getSolarRadiation({
-      date_min: utils.daysFrom(-3),
       ordering: "-date"
     }).then((res) => {
       utils.ts(res.body, "date");
@@ -196,7 +187,6 @@ export class Forecast extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     if (!this.state.radioBlackoutItems
      || !this.state.solarRadiationItems
      || !this.state.geomagActivityItems) {
@@ -207,15 +197,18 @@ export class Forecast extends React.Component {
     const [firstSolarRadiation,secondSolarRadiation,thirdSolarRadiation] = this.state.solarRadiationItems;
     const [firstGeomagActivity,secondGeomagActivity,thirdGeomagActivity] = this.state.geomagActivityItems;
 
-    const firstTransformGeomagActivity = { transform: `scaleY(${firstGeomagActivity.value * 0.01})` };
+    const firstGeo = (2.0 / firstGeomagActivity.value) * 0.5;
+    const firstTransformGeomagActivity = { transform: `scaleY(${firstGeo})` };
     const firstTransformSolarRadiation = { transform: `scaleY(${firstSolarRadiation.value * 0.01})` };
     const firstTransformBlackout = { transform: `scaleY(${firstRadioBlackout.value * 0.01})` };
 
-    const secondTransformGeomagActivity = { transform: `scaleY(${secondGeomagActivity.value * 0.01})` };
+    const secondGeo = (2.0 / secondGeomagActivity.value) * 0.5;
+    const secondTransformGeomagActivity = { transform: `scaleY(${secondGeo})` };
     const secondTransformSolarRadiation = { transform: `scaleY(${secondSolarRadiation.value * 0.01})` };
     const secondTransformBlackout = { transform: `scaleY(${secondRadioBlackout.value * 0.01})` };
 
-    const thirdTransformGeomagActivity = { transform: `scaleY(${thirdGeomagActivity.value * 0.01})` };
+    const thirdGeo = (2.0 / thirdGeomagActivity.value) * 0.5;
+    const thirdTransformGeomagActivity = { transform: `scaleY(${thirdGeo})` };
     const thirdTransformSolarRadiation = { transform: `scaleY(${thirdSolarRadiation.value * 0.01})` };
     const thirdTransformBlackout = { transform: `scaleY(${thirdRadioBlackout.value * 0.01})` };
 
@@ -243,7 +236,9 @@ export class Forecast extends React.Component {
                           </div>
                           <div className="Forecast__stats">
                               <div className="Forecast__statsLabel--geomagnetic">Geomagnetic Activity</div>
-                              <div className="Forecast__statsValue--geomagnetic">2 / {firstRadioBlackout.value}</div>
+                              <div className="Forecast__statsValue--geomagnetic">
+                                2 / {firstGeomagActivity.value}
+                              </div>
                           </div>
                           <div className="Forecast__stats">
                               <div className="Forecast__statsLabel--solar">Solar Radiation Activity</div>

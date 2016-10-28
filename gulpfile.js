@@ -2,7 +2,6 @@ const gulp = require("gulp");
 const path = require("path");
 const plugins = require("gulp-load-plugins")();
 const browserify = require("browserify");
-const babelify = require("babelify");
 const source = require("vinyl-source-stream");
 const chaf = require("connect-history-api-fallback");
 const url = require("url");
@@ -96,7 +95,8 @@ gulp.task("scripts", () => {
 
   return browserify({ paths: ["src/app"], debug: config.debug })
     .add(config.index.script)
-    .transform(babelify, { presets: ["es2015","react"] })
+    .transform("uglifyify", { global: true })
+    .transform("babelify", { presets: ["es2015","react"] })
     .bundle()
     .pipe(source(path.basename(config.index.script)))
     .pipe(gulp.dest(config.build.path));

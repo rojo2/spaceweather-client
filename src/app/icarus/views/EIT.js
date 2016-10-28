@@ -42,10 +42,12 @@ export class EIT extends React.Component {
   updateValue(newValue) {
     const clampedNewValue = Math.max(0, Math.min(1, newValue));
     const filter = this.props.filter;
-    this.setState({
-      value: clampedNewValue,
-      index: Math.round(clampedNewValue * (this.state[filter].length - 1))
-    });
+    if (this.state[filter] && this.state[filter].length > 0) {
+      this.setState({
+        value: clampedNewValue,
+        index: Math.round(clampedNewValue * (this.state[filter].length - 1))
+      });
+    }
     if (this.props.onChange) {
       // TODO: Cuándo se llama a este método en realidad
       // se debería devolver una fecha entre start y end.

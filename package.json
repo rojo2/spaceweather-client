@@ -35,16 +35,13 @@
     "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.0.2",
     "stylint": "^1.5.6",
+    "uglifyify": "^3.0.4",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
     "classnames": "^2.2.5",
     "d3": "^4.2.8",
     "gl-matrix": "^2.3.2",
-    "inferno": "^0.7.27",
-    "inferno-component": "^0.7.27",
-    "inferno-dom": "^0.7.27",
-    "inferno-router": "^0.7.27",
     "query-string": "^4.2.3",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
