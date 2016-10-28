@@ -5,6 +5,7 @@
   "main": "dist/index.html",
   "scripts": {
     "start": "gulp",
+    "build": "NODE_ENV=production gulp build",
     "test": "karma start"
   },
   "author": "ROJO 2 <hola@rojo2.com>",
