@@ -9,15 +9,18 @@ const fs = require("fs");
 const bs = require("browser-sync");
 
 const config = {
-  debug: true,
-  run: {
-    browserSync: true
-  },
+  debug: (process.env.NODE_ENV === "development"),
+  run: { browserSync: (process.env.NODE_ENV === "development") },
   build: {
     path: "./dist",
     fonts: "./dist/fonts/",
     sounds: "./dist/sounds/",
     images: "./dist/images/"
+  },
+  other: {
+    metadata: "./metadata.json",
+    humans: "./humans.txt",
+    robots: "./robots.txt"
   },
   index: {
     script: "./src/app/icarus/index.js",
@@ -34,10 +37,19 @@ const config = {
   }
 };
 
+gulp.task("other", () => {
+
+  return gulp.src([
+    config.other.humans,
+    config.other.robots
+  ]).pipe(gulp.dest(config.build.path));
+
+});
+
 gulp.task("templates", () => {
 
   return gulp.src(config.index.template)
-    .pipe(plugins.pug())
+    .pipe(plugins.pug({ locals: require(config.other.metadata) }))
     .pipe(gulp.dest(config.build.path));
 
 });
@@ -95,7 +107,7 @@ gulp.task("scripts", () => {
 
   return browserify({ paths: ["src/app"], debug: config.debug })
     .add(config.index.script)
-    .transform("uglifyify", { global: true })
+    .transform("uglifyify", { global: true, sourcemap: false })
     .transform("babelify", { presets: ["es2015","react"] })
     .bundle()
     .pipe(source(path.basename(config.index.script)))

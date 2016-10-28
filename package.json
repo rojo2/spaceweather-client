@@ -4,7 +4,7 @@
   "description": "Space weather visualization website",
   "main": "dist/index.html",
   "scripts": {
-    "start": "gulp",
+    "start": "NODE_ENV=development gulp",
     "build": "NODE_ENV=production gulp build",
     "test": "karma start"
   },
