@@ -97,7 +97,7 @@ gulp.task("styles", () => {
 
   return gulp.src(config.index.style)
     .pipe(plugins.stylus({
-      debug: config.debug
+      compress: !config.debug
     }))
     .pipe(gulp.dest(config.build.path));
 
@@ -138,6 +138,6 @@ gulp.task("watch", ["build"], () => {
 
 });
 
-gulp.task("build", ["templates", "styles", "scripts", "fonts", "images", "sounds"]);
+gulp.task("build", ["templates", "styles", "scripts", "fonts", "images", "sounds", "other"]);
 
 gulp.task("default", ["bs"]);

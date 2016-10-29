@@ -1,0 +1,3 @@
+#!/bin/bash
+PWD=$(pwd)
+docker run -v $PWD:/home/icarus -it node:6.9.1 /home/icarus/docker/entrypoint.sh
