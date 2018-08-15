@@ -2,17 +2,33 @@ import React from "react";
 
 export function formatDate(date) {
   return padLeft(date.getFullYear(), "0", 4)
-    + "-" + padLeft((date.getMonth() + 1), "0", 2)
+    + "-" + pad(date.getMonth(), 2, "0")
+    + "-" + padLeft(date.getDate(), "0", 2);
+}
+
+export function formatDateDaysFrom(date) {
+  return padLeft(date.getFullYear(), "0", 4)
+    + "-" + pad((date.getMonth()+1), 2, "0")
     + "-" + padLeft(date.getDate(), "0", 2);
 }
 
 export function formatDateTime(date) {
   return padLeft(date.getFullYear(), "0", 4)
-    + "-" + padLeft((date.getMonth() + 1), "0", 2)
+    + "-" + pad(date.getMonth(), 2, "0")
     + "-" + padLeft(date.getDate(), "0", 2)
     + " " + padLeft(date.getHours(), "0", 2)
     + ":" + padLeft(date.getMinutes(), "0", 2);
 }
+
+
+function pad(value, length = 2, chr = "0") {
+  let str = String(value);
+  if (str.length < length) {
+    str = chr + str;
+  }
+  return str;
+}
+
 
 export function padLeft(str, chr, length) {
   str = str.toString();
@@ -32,7 +48,7 @@ export function padRight(str, chr, length) {
 
 export function daysFrom(days, date = new Date()) {
   date.setDate(date.getDate() + days);
-  const minDateFormatted = formatDate(date);
+  const minDateFormatted = formatDateDaysFrom(date);
   return minDateFormatted;
 }
 
