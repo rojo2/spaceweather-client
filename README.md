@@ -18,7 +18,7 @@ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.29.0/install.sh | 
 
 Now that you have NVM, run `nvm install && nvm use`.
 
-When you have verified that you are running the correct Node.js version you can run NPM to install dependencies.
+When you have verified that you are running the correct Node.js version then you can run NPM to install dependencies.
 
 ```
 npm install # Install dependencies
@@ -30,3 +30,5 @@ npm start   # Run project
 ```
 npm test    # Run test
 ```
+
+Made with ❤ by ROJO 2 (http://rojo2.com)

@@ -67,3 +67,29 @@
 
 .Graph__temperature
     fill $colorMagnitude2
+
+
+.Graph__timeline
+    stroke $colorBase
+
+.Graph__sunspotInfo
+    padding 1rem
+    fill #000
+    cursor pointer
+
+.Graph__sunspotText
+    font-family 'FiraSans'
+    font-size 1rem
+    fill $colorHighlight
+    opacity 0
+    transform translate(-64px, -128px)
+    transition all .3s ease-out
+
+.Graph__sunspotInfoLabel
+    font-size 0.75rem
+    text-transform uppercase
+
+.Graph__sunspotInfo:hover .Graph__sunspotText
+    display block
+    opacity 1
+    transition all .3s ease-in

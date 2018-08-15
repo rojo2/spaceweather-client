@@ -1,0 +1,29 @@
+doctype html
+html(prefix="og: http://ogp.me/ns#")
+  head
+    meta(charset="utf-8")
+    meta(name="keywords",content=keywords.join(","))
+    meta(name="description",content=description)
+    each author in authors
+        meta(name="author",content=author)
+    meta(name="twitter:card",content="summary_large_image")
+    meta(name="twitter:title",content=twitter.title || title)
+    meta(name="twitter:description",content=twitter.description || description)
+    meta(name="twitter:image",content=twitter.image || image)
+    meta(name="twitter:site",content=twitter.site)
+    each creator in twitter.creators
+        meta(name="twitter:creator",content=creator)
+    meta(property="og:title",content=og.title || title)
+    meta(property="og:description",content=og.description || description)
+    meta(property="og:type",content="website")
+    meta(property="og:url",content=og.url || url)
+    meta(property="og:image",content=og.image || image)
+    meta(property="og:locale",content="en")
+    title=title
+    link(href=url,rel="canonical")
+    link(href="index.css",type="text/css",rel="stylesheet")
+    link(type="text/plain",rel="author",href=humans)
+    link(type="image/png",rel="icon",href="images/favicon.png")
+  body
+    #Application
+    script(src="index.js")

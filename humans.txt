@@ -1,0 +1,24 @@
+/* TEAM */
+Front-end Developer: Aitor Moreno-Melcón
+Site: http://rojo2.com
+Twitter: @azazeln28
+Location: Madrid, Madrid, Spain
+
+Front-end Developer & Designer: Omar Moreno-Melcón
+Site: http://rojo2.com
+Twitter: @mekanoide
+Location: Madrid, Madrid, Spain
+
+Back-end Developer: Pablo Ruiz-Múzquiz
+Site: http://kaleidos.net
+Twitter: @diacritica
+Location: Madrid, Madrid, Spain
+
+/* THANKS */
+Name: Ángela Rivera-Campos
+
+/* SITE */
+Last update: 2016/10/DD
+Standards: HTML5, CSS3, ES6
+Components: React, D3
+Software: Gulp, NPM, Python

@@ -1,0 +1,27 @@
+{
+  "url": "http://icarus.live",
+  "image": "http://icarus.live/images/icarus.png",
+  "title": "Icarus",
+  "description": "",
+  "keywords": [
+    "sun",
+    "solar",
+    "wind",
+    "particles",
+    "sunspots",
+    "space",
+    "weather"
+  ],
+  "authors": [
+    "Aitor Moreno-Melcón",
+    "Omar Moreno-Melcón",
+    "Pablo Ruiz-Múzquiz",
+    "Ángela Rivera-Campos"
+  ],
+  "twitter": {
+    "site": "@icarusalerts",
+    "creators": ["@rojo_2","@kaleidosnet"]
+  },
+  "og": {},
+  "humans": "http://icarus.live/humans.txt"
+}
