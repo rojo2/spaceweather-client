@@ -56,7 +56,7 @@ export class Forecast extends React.Component {
   componentDidMount() {
     API.getAlerts({
       ordering: "-issuetime",
-      limit: 20
+      date_min: utils.daysFrom(-3),
     }).then((res) => {
       this.setState({ alerts: res.body });
     }).catch((err) => console.error(err));
