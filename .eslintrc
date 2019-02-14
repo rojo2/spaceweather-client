@@ -14,7 +14,6 @@
     "es6": true,
     "node": true,
     "mocha": true,
-    "chai": true,
     "browser": true
   },
   "parser": "babel-eslint",

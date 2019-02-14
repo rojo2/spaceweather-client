@@ -6,10 +6,10 @@
   "scripts": {
     "start": "NODE_ENV=development gulp",
     "build": "NODE_ENV=production gulp build",
-    "test": "karma start"
+    "test": "NODE_ENV=test karma start"
   },
   "author": "ROJO 2 <hola@rojo2.com>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babel-eslint": "^7.0.0",
     "babel-plugin-inferno": "^1.0.0-legacy",
