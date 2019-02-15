@@ -1,5 +1,5 @@
 export const config = {
-  URL: "http://185.26.125.253:8000/api/",
+  URL: "https://api.icarus.live/api/",
   CREDENTIALS: {
     user: "admin",
     pass: "123456"

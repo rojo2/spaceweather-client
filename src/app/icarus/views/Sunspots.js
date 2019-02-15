@@ -39,9 +39,9 @@ export class Sunspots extends React.Component {
 
   loadSunspots() {
     const minDateFormatted = utils.daysFrom(-1);
-    const maxDateFormatted = utils.daysFrom(-1);
-    const minDateFormattedImage = utils.daysFrom(-2);
-    const maxDateFormattedImage = utils.daysFrom(0);
+    const maxDateFormatted = utils.daysFrom(1);
+    const minDateFormattedImage = utils.daysFrom(-1);
+    const maxDateFormattedImage = utils.daysFrom(1);
     return Promise.all([
       API.getImageChannels({
         channeltype: 5,

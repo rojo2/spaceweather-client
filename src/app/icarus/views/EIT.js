@@ -259,7 +259,7 @@ export class EIT extends React.Component {
     const current = (this.state.value * (end - start)) + start;
 
     const startDate = utils.formatDate(this.state.startDate);
-    const currentDate = utils.formatDate(new Date(current));
+    const currentDate = utils.formatDateTime(new Date(current));
     const endDate = utils.formatDate(this.state.endDate);
 
     return (

@@ -56,7 +56,7 @@ export class Forecast extends React.Component {
   componentDidMount() {
     API.getAlerts({
       ordering: "-issuetime",
-      limit: 50
+      date_min: utils.daysFrom(-3),
     }).then((res) => {
       this.setState({ alerts: res.body });
     }).catch((err) => console.error(err));
@@ -87,11 +87,12 @@ export class Forecast extends React.Component {
     }).catch((err) => console.error(err));
 
     API.getForecast().then((res) => {
+ 
       const rationale = res.body.pop();
       this.setState({
         solarRadiation: rationale.solarradiation,
         geomagActivity: rationale.geomagactivity,
-        radioBlackout: rationale.radioBlackout
+        radioBlackout: rationale.radioblackout
       });
     }).catch((err) => console.error(err));
   }
