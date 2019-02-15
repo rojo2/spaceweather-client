@@ -8,9 +8,12 @@ const url = require("url");
 const fs = require("fs");
 const bs = require("browser-sync");
 
+const isDevelopment = process.env.NODE_ENV === "development";
+const isProduction = process.env.NODE_ENV === "production";
+
 const config = {
-  debug: (process.env.NODE_ENV === "development"),
-  run: { browserSync: (process.env.NODE_ENV === "development") },
+  debug: (isDevelopment),
+  run: { browserSync: (isDevelopment) },
   build: {
     path: "./dist",
     fonts: "./dist/fonts/",
@@ -105,10 +108,17 @@ gulp.task("styles", () => {
 
 gulp.task("scripts", () => {
 
-  return browserify({ paths: ["src/app"], debug: config.debug })
-    .add(config.index.script)
-    .transform("uglifyify", { global: true, sourcemap: false })
-    .transform("babelify", { presets: ["es2015","react"] })
+  return browserify({
+    paths: ["src/app"],
+    debug: config.debug
+  }).add(config.index.script)
+    .transform("babelify")
+    .transform("uglifyify", {
+      global: true,
+      mangle: isProduction,
+      compress: isProduction,
+      sourcemap: isDevelopment
+    })
     .bundle()
     .pipe(source(path.basename(config.index.script)))
     .pipe(gulp.dest(config.build.path));
@@ -138,6 +148,14 @@ gulp.task("watch", ["build"], () => {
 
 });
 
-gulp.task("build", ["templates", "styles", "scripts", "fonts", "images", "sounds", "other"]);
+gulp.task("build", [
+  "templates",
+  "styles",
+  "scripts",
+  "fonts",
+  "images",
+  "sounds",
+  "other"
+]);
 
 gulp.task("default", ["bs"]);
