@@ -13,7 +13,7 @@ function xmlHttpRequest(url, options = {}) {
     xhr.responseType = options.responseType;
     xhr.withCredentials = options.withCredentials;
     if (options.user && options.pass) {
-      //xhr.setRequestHeader("Authorization", "Basic " + window.btoa(options.user + ":" + options.pass));
+      xhr.setRequestHeader("Authorization", "Basic " + window.btoa(options.user + ":" + options.pass));
     }
 
     if (options.headers) {
