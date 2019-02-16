@@ -1,4 +1,4 @@
-export function request(url, options = {}) {
+function xmlHttpRequest(url, options = {}) {
   return new Promise((resolve, reject) => {
     options = Object.assign({
       method: "GET",
@@ -13,7 +13,7 @@ export function request(url, options = {}) {
     xhr.responseType = options.responseType;
     xhr.withCredentials = options.withCredentials;
     if (options.user && options.pass) {
-      xhr.setRequestHeader("Authorization", "Basic " + window.btoa(options.user + ":" + options.pass));
+      //xhr.setRequestHeader("Authorization", "Basic " + window.btoa(options.user + ":" + options.pass));
     }
 
     if (options.headers) {
@@ -27,16 +27,16 @@ export function request(url, options = {}) {
 
     xhr.send((options.data ? options.data : null));
 
-    xhr.onerror = function() {
+    xhr.onerror = function (e) {
       xhr.onerror = null;
       xhr.onload = null;
-
-      reject({
-        error: "Error"
+      return reject({
+        error: "XMLHttpRequest error",
+        xhr
       });
     };
 
-    xhr.onload = function() {
+    xhr.onload = function () {
       const headers = xhr.getAllResponseHeaders()
         .split("\n")
         .map((item) => {
@@ -56,7 +56,7 @@ export function request(url, options = {}) {
       xhr.onerror = null;
       xhr.onload = null;
 
-      resolve({
+      return resolve({
         headers: headers,
         body: body,
         status: status
@@ -64,3 +64,42 @@ export function request(url, options = {}) {
     };
   });
 }
+
+function fetchRequest(url, options) {
+  options = Object.assign({
+    method: "GET",
+    user: null,
+    pass: null,
+    responseType: "json",
+    withCredentials: false
+  }, options);
+
+  return fetch(url, {
+    method: (options && options.method) || "GET",
+    credentials: (options && options.withCredentials && "include") || "same-origin",
+  }).then((response) => {
+    function createResponse(response) {
+      return function(body) {
+        console.log(body)
+        return {
+          headers: response.headers,
+          body: body,
+          status: response.status
+        };
+      };
+    }
+    if (options.responseType === "json") {
+      return response.json().then(createResponse(response));
+    } else if (options.responseType === "arraybuffer") {
+      return response.arrayBuffer().then(createResponse(response));
+    } else if (options.responseType === "blob") {
+      return response.blob().then(createResponse(response));
+    } else if (options.responseType === "text") {
+      return response.text().then(createResponse(response));
+    }
+  });
+}
+
+export const request = window.fetch ? fetchRequest : xmlHttpRequest;
+
+export default request;
