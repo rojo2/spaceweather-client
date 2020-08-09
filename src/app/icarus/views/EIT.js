@@ -116,9 +116,10 @@ export class EIT extends React.Component {
   handleTimeout() {
     const value = this.state.value >= 1.0 ? 0.0 : this.state.value + 0.01;
     const filter = this.props.filter;
+    const length = (filter in this.state && this.state[filter].length - 1) || 0;
     this.setState({
       value: value,
-      index: Math.round(value * (this.state[filter].length - 1))
+      index: Math.round(value * length)
     });
     if (this.props.onChange) {
       // TODO: Cuándo se llama a este método en realidad
@@ -193,6 +194,7 @@ export class EIT extends React.Component {
       });
       return images;
     }).catch((err) => {
+      console.log(err)
       console.error(err);
       console.trace(err.stack);
       this.setState({

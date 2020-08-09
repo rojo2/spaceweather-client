@@ -183,7 +183,7 @@ export class Weather extends React.Component {
     }
 
     switch(flux) {
-    default: console.warn("default flux",flux);
+    default: console.warn("default flux",flux); break;
     case "solar-wind": this.loadSolarWind().then(this.handleFluxComplete, this.handleFluxComplete); break;
     case "particle": this.loadProtonFlux().then(this.handleFluxComplete, this.handleFluxComplete); break;
     case "electron": this.loadElectronFlux().then(this.handleFluxComplete, this.handleFluxComplete); break;
