@@ -1,21 +1,20 @@
+import { mat4, vec3 } from 'gl-matrix'
 
-import {mat4,vec3} from "gl-matrix";
-
-const NUM_POINTS = 5000;
-const TIME = 100000;
-const ANGLE_INCREMENT = 0.00033;
+const NUM_POINTS = 5000
+const TIME = 100000
+const ANGLE_INCREMENT = 0.00033
 
 export function initBackground() {
-
-  const canvas = document.querySelector("canvas");
+  const canvas = document.querySelector('canvas')
   if (canvas) {
+    const gl = canvas.getContext('webgl', {
+      antialias: true,
+    })
 
-    const gl = canvas.getContext("webgl", {
-      antialias: true
-    });
-
-    const vertexShader = gl.createShader(gl.VERTEX_SHADER);
-    gl.shaderSource(vertexShader, `
+    const vertexShader = gl.createShader(gl.VERTEX_SHADER)
+    gl.shaderSource(
+      vertexShader,
+      `
     precision mediump float;
 
     uniform mat4 mvp;
@@ -38,14 +37,17 @@ export function initBackground() {
         gl_PointSize = 0.0;
       }
 
-    }`);
-    gl.compileShader(vertexShader);
+    }`
+    )
+    gl.compileShader(vertexShader)
     if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(vertexShader));
+      console.error(gl.getShaderInfoLog(vertexShader))
     }
 
-    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
-    gl.shaderSource(fragmentShader, `
+    const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER)
+    gl.shaderSource(
+      fragmentShader,
+      `
     precision highp float;
 
     const vec4 begin = vec4(1.0, 1.0, 1.0, 0.7);
@@ -66,103 +68,111 @@ export function initBackground() {
 
       gl_FragColor = vec4(dist, dist, dist, dist * alpha) * color;
 
-    }`);
+    }`
+    )
 
-    gl.compileShader(fragmentShader);
+    gl.compileShader(fragmentShader)
     if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(fragmentShader));
+      console.error(gl.getShaderInfoLog(fragmentShader))
     }
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
+    const program = gl.createProgram()
+    gl.attachShader(program, vertexShader)
+    gl.attachShader(program, fragmentShader)
+    gl.linkProgram(program)
 
     const attributes = {
-      position: gl.getAttribLocation(program, "position")
-    }, uniforms = {
-      mvp: gl.getUniformLocation(program, "mvp")
-    };
+        position: gl.getAttribLocation(program, 'position'),
+      },
+      uniforms = {
+        mvp: gl.getUniformLocation(program, 'mvp'),
+      }
 
-    const points = [];
+    const points = []
     for (let index = 0; index < NUM_POINTS; index++) {
-      points.push((Math.random() - 0.5) * 8);
-      points.push((Math.random() - 0.5) * 8);
-      points.push((Math.random() - 0.5) * 8);
+      points.push((Math.random() - 0.5) * 8)
+      points.push((Math.random() - 0.5) * 8)
+      points.push((Math.random() - 0.5) * 8)
     }
 
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW);
+    const buffer = gl.createBuffer()
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(points), gl.STATIC_DRAW)
 
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
+    gl.enable(gl.BLEND)
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE)
 
     const pMatrix = mat4.create(),
-          vMatrix = mat4.create(),
-          ivMatrix = mat4.create(),
-          mMatrix = mat4.create(),
-          mvMatrix = mat4.create(),
-          mvpMatrix = mat4.create(),
-          position = vec3.create();
+      vMatrix = mat4.create(),
+      ivMatrix = mat4.create(),
+      mMatrix = mat4.create(),
+      mvMatrix = mat4.create(),
+      mvpMatrix = mat4.create(),
+      position = vec3.create()
 
-    mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
+    mat4.perspective(
+      pMatrix,
+      Math.PI * 0.35,
+      canvas.width / canvas.height,
+      0.01,
+      1000.0
+    )
 
-    vec3.set(position,0.0,0.0,0.0);
+    vec3.set(position, 0.0, 0.0, 0.0)
 
-    let angle = 0.0;
+    let angle = 0.0
 
     function render(now) {
+      angle += ANGLE_INCREMENT
 
-      angle += ANGLE_INCREMENT;
+      gl.clearColor(0.0, 0.0, 0.0, 1.0)
+      gl.clear(gl.COLOR_BUFFER_BIT)
 
-      gl.clearColor(0.0, 0.0, 0.0, 1.0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-
-      gl.viewport(0,0,canvas.width,canvas.height);
+      gl.viewport(0, 0, canvas.width, canvas.height)
 
       // P * V * M
       //mat4.translate(mvpMatrix, mvpMatrix, position);
-      mat4.identity(mMatrix);
+      mat4.identity(mMatrix)
 
-      position[2] = Math.sin(now / TIME);
+      position[2] = Math.sin(now / TIME)
 
-      mat4.identity(vMatrix);
-      mat4.translate(vMatrix, vMatrix, position);
-      mat4.rotateX(vMatrix, vMatrix, angle);
-      mat4.rotateY(vMatrix, vMatrix, angle);
-      mat4.rotateZ(vMatrix, vMatrix, angle);
+      mat4.identity(vMatrix)
+      mat4.translate(vMatrix, vMatrix, position)
+      mat4.rotateX(vMatrix, vMatrix, angle)
+      mat4.rotateY(vMatrix, vMatrix, angle)
+      mat4.rotateZ(vMatrix, vMatrix, angle)
 
-      mat4.invert(ivMatrix, vMatrix);
+      mat4.invert(ivMatrix, vMatrix)
 
-      mat4.multiply(mvMatrix, ivMatrix, mMatrix);
-      mat4.multiply(mvpMatrix, pMatrix, mvMatrix);
+      mat4.multiply(mvMatrix, ivMatrix, mMatrix)
+      mat4.multiply(mvpMatrix, pMatrix, mvMatrix)
 
-      gl.useProgram(program);
-      gl.enableVertexAttribArray(attributes.position);
-      gl.uniformMatrix4fv(uniforms.mvp, false, mvpMatrix);
-      gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 3*4, 0);
-      gl.drawArrays(gl.POINTS, 0, NUM_POINTS);
+      gl.useProgram(program)
+      gl.enableVertexAttribArray(attributes.position)
+      gl.uniformMatrix4fv(uniforms.mvp, false, mvpMatrix)
+      gl.vertexAttribPointer(0, 3, gl.FLOAT, gl.FALSE, 3 * 4, 0)
+      gl.drawArrays(gl.POINTS, 0, NUM_POINTS)
 
-      window.requestAnimationFrame(render);
-
+      window.requestAnimationFrame(render)
     }
 
-    render();
+    render()
 
     function resize() {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
 
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      mat4.perspective(pMatrix, Math.PI * 0.35, canvas.width / canvas.height, 0.01, 1000.0);
-
+      mat4.perspective(
+        pMatrix,
+        Math.PI * 0.35,
+        canvas.width / canvas.height,
+        0.01,
+        1000.0
+      )
     }
 
-    resize();
+    resize()
 
-    window.addEventListener("resize", resize);
-
+    window.addEventListener('resize', resize)
   }
-
 }

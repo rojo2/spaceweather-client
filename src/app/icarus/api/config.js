@@ -1,7 +1,7 @@
 export const config = {
-  URL: "https://api.icarus.live/api/",
+  URL: 'https://api.icarus.live/api/',
   CREDENTIALS: {
     user: undefined,
-    pass: undefined
-  }
-};
+    pass: undefined,
+  },
+}

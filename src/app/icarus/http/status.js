@@ -1,5 +1,4 @@
 export const status = {
-
   CONTINUE: 100,
   SWITCHING_PROTOCOLS: 101,
 
@@ -15,6 +14,5 @@ export const status = {
   FORBIDDEN: 403,
   NOT_FOUND: 404,
 
-  INTERNAL_SERVER_ERROR: 500
-
-};
+  INTERNAL_SERVER_ERROR: 500,
+}

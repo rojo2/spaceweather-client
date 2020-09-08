@@ -1,10 +1,9 @@
-import {electronFluxGraph, protonFluxGraph, xrayFluxGraph} from "./flux";
-import {solarCycleGraph} from "./solarCycle";
-import {solarWindGraph} from "./solarWind";
-import {sunspots} from "./sunspots";
+import { electronFluxGraph, protonFluxGraph, xrayFluxGraph } from './flux'
+import { solarCycleGraph } from './solarCycle'
+import { solarWindGraph } from './solarWind'
+import { sunspots } from './sunspots'
 
 export const graphs = {
-
   electronFluxGraph,
   protonFluxGraph,
   xrayFluxGraph,
@@ -12,8 +11,7 @@ export const graphs = {
   solarWindGraph,
   solarCycleGraph,
 
-  sunspots
+  sunspots,
+}
 
-};
-
-export default graphs;
+export default graphs

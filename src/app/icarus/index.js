@@ -1,17 +1,17 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import {Router, Route, IndexRedirect, browserHistory} from "react-router";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router'
 
-import Layout from "icarus/views/Layout";
-import Weather from "icarus/views/Weather";
-import Sunspots from "icarus/views/Sunspots";
-import SolarCycle from "icarus/views/SolarCycle";
-import Forecast from "icarus/views/Forecast";
+import Layout from '@/views/Layout'
+import Weather from '@/views/Weather'
+import Sunspots from '@/views/Sunspots'
+import SolarCycle from '@/views/SolarCycle'
+import Forecast from '@/views/Forecast'
 
 export class Application extends React.Component {
   constructor(props) {
-    super(props);
-    this.displayName = "Application";
+    super(props)
+    this.displayName = 'Application'
   }
   render() {
     return (
@@ -24,11 +24,8 @@ export class Application extends React.Component {
           <IndexRedirect to="/weather" />
         </Route>
       </Router>
-    );
+    )
   }
 }
 
-ReactDOM.render(
-  <Application />,
-  document.querySelector("#Application")
-);
+ReactDOM.render(<Application />, document.querySelector('#Application'))

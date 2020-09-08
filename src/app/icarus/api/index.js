@@ -1,16 +1,15 @@
-import {getProtonFlux,getProtonFluxTypes} from "icarus/api/protonflux";
-import {getElectronFlux,getElectronFluxTypes} from "icarus/api/electronflux";
-import {getXrayFlux,getXrayFluxTypes} from "icarus/api/xrayflux";
-import {getSunspots,getSunspotTypes,getSunspotRegions} from "icarus/api/sunspots";
-import {getAlerts,getAlertTypes,getForecast} from "icarus/api/alerts";
-import {getImageChannels,getImageChannelTypes} from "icarus/api/channels";
-import {getSolarWind} from "icarus/api/solarwind";
-import {getGeomagneticActivity} from "icarus/api/geomagnetic";
-import {getRadioBlackout,getRadioBlackoutTypes} from "icarus/api/radioblackout";
-import {getSolarRadiation,getSolarRadiationTypes} from "icarus/api/solarradiation";
+import { getProtonFlux, getProtonFluxTypes } from '@/api/protonflux'
+import { getElectronFlux, getElectronFluxTypes } from '@/api/electronflux'
+import { getXrayFlux, getXrayFluxTypes } from '@/api/xrayflux'
+import { getSunspots, getSunspotTypes, getSunspotRegions } from '@/api/sunspots'
+import { getAlerts, getAlertTypes, getForecast } from '@/api/alerts'
+import { getImageChannels, getImageChannelTypes } from '@/api/channels'
+import { getSolarWind } from '@/api/solarwind'
+import { getGeomagneticActivity } from '@/api/geomagnetic'
+import { getRadioBlackout, getRadioBlackoutTypes } from '@/api/radioblackout'
+import { getSolarRadiation, getSolarRadiationTypes } from '@/api/solarradiation'
 
 export const API = {
-
   getAll() {
     return Promise.all([
       // load types.
@@ -27,8 +26,8 @@ export const API = {
 
       // load sunspots.
       getSunspots(),
-      getSunspotRegions()
-    ]);
+      getSunspotRegions(),
+    ])
   },
 
   getProtonFlux,
@@ -59,8 +58,7 @@ export const API = {
   getRadioBlackoutTypes,
 
   getSolarRadiation,
-  getSolarRadiationTypes
+  getSolarRadiationTypes,
+}
 
-};
-
-export default API;
+export default API
