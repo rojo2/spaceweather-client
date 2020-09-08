@@ -20,15 +20,18 @@ export function formatDateTime(date) {
     + ":" + padLeft(date.getMinutes(), "0", 2);
 }
 
+export function exponent(value, base = 10) {
+  if (!value) return 0;
+  return Math.floor(Math.log10(Math.abs(value)) / Math.log10(base));
+}
 
-function pad(value, length = 2, chr = "0") {
+export function pad(value, length = 2, chr = "0") {
   let str = String(value);
   if (str.length < length) {
     str = chr + str;
   }
   return str;
 }
-
 
 export function padLeft(str, chr, length) {
   str = str.toString();
@@ -88,8 +91,16 @@ function interpolateLog(value,min,max) {
   return interpolate(Math.log10(value), Math.log10(min), Math.log10(max));
 }
 
-function range(value,min,max) {
+function from(value,min,max) {
   return (value - min) / (max - min);
+}
+
+function to(value, min, max) {
+  return (1 - value) * min + value * max;
+}
+
+function fromTo(value, fromMin, fromMax, toMin, toMax) {
+  return to(from(value, fromMin, fromMax), toMin, toMax);
 }
 
 function ts(list,x = "date",y = "ts") {
@@ -144,15 +155,14 @@ function minOf(lists,name,count = 0) {
   }
 }
 
-function log(value,min,max) {
-  const m = Math.log10(min);
-  return (Math.log10(value) - m) / (Math.log10(max) - m);
+function log(value, min, max) {
+  return from(Math.log10(value), Math.log10(min), Math.log10(max));
 }
 
-function pointsLog(list,x,y,minX,maxX,minY,maxY) {
+function pointsLog(list, x, y, minX, maxX, minY, maxY) {
   return list.map((item) => {
     return {
-      x: range(item[x], minX, maxX),
+      x: from(item[x], minX, maxX),
       y: log(item[y], minY, maxY)
     };
   });
@@ -161,13 +171,13 @@ function pointsLog(list,x,y,minX,maxX,minY,maxY) {
 function points(list,x,y,minX,maxX,minY,maxY) {
   return list.map((item) => {
     return {
-      x: range(item[x], minX, maxX),
-      y: range(item[y], minY, maxY)
+      x: from(item[x], minX, maxX),
+      y: from(item[y], minY, maxY)
     };
   });
 }
 
-function dots(points,width,height) {
+function dots(points, width, height) {
   return points.map((point) => {
     const x = point.x * width;
     const y = height - (point.y * height);
@@ -178,16 +188,16 @@ function dots(points,width,height) {
   });
 }
 
-function areaPath(points,width,height) {
-  return points.reduce((acc,point,index) =>  {
+function areaPath(points, width, height) {
+  return points.reduce((acc, point, index) =>  {
     const cmd = (index === 0 ? "M" : "L");
     const pos = `${cmd}${point.x * width} ${height - (point.y * height)}`;
     return acc + (index > 0 ? "," : "") + pos;
   }, "") + `L${width} ${height} L0 ${height}`;
 }
 
-function path(points,width,height) {
-  return points.reduce((acc,point,index) =>  {
+function path(points, width, height) {
+  return points.reduce((acc, point, index) =>  {
     const cmd = (index === 0 ? "M" : "L");
     const pos = `${cmd}${point.x * width} ${height - (point.y * height)}`;
     return acc + (index > 0 ? "," : "") + pos;
@@ -198,22 +208,22 @@ function nearest(value, roundTo = 0.1) {
   return Math.round(value / roundTo) * roundTo;
 }
 
-function ticksLog(min,max) {
-  const range = (max - min);
-  const step = range / 10;
+function ticksLog(min, max) {
+  const minExponent = exponent(min);
+  const maxExponent = exponent(max);
   const ticks = [];
-  for (let i = min; i < max; i += step) {
-    ticks.push(Math.log10(i) / Math.log10(max));
+  for (let value = minExponent; value < maxExponent; value ++) {
+    ticks.push(Math.pow(10, value));
   }
   return ticks;
 }
 
-function ticks(min,max) {
+function ticks(min, max) {
   const range = (max - min);
   const step = range / 10;
   const ticks = [];
-  for (let i = min; i <= max; i += step) {
-    ticks.push(i);
+  for (let value = min; value <= max; value += step) {
+    ticks.push(value);
   }
   return ticks;
 }
@@ -260,10 +270,13 @@ function radio(list) {
 }
 
 export default {
+  exponent,
   parseDate,
   interpolate,
   interpolateLog,
-  range,
+  from,
+  to,
+  fromTo,
   time,
   ts,
   max,

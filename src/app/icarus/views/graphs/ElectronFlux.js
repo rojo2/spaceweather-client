@@ -18,8 +18,8 @@ class ElectronFluxGraphData extends React.Component {
     const maxX = utils.maxOf(data,"time",2);
     const minX = utils.minOf(data,"time",2);
 
-    const minY = 0.1;
-    const maxY = 1200000;
+    const minY = 1;
+    const maxY = 1000000;
 
     const d0 = utils.path(utils.pointsLog(data[0],"time","value",minX,maxX,minY,maxY),width,height);
     const d1 = utils.path(utils.pointsLog(data[1],"time","value",minX,maxX,minY,maxY),width,height);
@@ -28,8 +28,8 @@ class ElectronFluxGraphData extends React.Component {
 
     const minTime = new Date(minX).getTime();
     const maxTime = new Date(maxX).getTime();
-    const xAxis = utils.ticks(minTime,maxTime);
-    const yAxis = utils.ticks(minY,maxY);
+    const xAxis = utils.ticks(minTime, maxTime);
+    const yAxis = utils.ticksLog(minY, maxY);
     const xTicks = xAxis.map((value,index,list) => {
       const x = utils.interpolate((value - minX) / (maxX - minX),0,width);
       const y = 24;

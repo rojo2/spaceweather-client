@@ -29,7 +29,7 @@ class ProtonFluxGraphData extends React.Component {
     const minTime = new Date(minX).getTime();
     const maxTime = new Date(maxX).getTime();
     const xAxis = utils.ticks(minTime,maxTime);
-    const yAxis = utils.ticks(minY,maxY);
+    const yAxis = utils.ticksLog(minY,maxY);
     const xTicks = utils.ticks(minTime,maxTime).map((value,index,list) => {
       const x = utils.interpolate((value - minX) / (maxX - minX),0,width);
       const y = 24;
