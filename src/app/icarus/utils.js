@@ -197,9 +197,20 @@ function areaPath(points, width, height) {
 }
 
 function path(points, width, height) {
-  return points.reduce((acc, point, index) =>  {
-    const cmd = (index === 0 ? "M" : "L");
-    const pos = `${cmd}${point.x * width} ${height - (point.y * height)}`;
+  let isNextM = true;
+  return points.reduce((acc, point, index) => {
+    const x = point.x * width;
+    const y = height - point.y * height;
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      isNextM = true;
+      return acc + "";
+    }
+    let cmd = "L";
+    if (isNextM) {
+      cmd = "M";
+      isNextM = false;
+    }
+    const pos = `${cmd}${x} ${y}`;
     return acc + (index > 0 ? "," : "") + pos;
   }, "");
 }
