@@ -1,5 +1,7 @@
 # Readme
 
+**DEPRECATED**: see https://github.com/rojo2/icarus-client for a new versión using [Nuxt.js](https://nuxtjs.org/)
+
 ## How to install
 
 First of all you need to install NVM, if you already have it, just run `nvm install && nvm use` where the `.nvmrc` is.
